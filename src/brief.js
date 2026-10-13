@@ -14,11 +14,28 @@ export function createBrief(data) {
   ].join('\n');
 }
 
+export function validateBriefInput(data) {
+  const name = String(data.get('name') || '').trim();
+  const email = String(data.get('email') || '').trim();
+  const idea = String(data.get('idea') || '').trim();
+
+  if (!name) {
+    return { valid: false, field: 'name', message: 'Please enter your name.' };
+  }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return { valid: false, field: 'email', message: 'Please enter a valid email address.' };
+  }
+  if (!idea || idea.length < 10) {
+    return { valid: false, field: 'idea', message: 'Please provide at least 10 characters describing your project or idea.' };
+  }
+  return { valid: true, name, email, idea };
+}
+
 export function isContactEmail(value) {
   return typeof value === 'string' && /^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(value);
 }
 
 export function makeEmailLink(email, brief) {
   if (!isContactEmail(email)) return null;
-  return `mailto:${email}?subject=${encodeURIComponent('Let’s build what’s next | EG TECH project brief')}&body=${encodeURIComponent(brief)}`;
+  return `mailto:${email}?subject=${encodeURIComponent('EG TECH project brief | Let’s discuss your project')}&body=${encodeURIComponent(brief)}`;
 }
