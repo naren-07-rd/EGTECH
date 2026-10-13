@@ -18,9 +18,19 @@
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="header">
       <a class="brand" href="#home" aria-label="EG TECH home"><img src="/eg-tech-logo.jpeg" alt="EG TECH official logo" width="48" height="48" /><span>EG TECH<small>EMPOWERING GROWTH TECHNOLOGY</small></span></a>
-      <nav class="desktop-nav" aria-label="Main navigation"><a href="#services">Services</a><a href="#work">Work</a><a href="#visibility">Visibility</a><a href="#process">Process</a><a href="#about">Studio</a><a href="#feedback">Standards</a><a href="#philosophy">Manifesto</a></nav>
+      <nav class="eg-navbar desktop-nav" aria-label="Main navigation">
+        <!-- Visual reference inspired by Uiverse.io by SelfMadeSystem -->
+        <a class="eg-navbar__link" href="#work">Work</a>
+        <a class="eg-navbar__link" href="#services">Services</a>
+        <a class="eg-navbar__link" href="#process">Process</a>
+        <a class="eg-navbar__link" href="#about">About</a>
+        <a class="eg-navbar__link" href="#faq">FAQ</a>
+        <svg class="eg-navbar__outline" aria-hidden="true" focusable="false">
+          <rect class="eg-navbar__rect" rx="100" ry="100" />
+        </svg>
+      </nav>
       <div class="header-actions"><button class="theme-toggle" aria-label="Switch to dark theme" title="Switch theme"><span aria-hidden="true">◐</span></button><a class="button button-small header-cta" href="#brief">Discuss your project <span aria-hidden="true">↗</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav">Menu <span aria-hidden="true">+</span></button></div>
-      <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden><a href="#services">Services</a><a href="#work">Work</a><a href="#visibility">Visibility</a><a href="#process">Process</a><a href="#about">Studio</a><a href="#feedback">Standards</a><a href="#philosophy">Manifesto</a><a href="#brief">Discuss your project ↗</a></nav>
+      <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden><a href="#work">Work</a><a href="#services">Services</a><a href="#process">Process</a><a href="#about">About</a><a href="#faq">FAQ</a><a class="mobile-cta" href="#brief">Discuss your project ↗</a></nav>
     </header>
 
     <main id="main">
@@ -81,7 +91,37 @@
 
       <section id="philosophy" class="manifesto section-pad"><p class="eyebrow reveal">08 / STUDIO MANIFESTO</p><h2 class="reveal">Intentional design.<br /><em>Zero noise.</em></h2><div class="manifesto-principles"><p><span>01</span>Function and usability guide every interface.</p><p><span>02</span>Performance and low latency are foundational requirements.</p><p><span>03</span>Clean, maintainable code outlasts fleeting aesthetic trends.</p></div><div class="manifesto-bottom"><p>Every interaction should help someone accomplish a goal.<br />Every system should make your business more resilient.</p><a class="button" href="#brief">Discuss your project <span aria-hidden="true">↗</span></a></div></section>
 
-      <section id="brief" class="brief section-pad"><div class="brief-intro reveal"><p class="eyebrow">09 / PROJECT BRIEFING</p><h2>Have a project in mind?<br /><span>Let’s discuss<br />the details.</span></h2><p>Tell us what you want to build or improve.<br />We review every brief and respond within 1–2 business days.</p><div class="brief-note"><span aria-hidden="true">↗</span><p>Share your goals.<br />We will help clarify scope, architecture and next steps.</p></div></div>
+      <section id="faq" class="faq section-pad">
+        <div class="reveal">
+          <p class="eyebrow">09 / FREQUENTLY ASKED QUESTIONS</p>
+          <h2>Common questions &amp;<br /><em>clear answers.</em></h2>
+          <p>Engineering standards, working relationships, and practical details about partnering with EG TECH.</p>
+        </div>
+        <div class="faq-list">
+          <details class="reveal" open>
+            <summary>What services does EG TECH provide?<span aria-hidden="true">+</span></summary>
+            <div class="service-content"><p>We connect strategy, design and engineering across custom web applications, ecommerce platforms, brand identity, workflow automation, and search infrastructure.</p></div>
+          </details>
+          <details class="reveal">
+            <summary>How does the delivery process work?<span aria-hidden="true">+</span></summary>
+            <div class="service-content"><p>We follow a five-step delivery framework: Discovery &amp; scope, Architecture &amp; design, Engineering &amp; review, Testing &amp; hardening, and Deployment &amp; handover. You communicate directly with the engineers building your software.</p></div>
+          </details>
+          <details class="reveal">
+            <summary>Where is EG TECH located?<span aria-hidden="true">+</span></summary>
+            <div class="service-content"><p>EG TECH is based in Tamil Nadu, India, pairing local market insight with modern web engineering standards.</p></div>
+          </details>
+          <details class="reveal">
+            <summary>Are project scopes and timelines agreed in writing?<span aria-hidden="true">+</span></summary>
+            <div class="service-content"><p>Yes. Deliverables, responsibilities, review milestones, and handover criteria are documented in writing before kickoff.</p></div>
+          </details>
+          <details class="reveal">
+            <summary>How can we start a project or enquiry?<span aria-hidden="true">+</span></summary>
+            <div class="service-content"><p>Prepare a structured project brief using the briefing tool below. You can review, copy, download, or email your requirements directly to EG TECH.</p></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="brief" class="brief section-pad"><div class="brief-intro reveal"><p class="eyebrow">10 / PROJECT BRIEFING</p><h2>Have a project in mind?<br /><span>Let’s discuss<br />the details.</span></h2><p>Tell us what you want to build or improve.<br />We review every brief and respond within 1–2 business days.</p><div class="brief-note"><span aria-hidden="true">↗</span><p>Share your goals.<br />We will help clarify scope, architecture and next steps.</p></div></div>
         <form id="brief-form" class="brief-form" method="POST" action="javascript:void(0)" novalidate><p class="eyebrow">PROJECT BRIEFING</p><fieldset><legend>What services do you need?</legend><div class="service-chips"><label><input type="checkbox" name="service" value="Website" /><span>Website</span></label><label><input type="checkbox" name="service" value="Mobile app" /><span>Mobile app</span></label><label><input type="checkbox" name="service" value="Brand &amp; design" /><span>Brand &amp; design</span></label><label><input type="checkbox" name="service" value="Automation" /><span>Automation</span></label><label><input type="checkbox" name="service" value="Custom software" /><span>Custom software</span></label><label><input type="checkbox" name="service" value="Digital growth" /><span>Digital growth</span></label><label><input type="checkbox" name="service" value="Let’s explore" /><span>Let’s explore</span></label></div></fieldset><div class="form-row"><label for="field-name">Your name<input id="field-name" name="name" autocomplete="name" placeholder="Alex Morgan" required maxlength="100" /></label><label for="field-email">Email address<input id="field-email" name="email" type="email" autocomplete="email" placeholder="alex@company.com" required maxlength="200" /></label></div><label for="field-company">Company <span class="optional">(optional)</span><input id="field-company" name="company" autocomplete="organization" placeholder="Your company or venture name" maxlength="160" /></label><label for="field-idea">Tell us about your project or requirements<textarea id="field-idea" name="idea" placeholder="What are you building, what challenge are you solving, or what timeline are you aiming for?" required minlength="10" maxlength="5000" rows="3"></textarea></label><div class="form-row"><label for="field-budget">Project scale<select id="field-budget" name="budget"><option>Let’s discuss</option><option>A focused first step</option><option>A complete digital presence</option><option>A custom product or platform</option><option>Ongoing partnership</option></select></label><label for="field-timeline">Ideal timeline<select id="field-timeline" name="timeline"><option>Flexible / exploring</option><option>Within 1 month</option><option>1-3 months</option><option>3-6 months</option></select></label></div><button class="button form-submit" type="submit">Prepare project brief <span aria-hidden="true">↗</span></button><p class="form-privacy" id="form-help">Your details stay in this browser. Prepare a brief to review, copy, or download.</p><div class="form-result" hidden aria-live="polite"><h3>Your brief is ready.</h3><p id="result-description">Your brief has been prepared in your browser. Download or copy it to share with EG TECH. Nothing has been sent over the network.</p><details class="brief-review"><summary>Review your brief</summary><pre id="brief-preview"></pre></details><div class="result-actions"><button class="button button-small" type="button" id="copy-brief">Copy brief 📋</button><button class="button button-small" type="button" id="download-brief">Download brief ↓</button><a class="button button-small" id="email-brief" hidden>Open email draft ↗</a></div></div></form>
       </section>
     </main>

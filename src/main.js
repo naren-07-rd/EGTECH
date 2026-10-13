@@ -40,6 +40,150 @@ matchMedia('(min-width: 1001px)').addEventListener('change', event => {
   if (event.matches) closeMenu();
 });
 
+// Animated border navigation
+// Visual reference inspired by Uiverse.io by SelfMadeSystem
+function startAnimatedNavbar() {
+  const nav = document.querySelector('.eg-navbar');
+  if (!nav) return () => {};
+  const rect = nav.querySelector('.eg-navbar__rect');
+  const links = Array.from(nav.querySelectorAll('.eg-navbar__link'));
+  if (!rect || links.length === 0) return () => {};
+
+  let activeLink = null;
+  let hoveredOrFocusedLink = null;
+
+  function renderIndicator(target) {
+    if (!target) {
+      nav.style.setProperty('--indicator-opacity', '0');
+      rect.style.opacity = '0';
+      return;
+    }
+    const navBounds = nav.getBoundingClientRect();
+    const linkBounds = target.getBoundingClientRect();
+    const x = linkBounds.left - navBounds.left;
+    const y = linkBounds.top - navBounds.top;
+    const w = linkBounds.width;
+    const h = linkBounds.height;
+    const r = h / 2;
+
+    nav.style.setProperty('--indicator-x', `${x}px`);
+    nav.style.setProperty('--indicator-y', `${y}px`);
+    nav.style.setProperty('--indicator-w', `${w}px`);
+    nav.style.setProperty('--indicator-h', `${h}px`);
+    nav.style.setProperty('--indicator-r', `${r}px`);
+    nav.style.setProperty('--indicator-opacity', '1');
+
+    rect.setAttribute('x', '0');
+    rect.setAttribute('y', '0');
+    rect.setAttribute('width', String(w));
+    rect.setAttribute('height', String(h));
+    rect.setAttribute('rx', String(r));
+    rect.setAttribute('ry', String(r));
+    rect.style.width = `${w}px`;
+    rect.style.height = `${h}px`;
+    rect.style.transform = `translate(${x}px, ${y}px)`;
+    rect.style.opacity = '1';
+  }
+
+  function update() {
+    renderIndicator(hoveredOrFocusedLink || activeLink);
+  }
+
+  links.forEach(link => {
+    link.addEventListener('pointerenter', () => {
+      hoveredOrFocusedLink = link;
+      update();
+    });
+    link.addEventListener('focus', () => {
+      hoveredOrFocusedLink = link;
+      update();
+    });
+    link.addEventListener('blur', () => {
+      if (hoveredOrFocusedLink === link) {
+        hoveredOrFocusedLink = null;
+        update();
+      }
+    });
+  });
+
+  nav.addEventListener('pointerleave', () => {
+    hoveredOrFocusedLink = null;
+    update();
+  });
+
+  const onResize = () => update();
+  window.addEventListener('resize', onResize, { passive: true });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => update());
+  }
+
+  // Active section tracking via IntersectionObserver
+  // Links in navbar: Work (#work), Services (#services), Process (#process), About (#about), FAQ (#faq)
+  const observedSections = [
+    document.getElementById('work'),
+    document.getElementById('services'),
+    document.getElementById('process'),
+    document.getElementById('about'),
+    document.getElementById('faq')
+  ].filter(Boolean);
+
+  const sectionObserver = new IntersectionObserver(() => {
+    if (window.scrollY < 200) {
+      links.forEach(l => l.removeAttribute('aria-current'));
+      activeLink = null;
+      update();
+      return;
+    }
+
+    const inView = observedSections
+      .map(sec => ({ sec, rect: sec.getBoundingClientRect() }))
+      .filter(({ rect }) => rect.top <= 250 && rect.bottom >= 100)
+      .sort((a, b) => b.rect.top - a.rect.top);
+
+    if (inView.length > 0) {
+      const current = inView[0].sec;
+      const href = `#${current.id}`;
+      links.forEach(l => {
+        if (l.getAttribute('href') === href) {
+          l.setAttribute('aria-current', 'location');
+          activeLink = l;
+        } else {
+          l.removeAttribute('aria-current');
+        }
+      });
+    } else if (window.scrollY < 300) {
+      links.forEach(l => l.removeAttribute('aria-current'));
+      activeLink = null;
+    }
+    update();
+  }, {
+    rootMargin: '-88px 0px -40% 0px',
+    threshold: [0, 0.1, 0.25, 0.5, 0.75]
+  });
+
+  observedSections.forEach(s => sectionObserver.observe(s));
+
+  const onScroll = () => {
+    if (window.scrollY < 180 && activeLink) {
+      links.forEach(l => l.removeAttribute('aria-current'));
+      activeLink = null;
+      update();
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  requestAnimationFrame(update);
+  setTimeout(update, 100);
+
+  return () => {
+    window.removeEventListener('resize', onResize);
+    window.removeEventListener('scroll', onScroll);
+    sectionObserver.disconnect();
+  };
+}
+
+const disposeAnimatedNavbar = startAnimatedNavbar();
+
 // Theme switcher
 const themeButton = document.querySelector('.theme-toggle');
 function applyTheme(theme) {
@@ -294,6 +438,7 @@ document.querySelector('#year').textContent = new Date().getFullYear();
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
+    disposeAnimatedNavbar();
     disposeIntro();
     disposeReferenceMotion();
     disposeExpressiveMotion();
