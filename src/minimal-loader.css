@@ -1,0 +1,30 @@
+/* Quiet reference-inspired intro; the counter measures the intro, not network progress. */
+.minimal-loader{background:#080c11;color:#eaf0fa;position:relative;overflow:hidden}
+.minimal-loader[hidden]{display:none!important}
+.minimal-loader.logo-loader--startup{position:fixed;inset:0;z-index:100;flex-direction:column;gap:32px;background:radial-gradient(ellipse at 50% 48%,#11203b66,transparent 40%),#080c11}
+.intro-meta{position:absolute;top:32px;left:36px;right:36px;display:flex;justify-content:space-between;font:9px var(--mono);letter-spacing:.18em;color:#8290a5}
+.intro-symbol{position:relative;display:grid;place-items:center;width:160px;height:160px;flex-shrink:0}
+.intro-symbol img{width:84px;height:84px;object-fit:cover;border-radius:50%;animation:intro-mark 1.65s cubic-bezier(.2,.8,.2,1) both}
+.intro-frame{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke-width:2}
+.intro-outline{stroke:#dce6f6;stroke-dasharray:1;animation:intro-draw 1.3s cubic-bezier(.4,0,.2,1) both}
+.intro-signal{stroke:#3d73ff;stroke-width:3;stroke-dasharray:.15 .85;animation:intro-trace 1.65s linear infinite}
+.intro-scan{position:absolute;width:102px;height:1px;background:linear-gradient(90deg,transparent,#76a8ff,transparent);box-shadow:0 0 14px #407cff;animation:intro-scan 1.65s ease-in-out infinite}
+.intro-caption{display:flex;flex-direction:column;align-items:center;gap:25px;font:9px var(--mono);letter-spacing:.14em;color:#94a1b5}
+.intro-count{font-size:11px;font-variant-numeric:tabular-nums;letter-spacing:.12em;color:#eaf0fa;min-width:90px}
+.intro-count i{font-style:normal;color:#647187;padding-left:7px}
+.intro-baseline{position:absolute;bottom:0;left:0;right:0;height:2px;background:#ffffff08}
+.intro-baseline span{display:block;width:100%;height:100%;background:#3974ff;transform-origin:left;animation:intro-progress 1.65s linear both}
+.minimal-loader.logo-loader--form{flex-direction:row;gap:20px;padding:18px 24px;background:#080c11;text-align:left;border:1px solid #233047;border-radius:12px}
+.logo-loader--form .intro-meta{display:none}
+.logo-loader--form .intro-symbol{width:64px;height:64px}
+.logo-loader--form .intro-symbol img{width:34px;height:34px}
+.logo-loader--form .intro-scan{width:42px}
+.logo-loader--form .intro-caption{align-items:flex-start}
+.logo-loader--form .intro-baseline span{animation:intro-progress .85s linear both}
+@keyframes intro-mark{0%{opacity:0;transform:scale(.7)}50%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
+@keyframes intro-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes intro-trace{to{stroke-dashoffset:-1}}
+@keyframes intro-scan{0%,100%{translate:0 -44px;opacity:0}20%,80%{opacity:1}90%{translate:0 44px}}
+@keyframes intro-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(max-width:600px){.intro-meta{top:24px;left:24px;right:24px;font-size:7px}.intro-meta span:last-child{max-width:150px;text-align:right;line-height:1.6}}
+@media(prefers-reduced-motion:reduce){.minimal-loader *{animation:none!important}.intro-scan{display:none}}
