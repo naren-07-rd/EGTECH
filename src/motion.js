@@ -50,10 +50,20 @@ export function startMotion(preference) {
       if (!enabled()) continue;
       const element = entry.target;
       if (element.matches('.service')) {
-        animate(element, [{ opacity: 0, transform: 'translateX(-28px)' }, { opacity: 1, transform: 'translateX(0)' }]);
+        // Coordinated by services-cinematic.js module
+        return;
       } else if (element.matches('.case-study')) {
-        animate(element.querySelector('.case-cover'), [{ opacity: .2, clipPath: 'inset(12% 0 0 0 round 22px)', transform: 'translateY(35px) scale(.96)' }, { opacity: 1, clipPath: 'inset(0 round 22px)', transform: 'translateY(0) scale(1)' }], { duration: 1000 });
-        animate(element.querySelector('.case-meta'), rise, { delay: 160 });
+        // Coordinated by portfolio-cinematic.js module
+        return;
+      } else if (element.closest('#process') || element.closest('#about') || element.closest('#philosophy')) {
+        // Coordinated by process-about-manifesto-cinematic.js module
+        return;
+      } else if (element.closest('#feedback') || element.closest('#faq') || element.closest('#brief')) {
+        // Coordinated by pricing-faq-contact-cinematic.js module
+        return;
+      } else if (element.closest('.footer')) {
+        // Coordinated by footer-cinematic.js module
+        return;
       } else if (element.matches('.search-blueprint')) {
         animate(element, [{ opacity: 0, transform: 'perspective(900px) rotateX(8deg) translateY(20px)' }, { opacity: 1, transform: 'perspective(900px) rotateX(0) translateY(0)' }]);
         element.querySelectorAll('li').forEach((row, index) => animate(row, rise, { delay: 100 + index * 130 }));
@@ -72,6 +82,9 @@ export function startMotion(preference) {
   // Split headings own their motion. Never clip a heading or animate its container.
   document.querySelectorAll('.reveal,.manifesto-principles p,.brief-form,.footer-statement').forEach(element => {
     if (element.matches('h2') || element.querySelector('h2')) return;
+    if (element.closest('#process') || element.closest('#about') || element.closest('#philosophy')) return;
+    if (element.closest('#feedback') || element.closest('#faq') || element.closest('#brief')) return;
+    if (element.closest('.footer')) return;
     observer.observe(element);
   });
 
@@ -83,30 +96,12 @@ export function startMotion(preference) {
   }, { threshold: 0 });
   document.querySelectorAll('.system-showcase,.case-cover,.search-blueprint,.studio-art').forEach(element => ambient.observe(element));
 
-  const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
-  document.querySelectorAll('.case-cover').forEach(card => {
-    let tiltFrame = 0;
-    listen(card, 'pointermove', event => {
-      if (!enabled() || !finePointer.matches || tiltFrame) return;
-      const { clientX, clientY } = event;
-      tiltFrame = requestAnimationFrame(() => {
-        tiltFrame = 0;
-        if (!enabled()) return;
-        const bounds = card.getBoundingClientRect();
-        const x = (clientX - bounds.left) / bounds.width - .5;
-        const y = (clientY - bounds.top) / bounds.height - .5;
-        card.style.transform = `perspective(1000px) rotateX(${-y * 5}deg) rotateY(${x * 6}deg)`;
-      });
-    });
-    listen(card, 'pointerleave', () => { cancelAnimationFrame(tiltFrame); tiltFrame = 0; card.style.removeProperty('transform'); });
-    cleanups.push(() => cancelAnimationFrame(tiltFrame));
-  });
+  // Pointer tilt for .case-cover is coordinated by portfolio-cinematic.js via CSS variables (--tilt-rx, --tilt-ry)
   document.querySelectorAll('.service').forEach(details => {
     const summary = details.querySelector('summary');
     if (summary) summary.setAttribute('aria-expanded', String(details.open));
     listen(details, 'toggle', () => {
       if (summary) summary.setAttribute('aria-expanded', String(details.open));
-      if (details.open) animate(details.querySelector('.service-content'), [{ opacity: 0, transform: 'translateY(-9px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 380 });
     });
   });
   const menu = document.querySelector('#mobile-nav');

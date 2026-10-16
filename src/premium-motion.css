@@ -1,0 +1,825 @@
+/* ==========================================================================
+   EG TECH — Premium Motion Design Foundation Tokens & Utilities
+   Cinematic agency experience: refined easing, masked reveals, clip paths, 
+   micro-interactions, and strict protection for hero & header components.
+   ========================================================================== */
+
+:root {
+  /* Premium motion tokens */
+  --motion-ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-duration-fast: 400ms;
+  --motion-duration-normal: 800ms;
+  --motion-duration-slow: 1100ms;
+  --motion-stagger-gap: 100ms;
+}
+
+/* --------------------------------------------------------------------------
+   1. Section Heading Masking Primitives
+   Allows natural line-box masking without clipping letters or descenders.
+   -------------------------------------------------------------------------- */
+.motion-mask-wrap {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  line-height: inherit;
+  vertical-align: top;
+}
+
+.motion-mask-inner {
+  display: inline-block;
+  will-change: transform, opacity;
+  transform-origin: left bottom;
+}
+
+/* --------------------------------------------------------------------------
+   2. Image Clip-Path & Scale Stage Primitives
+   -------------------------------------------------------------------------- */
+.motion-clip-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card, 16px);
+  background-color: var(--elevated, #101726);
+}
+
+.motion-clip-target {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: clip-path, transform, opacity;
+  transform-origin: center center;
+}
+
+/* --------------------------------------------------------------------------
+   3. Tactile 3D Card Tilt Micro-Interaction
+   Uses isolated custom properties so entrance WAAPI does not get clobbered.
+   -------------------------------------------------------------------------- */
+.motion-tilt-card {
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg));
+  transition: transform 0.28s var(--motion-ease-premium);
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   4. Reduced Motion & Global Site Motion Toggle Safety
+   When user requests reduced motion or toggles motion off, all elements
+   immediately render in their final, fully accessible, unclipped state.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .motion-mask-wrap {
+    overflow: visible !important;
+  }
+  .motion-mask-inner {
+    transform: none !important;
+    opacity: 1 !important;
+    will-change: auto !important;
+    animation: none !important;
+  }
+  .motion-clip-target {
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    will-change: auto !important;
+    animation: none !important;
+  }
+  .motion-tilt-card {
+    transform: none !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+}
+
+:root[data-motion="off"] .motion-mask-wrap {
+  overflow: visible !important;
+}
+
+:root[data-motion="off"] .motion-mask-inner {
+  transform: none !important;
+  opacity: 1 !important;
+  will-change: auto !important;
+  animation: none !important;
+}
+
+:root[data-motion="off"] .motion-clip-target {
+  clip-path: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  will-change: auto !important;
+  animation: none !important;
+}
+
+:root[data-motion="off"] .motion-tilt-card {
+  transform: none !important;
+  transition: none !important;
+  will-change: auto !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. Explicit Hero & Header Protection
+   Guarantee that foundation classes NEVER apply to or conflict with
+   hero (#home) or header elements under any circumstances.
+   -------------------------------------------------------------------------- */
+#home .motion-mask-wrap,
+#home .motion-mask-inner,
+#home .motion-clip-target,
+#home .motion-tilt-card,
+.header .motion-mask-wrap,
+.header .motion-mask-inner,
+.header .motion-clip-target,
+.header .motion-tilt-card {
+  transform: none;
+  clip-path: none;
+}
+
+/* --------------------------------------------------------------------------
+   6. Services Section Cinematic Enhancements (#services)
+   -------------------------------------------------------------------------- */
+#services .service {
+  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+#services .service:hover {
+  background: color-mix(in srgb, var(--accent) 3.5%, transparent);
+}
+
+#services .service[open] {
+  background: color-mix(in srgb, var(--accent) 2%, transparent);
+}
+
+#services .service .expand {
+  display: inline-block;
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+#services .service[open] .expand {
+  transform: rotate(45deg);
+  color: var(--accent-text);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #services .service-media img {
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+  #services .service:hover .service-media img {
+    transform: scale(1.03);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. SEO & Performance Cinematic Enhancements (#visibility)
+   -------------------------------------------------------------------------- */
+#visibility.visibility {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+#visibility.visibility::before {
+  content: '';
+  position: absolute;
+  top: 15%;
+  right: 6%;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--stage-accent) 6%, transparent) 0%, transparent 68%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #visibility .seo-feature-card:hover .seo-feature-card__icon svg {
+    transform: translateY(-2px) scale(1.1);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #visibility .seo-feature-card:hover .seo-feature-card__icon {
+    transform: translateY(-1px);
+    background: color-mix(in srgb, var(--stage-accent) 18%, transparent);
+    border-color: color-mix(in srgb, var(--stage-accent) 45%, transparent);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s;
+  }
+}
+
+/* Reduced motion & motion off safety for services & visibility */
+@media (prefers-reduced-motion: reduce) {
+  #services .service,
+  #services .service .expand,
+  #services .service-media img,
+  #visibility .seo-feature-card:hover .seo-feature-card__icon,
+  #visibility .seo-feature-card:hover .seo-feature-card__icon svg {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+:root[data-motion="off"] #services .service,
+:root[data-motion="off"] #services .service .expand,
+:root[data-motion="off"] #services .service-media img,
+:root[data-motion="off"] #visibility .seo-feature-card:hover .seo-feature-card__icon,
+:root[data-motion="off"] #visibility .seo-feature-card:hover .seo-feature-card__icon svg {
+  transform: none !important;
+  transition: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   8. Portfolio Section Cinematic Enhancements (#work)
+   -------------------------------------------------------------------------- */
+#work.studio-work {
+  position: relative;
+  overflow: hidden;
+}
+
+.case-cover {
+  border: 1px solid var(--line);
+  transition:
+    border-color 0.4s var(--motion-ease-premium),
+    box-shadow 0.4s var(--motion-ease-premium);
+}
+
+.case-study:hover .case-cover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  box-shadow:
+    0 24px 48px -18px rgba(0, 0, 0, 0.45),
+    0 0 32px -8px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+:root[data-theme=light] .case-study:hover .case-cover {
+  box-shadow:
+    0 24px 48px -18px rgba(17, 27, 44, 0.12),
+    0 0 32px -8px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+/* Fine pointer hover zoom on live preview image */
+@media (hover: hover) and (pointer: fine) {
+  .cover-live .preview-browser img {
+    transition: transform 0.65s var(--motion-ease-premium);
+    will-change: transform;
+  }
+  .case-study:hover .cover-live .preview-browser img {
+    transform: scale(1.035);
+  }
+}
+
+/* Scroll-responsive image depth on larger screens */
+@media (min-width: 768px) {
+  .cover-live .preview-browser {
+    transform: translateY(var(--case-depth-shift, 0px));
+    transition: transform 0.12s linear;
+    will-change: transform;
+  }
+  .cover-ai .document-stack {
+    transform: translateY(calc(var(--case-depth-shift, 0px) * 0.75));
+    transition: transform 0.12s linear;
+    will-change: transform;
+  }
+}
+
+/* Project action button hover animation */
+.case-open {
+  transition:
+    transform 0.35s var(--motion-ease-premium),
+    background 0.28s ease,
+    color 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.case-study:hover .case-open {
+  transform: rotate(45deg) scale(1.08);
+  background: var(--accent);
+  color: #101010;
+  border-color: var(--accent);
+  box-shadow: 0 6px 16px -2px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+/* Project dialog opening & closing transitions */
+#project-dialog {
+  transition:
+    opacity 0.32s var(--motion-ease-premium),
+    transform 0.36s var(--motion-ease-premium);
+}
+#project-dialog::backdrop {
+  transition: opacity 0.35s ease;
+}
+
+/* Reduced motion and site motion toggle overrides */
+@media (prefers-reduced-motion: reduce) {
+  .case-cover,
+  .case-study:hover .case-cover,
+  .cover-live .preview-browser,
+  .cover-live .preview-browser img,
+  .case-study:hover .cover-live .preview-browser img,
+  .cover-ai .document-stack,
+  .case-open,
+  .case-study:hover .case-open,
+  #project-dialog {
+    transform: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+  }
+}
+
+:root[data-motion="off"] .case-cover,
+:root[data-motion="off"] .case-study:hover .case-cover,
+:root[data-motion="off"] .cover-live .preview-browser,
+:root[data-motion="off"] .cover-live .preview-browser img,
+:root[data-motion="off"] .case-study:hover .cover-live .preview-browser img,
+:root[data-motion="off"] .cover-ai .document-stack,
+:root[data-motion="off"] .case-open,
+:root[data-motion="off"] .case-study:hover .case-open,
+:root[data-motion="off"] #project-dialog {
+  transform: none !important;
+  transition: none !important;
+  box-shadow: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   9. Engineering Process Cinematic Enhancements (#process)
+   -------------------------------------------------------------------------- */
+#process.engineering-process {
+  position: relative;
+}
+
+#process .process-step {
+  transition:
+    background 0.3s var(--motion-ease-premium),
+    border-color 0.3s var(--motion-ease-premium);
+}
+
+#process .process-step:hover {
+  background: color-mix(in srgb, var(--stage-accent) 2.5%, transparent);
+}
+
+#process .process-step:hover .process-step__circle {
+  border-color: color-mix(in srgb, var(--stage-accent) 60%, var(--stage-border));
+}
+
+#process .process-step:hover .process-step__chevron {
+  color: var(--stage-fg);
+  transform: translateY(2px);
+}
+
+#process .process-step[data-state="open"] .process-step__chevron {
+  transform: rotate(180deg);
+}
+
+/* --------------------------------------------------------------------------
+   10. About Section Cinematic Enhancements (#about)
+   -------------------------------------------------------------------------- */
+#about.studio-profile {
+  position: relative;
+  overflow: hidden;
+}
+
+#about .studio-art {
+  box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition:
+    box-shadow 0.4s var(--motion-ease-premium),
+    border-color 0.4s var(--motion-ease-premium);
+}
+
+#about .studio-art:hover {
+  border-color: color-mix(in srgb, var(--accent) 35%, rgba(255, 255, 255, 0.08));
+  box-shadow: 0 28px 55px -18px rgba(0, 0, 0, 0.55), 0 0 35px -10px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+@media (min-width: 768px) {
+  #about .studio-art {
+    transform: translateY(var(--art-depth-shift, 0px));
+    transition:
+      transform 0.12s linear,
+      box-shadow 0.4s var(--motion-ease-premium),
+      border-color 0.4s var(--motion-ease-premium);
+    will-change: transform;
+  }
+}
+
+#about .text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition:
+    color 0.25s ease,
+    transform 0.3s var(--motion-ease-premium);
+}
+
+#about .text-link:hover {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   11. Studio Manifesto Cinematic Enhancements (#philosophy)
+   -------------------------------------------------------------------------- */
+#philosophy.manifesto {
+  position: relative;
+  overflow: hidden;
+}
+
+#philosophy .manifesto-principles {
+  position: relative;
+}
+
+#philosophy .manifesto-principles p {
+  position: relative;
+  transition:
+    opacity 0.32s ease,
+    color 0.32s ease,
+    transform 0.32s var(--motion-ease-premium);
+  will-change: transform, opacity;
+}
+
+/* Subtle animated underline divider */
+#philosophy .manifesto-principles p::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: linear-gradient(90deg, #91b6ff 0%, #bed5ff 40%, transparent 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.85s var(--motion-ease-premium), opacity 0.35s ease;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+#philosophy .manifesto-principles p.is-divider-revealed::after {
+  transform: scaleX(1);
+}
+
+/* Restrained principle focus with subtle sibling dimming */
+@media (hover: hover) and (pointer: fine) {
+  #philosophy .manifesto-principles:hover p {
+    opacity: 0.62;
+  }
+
+  #philosophy .manifesto-principles p:hover {
+    opacity: 1 !important;
+    color: #ffffff;
+    transform: translateX(5px);
+  }
+
+  #philosophy .manifesto-principles p:hover span {
+    color: #c7dcff;
+    text-shadow: 0 0 10px rgba(145, 182, 255, 0.45);
+  }
+
+  #philosophy .manifesto-principles p:hover::after {
+    opacity: 1;
+    height: 2px;
+    background: linear-gradient(90deg, #91b6ff 0%, #bed5ff 60%, transparent 100%);
+  }
+}
+
+#philosophy .manifesto-bottom .button {
+  transition:
+    transform 0.3s var(--motion-ease-premium),
+    background 0.25s ease,
+    box-shadow 0.3s ease;
+}
+
+#philosophy .manifesto-bottom .button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(145, 182, 255, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Reduced Motion & Data-Motion Off Overrides (Sections 9, 10, 11)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  #process .process-step,
+  #process .process-step:hover,
+  #process .process-step__chevron,
+  #about .studio-art,
+  #about .studio-art:hover,
+  #about .text-link,
+  #about .text-link:hover,
+  #philosophy .manifesto-principles p,
+  #philosophy .manifesto-principles p:hover,
+  #philosophy .manifesto-principles p::after,
+  #philosophy .manifesto-bottom .button,
+  #philosophy .manifesto-bottom .button:hover {
+    transform: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+  }
+  #philosophy .manifesto-principles p::after {
+    transform: scaleX(1) !important;
+  }
+  #philosophy .manifesto-principles:hover p {
+    opacity: 1 !important;
+  }
+}
+
+:root[data-motion="off"] #process .process-step,
+:root[data-motion="off"] #process .process-step:hover,
+:root[data-motion="off"] #process .process-step__chevron,
+:root[data-motion="off"] #about .studio-art,
+:root[data-motion="off"] #about .studio-art:hover,
+:root[data-motion="off"] #about .text-link,
+:root[data-motion="off"] #about .text-link:hover,
+:root[data-motion="off"] #philosophy .manifesto-principles p,
+:root[data-motion="off"] #philosophy .manifesto-principles p:hover,
+:root[data-motion="off"] #philosophy .manifesto-principles p::after,
+:root[data-motion="off"] #philosophy .manifesto-bottom .button,
+:root[data-motion="off"] #philosophy .manifesto-bottom .button:hover {
+  transform: none !important;
+  transition: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+:root[data-motion="off"] #philosophy .manifesto-principles p::after {
+  transform: scaleX(1) !important;
+}
+:root[data-motion="off"] #philosophy .manifesto-principles:hover p {
+  opacity: 1 !important;
+}
+
+/* --------------------------------------------------------------------------
+   12. Website Packages Cinematic Enhancements (#feedback)
+   -------------------------------------------------------------------------- */
+#feedback.website-packages {
+  position: relative;
+}
+
+#feedback .eg-package-card {
+  transition:
+    border-color 0.35s var(--motion-ease-premium),
+    box-shadow 0.35s var(--motion-ease-premium),
+    transform 0.28s var(--motion-ease-premium);
+}
+
+#feedback .eg-package-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  box-shadow:
+    0 24px 48px -18px rgba(0, 0, 0, 0.45),
+    0 0 32px -8px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+:root[data-theme=light] #feedback .eg-package-card:hover {
+  box-shadow:
+    0 24px 48px -18px rgba(17, 27, 44, 0.12),
+    0 0 32px -8px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+#feedback .eg-package-card.has-selected-pop {
+  animation: package-selected-pulse 0.6s var(--motion-ease-premium);
+}
+
+@keyframes package-selected-pulse {
+  0% {
+    box-shadow: 0 0 0 0px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0px transparent;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   13. FAQ Cinematic Presentation Enhancements (#faq)
+   -------------------------------------------------------------------------- */
+#faq.faq {
+  position: relative;
+  overflow: hidden;
+}
+
+#faq .faq-slide {
+  transition:
+    opacity 400ms var(--motion-ease-premium),
+    transform 400ms var(--motion-ease-premium);
+}
+
+@media (min-width: 768px) {
+  #faq .faq-bg-panel--left {
+    transform: translateY(calc(-50% + var(--faq-panel-shift, 0px))) rotateY(18deg) scale(0.86);
+    transition: transform 0.12s linear;
+  }
+  #faq .faq-bg-panel--right {
+    transform: translateY(calc(-50% + var(--faq-panel-shift, 0px))) rotateY(-18deg) scale(0.86);
+    transition: transform 0.12s linear;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. Project Enquiry & Briefing Enhancements (#brief)
+   -------------------------------------------------------------------------- */
+#brief.brief {
+  position: relative;
+}
+
+#brief .brief-form input:not([type=checkbox]),
+#brief .brief-form select,
+#brief .brief-form textarea {
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+#brief .brief-form input:not([type=checkbox]):focus-visible,
+#brief .brief-form select:focus-visible,
+#brief .brief-form textarea:focus-visible {
+  outline: none !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent) !important;
+}
+
+#brief .brief-contact-card {
+  transition:
+    border-color 0.35s var(--motion-ease-premium),
+    box-shadow 0.35s var(--motion-ease-premium);
+}
+
+#brief .brief-contact-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+  box-shadow: 0 20px 42px -14px rgba(0, 0, 0, 0.42);
+}
+
+#brief .brief-contact-item {
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s var(--motion-ease-premium);
+}
+
+#brief .brief-contact-item:hover {
+  transform: translateX(4px);
+}
+
+#brief .brief-contact-item:hover .brief-contact-icon {
+  transform: scale(1.08);
+  transition: transform 0.25s var(--motion-ease-premium);
+}
+
+#brief .brief-form .form-submit {
+  transition:
+    background 0.25s ease,
+    transform 0.25s var(--motion-ease-premium),
+    box-shadow 0.25s ease;
+}
+
+#brief .brief-form .form-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+#brief .brief-form .form-submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* --------------------------------------------------------------------------
+   Reduced Motion & Data-Motion Off Overrides (Sections 12, 13, 14)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  #feedback .eg-package-card,
+  #feedback .eg-package-card:hover,
+  #feedback .eg-package-card.has-selected-pop,
+  #faq .faq-slide,
+  #faq .faq-bg-panel--left,
+  #faq .faq-bg-panel--right,
+  #brief .brief-contact-card,
+  #brief .brief-contact-card:hover,
+  #brief .brief-contact-item,
+  #brief .brief-contact-item:hover,
+  #brief .brief-contact-item:hover .brief-contact-icon,
+  #brief .brief-form .form-submit,
+  #brief .brief-form .form-submit:hover:not(:disabled),
+  #brief .brief-form .form-submit:active:not(:disabled) {
+    transform: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+  }
+}
+
+:root[data-motion="off"] #feedback .eg-package-card,
+:root[data-motion="off"] #feedback .eg-package-card:hover,
+:root[data-motion="off"] #feedback .eg-package-card.has-selected-pop,
+:root[data-motion="off"] #faq .faq-slide,
+:root[data-motion="off"] #faq .faq-bg-panel--left,
+:root[data-motion="off"] #faq .faq-bg-panel--right,
+:root[data-motion="off"] #brief .brief-contact-card,
+:root[data-motion="off"] #brief .brief-contact-card:hover,
+:root[data-motion="off"] #brief .brief-contact-item,
+:root[data-motion="off"] #brief .brief-contact-item:hover,
+:root[data-motion="off"] #brief .brief-contact-item:hover .brief-contact-icon,
+:root[data-motion="off"] #brief .brief-form .form-submit,
+:root[data-motion="off"] #brief .brief-form .form-submit:hover:not(:disabled),
+:root[data-motion="off"] #brief .brief-form .form-submit:active:not(:disabled) {
+  transform: none !important;
+  transition: none !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+/* ==========================================================================
+   15. Footer Cinematic Enhancements
+   Refined transition from preceding section, coordinated column stagger,
+   restrained brand mark entrance, and smooth hover underlines.
+   ========================================================================== */
+.footer {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Refined section transition: ambient gradient accent glow at top edge */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--accent) 35%, transparent) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.footer-col {
+  will-change: transform, opacity;
+}
+
+.footer-brand img {
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+
+.footer-bottom {
+  will-change: transform, opacity;
+}
+
+/* Animated hover underline for footer links */
+.footer-link {
+  position: relative;
+  display: inline-block;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s var(--motion-ease-premium, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.footer-link:hover::after,
+.footer-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Reduced motion & data-motion="off" overrides for Footer */
+@media (prefers-reduced-motion: reduce) {
+  .footer-col,
+  .footer-brand img,
+  .footer-bottom {
+    transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  .footer-link,
+  .footer-link::after {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+:root[data-motion="off"] .footer-col,
+:root[data-motion="off"] .footer-brand img,
+:root[data-motion="off"] .footer-bottom {
+  transform: none !important;
+  opacity: 1 !important;
+  animation: none !important;
+}
+
+:root[data-motion="off"] .footer-link,
+:root[data-motion="off"] .footer-link::after {
+  transition: none !important;
+  transform: none !important;
+}
+
+
+
+
+

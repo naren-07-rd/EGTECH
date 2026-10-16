@@ -5,9 +5,11 @@ import './motion.css';
 import './reference-motion.css';
 import './minimal-loader.css';
 import './typography.css';
+import './premium-motion.css';
 import { startReferenceMotion } from './reference-motion.js';
 import { startMotion } from './motion.js';
 import { startExpressiveMotion } from './expressive-motion.js';
+import { initPremiumMotion } from './premium-motion.js';
 import { createBrief, makeEmailLink, isContactEmail, validateBriefInput } from './brief.js';
 import { createLogoLoader, startLogoIntro } from './loader.js';
 import { initSeoFeatureCards } from './seo-feature-cards.js';
@@ -15,6 +17,12 @@ import { initPricingCards } from './pricing-cards.js';
 import { initProcessSteps } from './process-steps.js';
 import { initFaqCarousel } from './faq-carousel.js';
 import { initServiceAccordionNav } from './service-accordion-nav.js';
+import { initServicesCinematic } from './services-cinematic.js';
+import { initVisibilityCinematic } from './visibility-cinematic.js';
+import { initPortfolioCinematic } from './portfolio-cinematic.js';
+import { initProcessAboutManifestoCinematic } from './process-about-manifesto-cinematic.js';
+import { initPricingFaqContactCinematic } from './pricing-faq-contact-cinematic.js';
+import { initFooterCinematic } from './footer-cinematic.js';
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const disposeIntro = startLogoIntro(reducedMotion);
@@ -533,11 +541,39 @@ const disposeServiceAccordionNav = initServiceAccordionNav();
 const disposeMotion = startMotion(reducedMotion);
 const disposeExpressiveMotion = startExpressiveMotion(reducedMotion);
 const disposeReferenceMotion = startReferenceMotion(reducedMotion);
+const disposePremiumMotion = initPremiumMotion();
+const disposeServicesCinematic = initServicesCinematic();
+const disposeVisibilityCinematic = initVisibilityCinematic();
+const disposePortfolioCinematic = initPortfolioCinematic();
+const disposeProcessAboutManifestoCinematic = initProcessAboutManifestoCinematic();
+const disposePricingFaqContactCinematic = initPricingFaqContactCinematic();
+const disposeFooterCinematic = initFooterCinematic();
 
 document.querySelector('#year').textContent = new Date().getFullYear();
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
+    if (typeof disposeFooterCinematic === 'function') {
+      disposeFooterCinematic();
+    }
+    if (typeof disposePricingFaqContactCinematic === 'function') {
+      disposePricingFaqContactCinematic();
+    }
+    if (typeof disposeProcessAboutManifestoCinematic === 'function') {
+      disposeProcessAboutManifestoCinematic();
+    }
+    if (typeof disposePortfolioCinematic === 'function') {
+      disposePortfolioCinematic();
+    }
+    if (typeof disposeVisibilityCinematic === 'function') {
+      disposeVisibilityCinematic();
+    }
+    if (typeof disposeServicesCinematic === 'function') {
+      disposeServicesCinematic();
+    }
+    if (typeof disposePremiumMotion === 'function') {
+      disposePremiumMotion();
+    }
     if (typeof disposeServiceAccordionNav === 'function') {
       disposeServiceAccordionNav();
     }
