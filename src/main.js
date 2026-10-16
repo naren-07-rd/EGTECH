@@ -329,8 +329,10 @@ formLoader.hidden = true;
 document.querySelector('.form-submit').after(formLoader);
 
 const formError = document.createElement('p');
+formError.id = 'brief-form-error';
 formError.className = 'form-privacy';
 formError.setAttribute('role', 'alert');
+formError.setAttribute('aria-live', 'assertive');
 formError.style.color = '#e04848';
 formError.hidden = true;
 formLoader.after(formError);
@@ -342,7 +344,10 @@ form.addEventListener('submit', event => {
   // Clear previous validation alerts
   formError.hidden = true;
   formError.textContent = '';
-  form.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+  form.querySelectorAll('[aria-invalid]').forEach(el => {
+    el.removeAttribute('aria-invalid');
+    el.removeAttribute('aria-describedby');
+  });
 
   const data = new FormData(form);
   const validation = validateBriefInput(data);
@@ -353,6 +358,7 @@ form.addEventListener('submit', event => {
     const invalidField = form.querySelector(`[name="${validation.field}"]`);
     if (invalidField) {
       invalidField.setAttribute('aria-invalid', 'true');
+      invalidField.setAttribute('aria-describedby', 'brief-form-error');
       invalidField.focus();
     }
     return;
@@ -364,6 +370,7 @@ form.addEventListener('submit', event => {
   currentBrief = '';
   document.querySelector('.form-result').hidden = true;
   controls.forEach(control => { control.disabled = true; });
+  submitButton.disabled = true;
   form.setAttribute('aria-busy', 'true');
 
   try {
@@ -392,6 +399,7 @@ form.addEventListener('submit', event => {
     formLoader.hidden = true;
     form.removeAttribute('aria-busy');
     controls.forEach(control => { control.disabled = false; });
+    submitButton.disabled = false;
     preparingBrief = false;
     if (currentBrief) {
       document.querySelector('.form-result').scrollIntoView({
@@ -405,6 +413,7 @@ form.addEventListener('submit', event => {
 form.addEventListener('input', event => {
   if (event.target && event.target.hasAttribute('aria-invalid')) {
     event.target.removeAttribute('aria-invalid');
+    event.target.removeAttribute('aria-describedby');
   }
   if (!document.querySelector('.form-result').hidden) {
     document.querySelector('.form-result').hidden = true;
@@ -416,6 +425,7 @@ form.addEventListener('input', event => {
 form.addEventListener('change', event => {
   if (event.target && event.target.hasAttribute('aria-invalid')) {
     event.target.removeAttribute('aria-invalid');
+    event.target.removeAttribute('aria-describedby');
   }
   if (!document.querySelector('.form-result').hidden) {
     document.querySelector('.form-result').hidden = true;
@@ -423,6 +433,46 @@ form.addEventListener('change', event => {
   }
   formError.hidden = true;
 });
+
+// Optional online enquiry endpoint support
+const enquiryApiEndpoint = (import.meta.env.VITE_ENQUIRY_API_ENDPOINT || '').trim();
+const submitApiBtn = document.querySelector('#submit-api-brief');
+if (submitApiBtn && enquiryApiEndpoint) {
+  submitApiBtn.hidden = false;
+  submitApiBtn.addEventListener('click', async () => {
+    if (!currentBrief || submitApiBtn.disabled) return;
+    submitApiBtn.disabled = true;
+    const origText = submitApiBtn.innerHTML;
+    submitApiBtn.textContent = 'Sending...';
+    try {
+      const response = await fetch(enquiryApiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: form.querySelector('#field-name')?.value.trim(),
+          email: form.querySelector('#field-email')?.value.trim(),
+          company: form.querySelector('#field-company')?.value.trim(),
+          package: form.querySelector('#field-package')?.value,
+          budget: form.querySelector('#field-budget')?.value,
+          timeline: form.querySelector('#field-timeline')?.value,
+          idea: form.querySelector('#field-idea')?.value.trim(),
+          brief: currentBrief
+        })
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      document.querySelector('#result-description').textContent = 'Your enquiry was successfully sent to EG TECH! We will review your project brief and follow up promptly.';
+      submitApiBtn.textContent = 'Sent! ✓';
+    } catch {
+      formError.textContent = 'Could not send online. Please use the "Open email draft" or "Copy brief" options below to send your brief.';
+      formError.hidden = false;
+      submitApiBtn.innerHTML = origText;
+      submitApiBtn.disabled = false;
+    }
+  });
+}
 
 // Website package enquiry card selection & animated pricing cards
 // Preserves: packageSelect.value = pkg; packageSelect.dispatchEvent(new Event('change', { bubbles: true }));

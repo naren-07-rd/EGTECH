@@ -29,7 +29,8 @@ export function validateBriefInput(data) {
   if (!name) {
     return { valid: false, field: 'name', message: 'Please enter your name.' };
   }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+  if (!email || !EMAIL_REGEX.test(email)) {
     return { valid: false, field: 'email', message: 'Please enter a valid email address.' };
   }
   if (!idea || idea.length < 10) {

@@ -14,35 +14,38 @@ if (yearEl) {
 const themeBtn = document.querySelector('.theme-toggle');
 const root = document.documentElement;
 
+function applyTheme(theme) {
+  root.dataset.theme = theme;
+  if (themeBtn) {
+    themeBtn.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
+    themeBtn.title = themeBtn.getAttribute('aria-label');
+  }
+  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+  if (metaThemeColor) {
+    metaThemeColor.content = theme === 'dark' ? '#0b1018' : '#f5f7fb';
+  }
+}
+
 // Initialize theme from storage
 try {
-  const savedTheme = localStorage.getItem('eg-theme');
+  const savedTheme = localStorage.getItem('eg-theme-v2') || localStorage.getItem('eg-theme');
   if (savedTheme === 'dark' || savedTheme === 'light') {
-    root.dataset.theme = savedTheme;
+    applyTheme(savedTheme);
   }
 } catch {
   // Ignore localStorage issues
 }
 
-function updateThemeToggleAria() {
-  if (!themeBtn) return;
-  const current = root.dataset.theme === 'dark' ? 'dark' : 'light';
-  themeBtn.setAttribute('aria-label', current === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
-  themeBtn.title = themeBtn.getAttribute('aria-label');
-}
-
 if (themeBtn) {
-  updateThemeToggleAria();
   themeBtn.addEventListener('click', () => {
     const isDark = root.dataset.theme === 'dark';
     const next = isDark ? 'light' : 'dark';
-    root.dataset.theme = next;
+    applyTheme(next);
     try {
-      localStorage.setItem('eg-theme', next);
+      localStorage.setItem('eg-theme-v2', next);
     } catch {
       // Storage quota or private browsing
     }
-    updateThemeToggleAria();
   });
 }
 

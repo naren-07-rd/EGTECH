@@ -8,6 +8,11 @@
     <meta property="og:title" content="EG TECH | Ideas today. Impact tomorrow." />
     <meta property="og:description" content="A creative technology studio connecting strategy, design and engineering to build digital products and software." />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="/eg-tech-logo.jpeg" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="EG TECH | Ideas today. Impact tomorrow." />
+    <meta name="twitter:description" content="A creative technology studio connecting strategy, design and engineering to build digital products and software." />
+    <meta name="twitter:image" content="/eg-tech-logo.jpeg" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png" />
     <link rel="icon" type="image/jpeg" href="/eg-tech-logo.jpeg" />
@@ -734,15 +739,15 @@
                 </fieldset>
                 <div class="form-row">
                   <label for="field-name">Your name
-                    <input id="field-name" name="name" autocomplete="name" placeholder="Your name" required maxlength="100" />
+                    <input id="field-name" name="name" autocomplete="name" autocapitalize="words" spellcheck="false" placeholder="Your name" required maxlength="100" />
                   </label>
                   <label for="field-email">Email address
-                    <input id="field-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required maxlength="200" />
+                    <input id="field-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@company.com" required maxlength="200" />
                   </label>
                 </div>
                 <div class="form-row">
                   <label for="field-company">Company <span class="optional">(optional)</span>
-                    <input id="field-company" name="company" autocomplete="organization" placeholder="Company name" maxlength="160" />
+                    <input id="field-company" name="company" autocomplete="organization" autocapitalize="words" spellcheck="false" placeholder="Company name" maxlength="160" />
                   </label>
                   <label for="field-package">Website package
                     <select id="field-package" name="package">
@@ -785,6 +790,7 @@
                     <button class="button button-small" type="button" id="copy-brief">Copy brief 📋</button>
                     <button class="button button-small" type="button" id="download-brief">Download brief ↓</button>
                     <a class="button button-small" id="email-brief" hidden>Open email draft ↗</a>
+                    <button class="button button-small" type="button" id="submit-api-brief" hidden>Submit online ↗</button>
                   </div>
                 </div>
               </form>

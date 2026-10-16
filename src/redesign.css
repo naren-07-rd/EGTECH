@@ -1434,6 +1434,8 @@ html{scroll-padding-top:84px}section{scroll-margin-top:84px}
 .brief-form textarea{min-height:140px;border-radius:14px;border:1px solid var(--line);padding:16px;background:color-mix(in srgb,var(--bg) 65%,var(--surface));color:var(--text);font-size:16px;font-family:inherit;resize:vertical;line-height:1.6;box-sizing:border-box;width:100%;margin:0;transition:border-color .2s ease,outline-color .2s ease,box-shadow .2s ease}
 .brief-form input::placeholder,.brief-form textarea::placeholder{color:var(--muted);opacity:.75;font-size:16px}
 .brief-form input:not([type=checkbox]):focus-visible,.brief-form textarea:focus-visible,.brief-form select:focus-visible{outline:2px solid var(--accent)!important;outline-offset:2px;border-color:var(--accent)}
+.brief-form input[aria-invalid="true"],.brief-form textarea[aria-invalid="true"],.brief-form select[aria-invalid="true"]{border-color:#e04848!important;box-shadow:0 0 0 1px #e04848!important}
+.brief-form input[aria-invalid="true"]:focus-visible,.brief-form textarea[aria-invalid="true"]:focus-visible,.brief-form select[aria-invalid="true"]:focus-visible{outline:2px solid #e04848!important;outline-offset:2px}
 .brief-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;box-sizing:border-box}
 .service-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
 .service-chips label{cursor:pointer;display:inline-flex;width:auto;margin:0}
