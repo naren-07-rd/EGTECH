@@ -1,17 +1,24 @@
 export function createBrief(data) {
   const services = data.getAll('service').filter(Boolean);
-  return [
+  const pkg = String(data.get('package') || '').trim();
+  const lines = [
     'EG TECH | PROJECT BRIEF',
     'IDEAS TODAY | IMPACT TOMORROW',
     '',
     `Name: ${String(data.get('name') || '').trim()}`,
     `Email: ${String(data.get('email') || '').trim()}`,
     `Company: ${String(data.get('company') || '').trim() || 'Not specified'}`,
+  ];
+  if (pkg) {
+    lines.push(`Website package: ${pkg}`);
+  }
+  lines.push(
     `Interested in: ${services.length ? services.join(', ') : 'Let’s explore together'}`,
     `Project scale: ${data.get('budget') || 'Let’s discuss'}`,
     `Timeline: ${data.get('timeline') || 'Flexible / exploring'}`,
     '', 'THE IDEA', String(data.get('idea') || '').trim(),
-  ].join('\n');
+  );
+  return lines.join('\n');
 }
 
 export function validateBriefInput(data) {

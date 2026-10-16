@@ -36,7 +36,7 @@ export function startMotion(preference) {
       document.querySelectorAll('.case-cover').forEach(card => card.style.removeProperty('transform'));
       cancelAnimationFrame(frame);
       frame = 0;
-    } else scheduleProgress();
+    }
   }
   listen(button, 'click', () => { paused = !paused; sync(); });
   listen(preference, 'change', sync);
@@ -63,9 +63,9 @@ export function startMotion(preference) {
       } else if (element.matches('.standards-grid article')) {
         const index = [...element.parentElement.children].indexOf(element);
         animate(element, rise, { delay: index * 85 });
-      } else if (element.matches('.delivery-steps li')) {
-        animate(element.querySelector('div'), rise);
-        animate(element.querySelector('.step-no'), [{ opacity: 0, transform: 'scale(.65)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 550 });
+      } else if (element.matches('.eg-package-card') || element.matches('.eg-process-card') || element.matches('.delivery-steps li') || element.matches('.seo-card') || element.matches('.seo-feature-card')) {
+        const index = [...element.parentElement.children].indexOf(element);
+        animate(element, rise, { delay: index * 90 });
       } else animate(element, rise);
     }
   }, { threshold: .12 });
@@ -80,26 +80,8 @@ export function startMotion(preference) {
       entry.target.classList.toggle('motion-visible', entry.isIntersecting);
       if (entry.isIntersecting) visible.add(entry.target); else visible.delete(entry.target);
     }
-    scheduleProgress();
   }, { threshold: 0 });
-  document.querySelectorAll('.system-showcase,.case-cover,.search-blueprint,.studio-art,#process').forEach(element => ambient.observe(element));
-
-  const process = document.querySelector('#process');
-  const steps = [...process.querySelectorAll('.delivery-steps li')];
-  function progress() {
-    frame = 0;
-    if (!enabled() || !visible.has(process)) return;
-    const bounds = process.querySelector('.delivery-steps').getBoundingClientRect();
-    const cursor = innerHeight * .65;
-    const value = Math.max(0, Math.min(1, (cursor - bounds.top) / bounds.height));
-    process.style.setProperty('--process-progress', value);
-    steps.forEach(step => step.classList.toggle('step-reached', step.getBoundingClientRect().top < cursor));
-  }
-  function scheduleProgress() {
-    if (!frame && enabled() && visible.has(process)) frame = requestAnimationFrame(progress);
-  }
-  listen(window, 'scroll', scheduleProgress, { passive: true });
-  listen(window, 'resize', scheduleProgress, { passive: true });
+  document.querySelectorAll('.system-showcase,.case-cover,.search-blueprint,.studio-art').forEach(element => ambient.observe(element));
 
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   document.querySelectorAll('.case-cover').forEach(card => {
@@ -119,9 +101,14 @@ export function startMotion(preference) {
     listen(card, 'pointerleave', () => { cancelAnimationFrame(tiltFrame); tiltFrame = 0; card.style.removeProperty('transform'); });
     cleanups.push(() => cancelAnimationFrame(tiltFrame));
   });
-  document.querySelectorAll('.service').forEach(details => listen(details, 'toggle', () => {
-    if (details.open) animate(details.querySelector('.service-content'), [{ opacity: 0, transform: 'translateY(-9px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 380 });
-  }));
+  document.querySelectorAll('.service').forEach(details => {
+    const summary = details.querySelector('summary');
+    if (summary) summary.setAttribute('aria-expanded', String(details.open));
+    listen(details, 'toggle', () => {
+      if (summary) summary.setAttribute('aria-expanded', String(details.open));
+      if (details.open) animate(details.querySelector('.service-content'), [{ opacity: 0, transform: 'translateY(-9px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 380 });
+    });
+  });
   const menu = document.querySelector('#mobile-nav');
   const dialog = document.querySelector('#project-dialog');
   const result = document.querySelector('.form-result');

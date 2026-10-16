@@ -53,14 +53,6 @@ export function startReferenceMotion(preference) {
   const originalAbout = about.innerHTML;
   const words = []; // Body copy remains stable and fully readable.
 
-  const process = document.querySelector('#process');
-  const steps = [...process.querySelectorAll('.delivery-steps li')];
-  const stage = document.createElement('div');
-  stage.className = 'process-stage';
-  stage.append(...process.childNodes);
-  process.append(stage);
-  process.classList.add('cinematic-process');
-  const desktop = matchMedia('(min-width: 1100px) and (min-height: 700px)');
   const art = document.querySelector('.studio-art');
   const visible = new Set();
   const observer = new IntersectionObserver(entries => {
@@ -70,7 +62,7 @@ export function startReferenceMotion(preference) {
     });
     schedule();
   });
-  [belt, about, process, art].forEach(element => observer.observe(element));
+  [belt, about, art].forEach(element => observer.observe(element));
   const clamp = value => Math.max(0, Math.min(1, value));
   function draw() {
     frame = 0;
@@ -78,11 +70,6 @@ export function startReferenceMotion(preference) {
     if (visible.has(about)) {
       const progress = clamp((innerHeight * .86 - about.getBoundingClientRect().top) / (innerHeight * .5));
       words.forEach((word, i) => { word.style.opacity = String(.35 + .65 * clamp(progress * 1.8 - i / words.length * .8)); });
-    }
-    if (visible.has(process) && desktop.matches) {
-      const progress = clamp((90 - process.getBoundingClientRect().top) / Math.max(1, process.offsetHeight - innerHeight));
-      process.style.setProperty('--chapter-progress', progress);
-      steps.forEach((step, i) => step.classList.toggle('chapter-active', i === Math.min(steps.length - 1, Math.floor(progress * steps.length))));
     }
     if (visible.has(art)) {
       const progress = clamp((innerHeight - art.getBoundingClientRect().top) / (innerHeight + art.offsetHeight));
@@ -94,7 +81,6 @@ export function startReferenceMotion(preference) {
     if (!enabled()) {
       running.forEach(animation => animation.cancel());
       words.forEach(word => word.style.removeProperty('opacity'));
-      steps.forEach(step => step.classList.remove('chapter-active'));
       art.style.removeProperty('--art-travel');
       cancelAnimationFrame(frame); frame = 0;
     } else schedule();
@@ -112,8 +98,6 @@ export function startReferenceMotion(preference) {
     title.innerHTML = originalTitle;
     about.innerHTML = originalAbout; about.removeAttribute('aria-label');
     beltParent.append(beltText); viewport.remove();
-    process.append(...stage.childNodes); stage.remove();
-    process.classList.remove('cinematic-process');
   };
 }
 

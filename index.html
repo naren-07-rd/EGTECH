@@ -17,19 +17,21 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="header">
-      <a class="brand" href="#home" aria-label="EG TECH home"><img src="/eg-tech-logo.jpeg" alt="EG TECH official logo" width="48" height="48" /><span>EG TECH<small>EMPOWERING GROWTH TECHNOLOGY</small></span></a>
-      <nav class="eg-navbar desktop-nav" aria-label="Main navigation">
-        <!-- Visual reference inspired by Uiverse.io by SelfMadeSystem -->
-        <a class="eg-navbar__link" href="#work">Work</a>
-        <a class="eg-navbar__link" href="#services">Services</a>
-        <a class="eg-navbar__link" href="#process">Process</a>
-        <a class="eg-navbar__link" href="#about">About</a>
-        <a class="eg-navbar__link" href="#faq">FAQ</a>
-        <svg class="eg-navbar__outline" aria-hidden="true" focusable="false">
-          <rect class="eg-navbar__rect" rx="100" ry="100" />
-        </svg>
-      </nav>
-      <div class="header-actions"><button class="theme-toggle" aria-label="Switch to dark theme" title="Switch theme"><span aria-hidden="true">◐</span></button><a class="button button-small header-cta" href="#brief">Discuss your project <span aria-hidden="true">↗</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav">Menu <span aria-hidden="true">+</span></button></div>
+      <div class="header-inner">
+        <a class="brand" href="#home" aria-label="EG TECH home"><img src="/eg-tech-logo.jpeg" alt="EG TECH official logo" width="38" height="38" /><span>EG TECH<small>EMPOWERING GROWTH TECHNOLOGY</small></span></a>
+        <nav class="eg-navbar desktop-nav" aria-label="Main navigation">
+          <!-- Visual reference inspired by Uiverse.io by SelfMadeSystem -->
+          <a class="eg-navbar__link" href="#work">Work</a>
+          <a class="eg-navbar__link" href="#services">Services</a>
+          <a class="eg-navbar__link" href="#process">Process</a>
+          <a class="eg-navbar__link" href="#about">About</a>
+          <a class="eg-navbar__link" href="#faq">FAQ</a>
+          <svg class="eg-navbar__outline" aria-hidden="true" focusable="false">
+            <rect class="eg-navbar__rect" rx="100" ry="100" />
+          </svg>
+        </nav>
+        <div class="header-actions"><button class="theme-toggle" aria-label="Switch to dark theme" title="Switch theme"><span aria-hidden="true">◐</span></button><a class="button button-small header-cta" href="#brief">Discuss your project <span aria-hidden="true">↗</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav">Menu <span aria-hidden="true">+</span></button></div>
+      </div>
       <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden><a href="#work">Work</a><a href="#services">Services</a><a href="#process">Process</a><a href="#about">About</a><a href="#faq">FAQ</a><a class="mobile-cta" href="#brief">Discuss your project ↗</a></nav>
     </header>
 
@@ -59,10 +61,70 @@
       <section id="services" class="capabilities section-pad">
         <div class="section-heading reveal"><p class="eyebrow">02 / SERVICES &amp; CAPABILITIES</p><h2>Services &amp;<br /><em>capabilities.</em></h2><p>Clear scopes, reliable engineering, and digital systems built around your business goals.</p></div>
         <div class="service-list">
-          <details class="service reveal" open><summary><span class="service-number">01</span><h3>Web &amp; commerce</h3><span class="service-hint">CUSTOM WEBSITES &amp; STORES</span><span class="expand" aria-hidden="true">+</span></summary><div class="service-content"><p>Fast, accessible websites and ecommerce platforms that guide visitors smoothly from arrival to checkout or enquiry. Engineered for speed and conversion.</p><ul><li>Custom responsive websites &amp; web applications</li><li>Ecommerce platforms &amp; checkout journeys</li><li>Performance, accessibility &amp; mobile optimization</li></ul></div></details>
-          <details class="service reveal"><summary><span class="service-number">02</span><h3>Brand &amp; product design</h3><span class="service-hint">INTUITIVE INTERFACES</span><span class="expand" aria-hidden="true">+</span></summary><div class="service-content"><p>User research, brand identities, and interface designs that clearly communicate what you offer and make complex workflows intuitive.</p><ul><li>Brand identity systems &amp; visual guidelines</li><li>UI/UX research, wireframing &amp; prototyping</li><li>Design systems for web and mobile products</li></ul></div></details>
-          <details class="service reveal"><summary><span class="service-number">03</span><h3>Software &amp; automation</h3><span class="service-hint">STREAMLINED OPERATIONS</span><span class="expand" aria-hidden="true">+</span></summary><div class="service-content"><p>Custom software and integrations tailored to how your business operates, eliminating manual tasks and connecting key tools.</p><ul><li>Custom web apps &amp; internal administrative tools</li><li>Workflow automation &amp; business process tooling</li><li>Third-party API integrations &amp; data pipelines</li></ul></div></details>
-          <details class="service reveal"><summary><span class="service-number">04</span><h3>Search &amp; digital growth</h3><span class="service-hint">BUILT-IN DISCOVERABILITY</span><span class="expand" aria-hidden="true">+</span></summary><div class="service-content"><p>Search foundations engineered directly into the product, pairing crawlable architecture with structured content and measurement.</p><ul><li>Technical SEO &amp; JSON-LD structured data</li><li>Core Web Vitals &amp; response speed tuning</li><li>Search analytics setup &amp; growth tracking</li></ul></div></details>
+          <details class="service reveal" open>
+            <summary aria-expanded="true"><span class="service-number">01</span><h3>Web &amp; commerce</h3><span id="service-web"></span><span class="service-hint">CUSTOM WEBSITES &amp; STORES</span><span class="expand" aria-hidden="true">+</span></summary>
+            <div class="service-content">
+              <div class="service-text">
+                <p>Fast, accessible websites and ecommerce platforms that guide visitors smoothly from arrival to checkout or enquiry. Engineered for speed and conversion.</p>
+                <ul>
+                  <li>Custom responsive websites &amp; web applications</li>
+                  <li>Ecommerce platforms &amp; checkout journeys</li>
+                  <li>Performance, accessibility &amp; mobile optimization</li>
+                </ul>
+              </div>
+              <div class="service-media">
+                <img src="/web.jpg" alt="Hands typing on laptop keyboard with glowing digital commerce and shopping cart interface icons" width="1024" height="585" loading="lazy" decoding="async" />
+              </div>
+            </div>
+          </details>
+          <details class="service reveal">
+            <summary aria-expanded="false"><span class="service-number">02</span><h3>Brand &amp; product design</h3><span id="service-brand"></span><span class="service-hint">INTUITIVE INTERFACES</span><span class="expand" aria-hidden="true">+</span></summary>
+            <div class="service-content">
+              <div class="service-text">
+                <p>User research, brand identities, and interface designs that clearly communicate what you offer and make complex workflows intuitive.</p>
+                <ul>
+                  <li>Brand identity systems &amp; visual guidelines</li>
+                  <li>UI/UX research, wireframing &amp; prototyping</li>
+                  <li>Design systems for web and mobile products</li>
+                </ul>
+              </div>
+              <div class="service-media service-media--brand">
+                <img src="/Brand-Design-copy.webp" alt="Brand design and creative strategy illustration displaying marketing, logo, value, and design components" width="1000" height="470" loading="lazy" decoding="async" />
+              </div>
+            </div>
+          </details>
+          <details class="service reveal">
+            <summary aria-expanded="false"><span class="service-number">03</span><h3>Software &amp; automation</h3><span id="service-software"></span><span class="service-hint">STREAMLINED OPERATIONS</span><span class="expand" aria-hidden="true">+</span></summary>
+            <div class="service-content">
+              <div class="service-text">
+                <p>Custom software and integrations tailored to how your business operates, eliminating manual tasks and connecting key tools.</p>
+                <ul>
+                  <li>Custom web apps &amp; internal administrative tools</li>
+                  <li>Workflow automation &amp; business process tooling</li>
+                  <li>Third-party API integrations &amp; data pipelines</li>
+                </ul>
+              </div>
+              <div class="service-media">
+                <img src="/auto.webp" alt="Robotic automation arms operating on high-tech circuit board with AI holographic interface displays" width="1024" height="585" loading="lazy" decoding="async" />
+              </div>
+            </div>
+          </details>
+          <details class="service reveal">
+            <summary aria-expanded="false"><span class="service-number">04</span><h3>Search &amp; digital growth</h3><span id="service-growth"></span><span class="service-hint">BUILT-IN DISCOVERABILITY</span><span class="expand" aria-hidden="true">+</span></summary>
+            <div class="service-content">
+              <div class="service-text">
+                <p>Search foundations engineered directly into the product, pairing crawlable architecture with structured content and measurement.</p>
+                <ul>
+                  <li>Technical SEO &amp; JSON-LD structured data</li>
+                  <li>Core Web Vitals &amp; response speed tuning</li>
+                  <li>Search analytics setup &amp; growth tracking</li>
+                </ul>
+              </div>
+              <div class="service-media">
+                <img src="/growth.webp" alt="Digital growth chart showing upward trending metrics, ROI indicators, and business analytics network" width="1024" height="768" loading="lazy" decoding="async" />
+              </div>
+            </div>
+          </details>
         </div>
       </section>
 
@@ -76,56 +138,731 @@
       </section>
 
       <section id="visibility" class="visibility section-pad">
-        <div class="visibility-copy reveal"><p class="eyebrow">04 / SEARCH INFRASTRUCTURE &amp; PERFORMANCE</p><h2>Search discoverability<br />is an <em>engineering discipline.</em></h2><p>Visibility starts beneath the surface. Crawlable architecture, semantic structured data and fast page delivery provide search engines and users a direct path to your content.</p><a class="text-link" href="#brief">Strengthen your search foundation <span aria-hidden="true">↗</span></a></div>
-        <div class="search-blueprint reveal"><div class="blueprint-label"><span>DISCOVERABILITY / ARCHITECTURE</span><span aria-hidden="true">+</span></div><ol><li><span>01</span><div><h3>Crawl architecture</h3><p>Predictable URL hierarchy, canonical tags, clean sitemaps and proper redirect management.</p></div></li><li><span>02</span><div><h3>Semantic schema graphs</h3><p>Validated JSON-LD entities that describe organizations, products, reviews and local services.</p></div></li><li><span>03</span><div><h3>Delivery infrastructure</h3><p>Lean assets, modern image formats, efficient caching headers, and fast time-to-first-byte.</p></div></li></ol><div class="latency-target"><strong>&lt;50<span>ms</span></strong><p>TTFB engineering target<small>Target for suitable cached edge responses. Verified per route, region and hosting setup; not a universal guarantee.</small></p></div></div>
+        <div class="visibility-container">
+          <div class="visibility-copy">
+            <p class="eyebrow seo-label">SEO &amp; PERFORMANCE</p>
+            <h2>Built for speed.<br /><span class="seo-accent">Ready to be found.</span></h2>
+            <p class="seo-desc">We improve your website’s speed, structure, and search setup so customers can explore your business and take the next step.</p>
+            <a class="button seo-cta" href="#brief">Discuss your website <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="seo-feature-grid">
+            <!-- Feature cards inspired by Highlighted Feature Cards (Uiverse.io) -->
+            <div class="seo-feature-highlight" aria-hidden="true"></div>
+
+            <button type="button" class="seo-feature-card reveal" aria-pressed="true">
+              <div class="seo-feature-card__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              </div>
+              <h3 class="seo-feature-card__title">Faster pages</h3>
+              <p class="seo-feature-card__desc">Optimized images and streamlined code for smoother browsing.</p>
+            </button>
+
+            <button type="button" class="seo-feature-card reveal" aria-pressed="false">
+              <div class="seo-feature-card__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.35-4.35"/>
+                </svg>
+              </div>
+              <h3 class="seo-feature-card__title">Search-ready structure</h3>
+              <p class="seo-feature-card__desc">Clear page titles, useful internal links, and organized sitemaps.</p>
+            </button>
+
+            <button type="button" class="seo-feature-card reveal" aria-pressed="false">
+              <div class="seo-feature-card__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+                  <line x1="12" y1="18" x2="12.01" y2="18"/>
+                </svg>
+              </div>
+              <h3 class="seo-feature-card__title">Mobile-friendly experience</h3>
+              <p class="seo-feature-card__desc">Readable content, comfortable buttons, and layouts that fit smaller screens.</p>
+            </button>
+
+            <button type="button" class="seo-feature-card reveal" aria-pressed="false">
+              <div class="seo-feature-card__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10"/>
+                  <line x1="12" y1="20" x2="12" y2="4"/>
+                  <line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+              </div>
+              <h3 class="seo-feature-card__title">Measurement &amp; insights</h3>
+              <p class="seo-feature-card__desc">Analytics and search reporting to help you understand website performance.</p>
+            </button>
+          </div>
+        </div>
       </section>
 
       <section id="process" class="engineering-process section-pad">
         <div class="section-heading reveal"><p class="eyebrow">05 / ENGINEERING METHODOLOGY</p><h2>From requirements<br />to <em>verified release.</em></h2><p>A structured five-step delivery framework with visible deliverables at every milestone.</p></div>
-        <ol class="delivery-steps"><li class="reveal"><span class="step-no">01</span><div><h3>Discovery &amp; scope</h3><p>Understand the business problem, requirements and constraints. Agree on success criteria before writing code.</p></div><span class="step-output">BRIEF + SCOPE</span></li><li class="reveal"><span class="step-no">02</span><div><h3>Architecture &amp; design</h3><p>Map user flows, database structures and API integrations. Prototype the experience to validate key decisions early.</p></div><span class="step-output">SYSTEM PLAN + PROTOTYPE</span></li><li class="reveal"><span class="step-no">03</span><div><h3>Engineering &amp; review</h3><p>Build in modular increments with accessible interfaces and clean code. Review working software at each sprint.</p></div><span class="step-output">WORKING PRODUCT + REVIEWS</span></li><li class="reveal"><span class="step-no">04</span><div><h3>Testing &amp; hardening</h3><p>Verify critical user journeys across desktop and mobile, checking edge cases, validation, and error recovery.</p></div><span class="step-output">TEST PASS + RELEASE PLAN</span></li><li class="reveal"><span class="step-no">05</span><div><h3>Deployment &amp; handover</h3><p>Deploy to production hosting, verify Core Web Vitals, and hand over source code, credentials and documentation.</p></div><span class="step-output">DEPLOYMENT + HANDOVER</span></li></ol>
+        <div class="process-steps" data-active-step="-1">
+          <div class="process-steps__rail" aria-hidden="true">
+            <div class="process-steps__line-track"></div>
+            <div class="process-steps__line-fill"></div>
+          </div>
+          <ol class="process-steps__list">
+            <li class="process-step" data-step="0">
+              <div class="process-step__indicator" aria-hidden="true">
+                <span class="process-step__circle">1</span>
+              </div>
+              <div class="process-step__main">
+                <button type="button" class="process-step__header" id="process-header-0" aria-expanded="false" aria-controls="process-panel-0">
+                  <span class="process-step__title">Discovery &amp; scope</span>
+                  <svg class="process-step__chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="process-step__panel" id="process-panel-0" role="region" aria-labelledby="process-header-0" hidden>
+                  <div class="process-step__panel-inner">
+                    <p class="process-step__desc">Understand the business problem, requirements and constraints. Agree on success criteria before writing code.</p>
+                    <div class="process-step__deliverable">
+                      <span class="process-step__deliverable-label">Deliverable</span>
+                      <span class="process-step__deliverable-badge">BRIEF + SCOPE</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="process-step" data-step="1">
+              <div class="process-step__indicator" aria-hidden="true">
+                <span class="process-step__circle">2</span>
+              </div>
+              <div class="process-step__main">
+                <button type="button" class="process-step__header" id="process-header-1" aria-expanded="false" aria-controls="process-panel-1">
+                  <span class="process-step__title">Architecture &amp; design</span>
+                  <svg class="process-step__chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="process-step__panel" id="process-panel-1" role="region" aria-labelledby="process-header-1" hidden>
+                  <div class="process-step__panel-inner">
+                    <p class="process-step__desc">Map user flows, database structures and API integrations. Prototype the experience to validate key decisions early.</p>
+                    <div class="process-step__deliverable">
+                      <span class="process-step__deliverable-label">Deliverable</span>
+                      <span class="process-step__deliverable-badge">SYSTEM PLAN + PROTOTYPE</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="process-step" data-step="2">
+              <div class="process-step__indicator" aria-hidden="true">
+                <span class="process-step__circle">3</span>
+              </div>
+              <div class="process-step__main">
+                <button type="button" class="process-step__header" id="process-header-2" aria-expanded="false" aria-controls="process-panel-2">
+                  <span class="process-step__title">Engineering &amp; review</span>
+                  <svg class="process-step__chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="process-step__panel" id="process-panel-2" role="region" aria-labelledby="process-header-2" hidden>
+                  <div class="process-step__panel-inner">
+                    <p class="process-step__desc">Build in modular increments with accessible interfaces and clean code. Review working software at each sprint.</p>
+                    <div class="process-step__deliverable">
+                      <span class="process-step__deliverable-label">Deliverable</span>
+                      <span class="process-step__deliverable-badge">WORKING PRODUCT + REVIEWS</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="process-step" data-step="3">
+              <div class="process-step__indicator" aria-hidden="true">
+                <span class="process-step__circle">4</span>
+              </div>
+              <div class="process-step__main">
+                <button type="button" class="process-step__header" id="process-header-3" aria-expanded="false" aria-controls="process-panel-3">
+                  <span class="process-step__title">Testing &amp; hardening</span>
+                  <svg class="process-step__chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="process-step__panel" id="process-panel-3" role="region" aria-labelledby="process-header-3" hidden>
+                  <div class="process-step__panel-inner">
+                    <p class="process-step__desc">Verify critical user journeys across desktop and mobile, checking edge cases, validation, and error recovery.</p>
+                    <div class="process-step__deliverable">
+                      <span class="process-step__deliverable-label">Deliverable</span>
+                      <span class="process-step__deliverable-badge">TEST PASS + RELEASE PLAN</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="process-step" data-step="4">
+              <div class="process-step__indicator" aria-hidden="true">
+                <span class="process-step__circle">5</span>
+              </div>
+              <div class="process-step__main">
+                <button type="button" class="process-step__header" id="process-header-4" aria-expanded="false" aria-controls="process-panel-4">
+                  <span class="process-step__title">Deployment &amp; handover</span>
+                  <svg class="process-step__chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="process-step__panel" id="process-panel-4" role="region" aria-labelledby="process-header-4" hidden>
+                  <div class="process-step__panel-inner">
+                    <p class="process-step__desc">Deploy to production hosting, verify Core Web Vitals, and hand over source code, credentials and documentation.</p>
+                    <div class="process-step__deliverable">
+                      <span class="process-step__deliverable-label">Deliverable</span>
+                      <span class="process-step__deliverable-badge">DEPLOYMENT + HANDOVER</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
       </section>
 
       <section id="about" class="studio-profile section-pad"><div class="studio-art reveal" aria-hidden="true"><p>EG TECH / TAMIL NADU</p><div class="studio-monogram">EG<span>TECH.</span></div><div class="studio-art-footer"><span>LOCAL INSIGHT.</span><span>GLOBAL STANDARDS.</span></div></div><div class="studio-profile-copy reveal"><p class="eyebrow">06 / STUDIO PROFILE</p><h2>Focused engineering<br />from <em>Tamil Nadu.</em></h2><p class="studio-lead">A dedicated technology partner delivering reliable digital products for ambitious teams.</p><p>EG TECH combines engineering discipline, local market understanding and modern web standards. We connect strategy, design and implementation to solve practical business challenges.</p><p>From a founder’s first MVP to an established company’s next internal tool, we focus on durable code and clear collaboration.</p><a class="text-link" href="#brief">Discuss your project with us <span aria-hidden="true">↗</span></a></div></section>
 
-      <section id="feedback" class="studio-standards section-pad"><div class="section-heading reveal"><p class="eyebrow">07 / STUDIO WORKING STANDARDS</p><h2>How we partner with<br /><em>founders and business teams.</em></h2><p>A direct working relationship, transparent milestones, and code built to last.</p></div><div class="standards-grid"><article class="reveal"><span>01 / COMMUNICATION</span><h3>Direct developer<br />communication.</h3><p>Speak directly with the engineers and designers doing the work. Technical choices explained in plain language.</p></article><article class="reveal"><span>02 / TRANSPARENCY</span><h3>Milestones you<br />can evaluate.</h3><p>Defined deliverables, reviewable staging links, and clear acceptance criteria at every phase.</p></article><article class="reveal"><span>03 / ACCOUNTABILITY</span><h3>Written scopes &amp;<br />clear timelines.</h3><p>Project deliverables, responsibilities, and handover criteria documented in writing before kickoff.</p></article><article class="reveal"><span>04 / EVIDENCE</span><h3>Measurable baseline<br />benchmarks.</h3><p>Agree on target benchmarks upfront. Case study metrics published only with client permission and verified data.</p></article></div></section>
+      <section id="feedback" class="website-packages section-pad">
+        <div class="section-heading reveal">
+          <p class="eyebrow">07 / WEBSITE PACKAGES</p>
+          <h2>Choose the right website<br /><em>for your business.</em></h2>
+          <p>Start with a simple website, build something custom, or take your store online.</p>
+        </div>
+        <div class="eg-package-grid">
+          <!-- Card design inspired by Uiverse.io by dylanharriscameron -->
+          <article class="eg-package-card reveal" style="--pkg-index: 0" data-package="Basic Website">
+            <button type="button" class="pricing-card__heart-btn" aria-label="Save Basic Website" aria-pressed="false" data-plan-id="basic">
+              <!-- Heart icon: Feather / Lucide Icons (MIT) -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+              <span class="pricing-card__particles" aria-hidden="true"></span>
+            </button>
+            <div class="eg-package-card__surface" aria-hidden="true"></div>
+            <div class="eg-package-card__content">
+              <span class="eg-package-card__badge">BASIC WEBSITE</span>
+              <h3 class="eg-package-card__title">Basic Website</h3>
+              <p class="eg-package-card__desc">A clear, professional online presence for your business.</p>
+              
+              <div class="eg-package-card__target">
+                <span class="eg-package-card__target-label">Best for</span>
+                <p class="eg-package-card__target-text">Small businesses, personal brands and portfolios.</p>
+              </div>
+
+              <div class="eg-package-card__features-wrap">
+                <span class="eg-package-card__features-label">Included features</span>
+                <ul class="eg-package-card__features" aria-label="Basic website features">
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Responsive desktop and mobile layouts.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Essential business pages.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Contact form and enquiry links.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Basic on-page SEO setup.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Deployment and handover.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="eg-package-card__footer">
+                <div class="eg-package-card__pricing">
+                  <span class="eg-package-card__pricing-label">Pricing</span>
+                  <span class="eg-package-card__pricing-val">Request a quote</span>
+                </div>
+                <button type="button" class="eg-package-card__btn pricing-card__btn" data-package="Basic Website" aria-pressed="false" aria-label="Choose Basic Website">
+                  <span class="pricing-card__btn-sr sr-only">Choose Basic Website</span>
+                  <span class="pricing-card__btn-morph" aria-hidden="true">
+                    <span class="pricing-card__btn-text pricing-card__btn-text--choose">Choose Basic</span>
+                    <span class="pricing-card__btn-text pricing-card__btn-text--chosen">Chosen</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card design inspired by Uiverse.io by dylanharriscameron -->
+          <article class="eg-package-card reveal" style="--pkg-index: 1" data-package="Custom Website">
+            <button type="button" class="pricing-card__heart-btn" aria-label="Save Custom Website" aria-pressed="false" data-plan-id="custom">
+              <!-- Heart icon: Feather / Lucide Icons (MIT) -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+              <span class="pricing-card__particles" aria-hidden="true"></span>
+            </button>
+            <div class="eg-package-card__surface" aria-hidden="true"></div>
+            <div class="eg-package-card__content">
+              <span class="eg-package-card__badge">CUSTOM WEBSITE</span>
+              <h3 class="eg-package-card__title">Custom Website</h3>
+              <p class="eg-package-card__desc">A website designed around your brand and business requirements.</p>
+
+              <div class="eg-package-card__target">
+                <span class="eg-package-card__target-label">Best for</span>
+                <p class="eg-package-card__target-text">Businesses needing distinctive design or tailored functionality.</p>
+              </div>
+
+              <div class="eg-package-card__features-wrap">
+                <span class="eg-package-card__features-label">Included features</span>
+                <ul class="eg-package-card__features" aria-label="Custom website features">
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Custom page layouts and visual design.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Interactive features tailored to your needs.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Content management where required.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Integrations agreed during scoping.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Performance and accessibility checks.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="eg-package-card__footer">
+                <div class="eg-package-card__pricing">
+                  <span class="eg-package-card__pricing-label">Pricing</span>
+                  <span class="eg-package-card__pricing-val">Request a quote</span>
+                </div>
+                <button type="button" class="eg-package-card__btn pricing-card__btn" data-package="Custom Website" aria-pressed="true" aria-label="Custom Website chosen">
+                  <span class="pricing-card__btn-sr sr-only">Custom Website chosen</span>
+                  <span class="pricing-card__btn-morph" aria-hidden="true">
+                    <span class="pricing-card__btn-text pricing-card__btn-text--choose">Choose Custom</span>
+                    <span class="pricing-card__btn-text pricing-card__btn-text--chosen">Chosen</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card design inspired by Uiverse.io by dylanharriscameron -->
+          <article class="eg-package-card reveal" style="--pkg-index: 2" data-package="E-commerce">
+            <button type="button" class="pricing-card__heart-btn" aria-label="Save E-commerce" aria-pressed="false" data-plan-id="ecommerce">
+              <!-- Heart icon: Feather / Lucide Icons (MIT) -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+              <span class="pricing-card__particles" aria-hidden="true"></span>
+            </button>
+            <div class="eg-package-card__surface" aria-hidden="true"></div>
+            <div class="eg-package-card__content">
+              <span class="eg-package-card__badge">E-COMMERCE</span>
+              <h3 class="eg-package-card__title">E-commerce</h3>
+              <p class="eg-package-card__desc">An online store that helps customers browse products and place orders.</p>
+
+              <div class="eg-package-card__target">
+                <span class="eg-package-card__target-label">Best for</span>
+                <p class="eg-package-card__target-text">Retailers and brands selling products online.</p>
+              </div>
+
+              <div class="eg-package-card__features-wrap">
+                <span class="eg-package-card__features-label">Included features</span>
+                <ul class="eg-package-card__features" aria-label="E-commerce features">
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Product catalog and category pages.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Shopping cart and checkout.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Payment-provider integration.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Product and order management.</span>
+                  </li>
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Responsive shopping experience.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="eg-package-card__footer">
+                <div class="eg-package-card__pricing">
+                  <span class="eg-package-card__pricing-label">Pricing</span>
+                  <span class="eg-package-card__pricing-val">Request a quote</span>
+                </div>
+                <button type="button" class="eg-package-card__btn pricing-card__btn" data-package="E-commerce" aria-pressed="false" aria-label="Choose E-commerce">
+                  <span class="pricing-card__btn-sr sr-only">Choose E-commerce</span>
+                  <span class="pricing-card__btn-morph" aria-hidden="true">
+                    <span class="pricing-card__btn-text pricing-card__btn-text--choose">Choose E-commerce</span>
+                    <span class="pricing-card__btn-text pricing-card__btn-text--chosen">Chosen</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+        <p class="eg-package-note reveal">Final features, pricing and delivery timelines are agreed after reviewing your requirements.</p>
+      </section>
 
       <section id="philosophy" class="manifesto section-pad"><p class="eyebrow reveal">08 / STUDIO MANIFESTO</p><h2 class="reveal">Intentional design.<br /><em>Zero noise.</em></h2><div class="manifesto-principles"><p><span>01</span>Function and usability guide every interface.</p><p><span>02</span>Performance and low latency are foundational requirements.</p><p><span>03</span>Clean, maintainable code outlasts fleeting aesthetic trends.</p></div><div class="manifesto-bottom"><p>Every interaction should help someone accomplish a goal.<br />Every system should make your business more resilient.</p><a class="button" href="#brief">Discuss your project <span aria-hidden="true">↗</span></a></div></section>
 
-      <section id="faq" class="faq section-pad">
-        <div class="reveal">
-          <p class="eyebrow">09 / FREQUENTLY ASKED QUESTIONS</p>
-          <h2>Common questions &amp;<br /><em>clear answers.</em></h2>
-          <p>Engineering standards, working relationships, and practical details about partnering with EG TECH.</p>
-        </div>
-        <div class="faq-list">
-          <details class="reveal" open>
-            <summary>What services does EG TECH provide?<span aria-hidden="true">+</span></summary>
-            <div class="service-content"><p>We connect strategy, design and engineering across custom web applications, ecommerce platforms, brand identity, workflow automation, and search infrastructure.</p></div>
-          </details>
-          <details class="reveal">
-            <summary>How does the delivery process work?<span aria-hidden="true">+</span></summary>
-            <div class="service-content"><p>We follow a five-step delivery framework: Discovery &amp; scope, Architecture &amp; design, Engineering &amp; review, Testing &amp; hardening, and Deployment &amp; handover. You communicate directly with the engineers building your software.</p></div>
-          </details>
-          <details class="reveal">
-            <summary>Where is EG TECH located?<span aria-hidden="true">+</span></summary>
-            <div class="service-content"><p>EG TECH is based in Tamil Nadu, India, pairing local market insight with modern web engineering standards.</p></div>
-          </details>
-          <details class="reveal">
-            <summary>Are project scopes and timelines agreed in writing?<span aria-hidden="true">+</span></summary>
-            <div class="service-content"><p>Yes. Deliverables, responsibilities, review milestones, and handover criteria are documented in writing before kickoff.</p></div>
-          </details>
-          <details class="reveal">
-            <summary>How can we start a project or enquiry?<span aria-hidden="true">+</span></summary>
-            <div class="service-content"><p>Prepare a structured project brief using the briefing tool below. You can review, copy, download, or email your requirements directly to EG TECH.</p></div>
-          </details>
+      <section id="faq" class="faq section-pad" aria-label="Frequently Asked Questions">
+        <div class="faq__container">
+          <div class="faq__header reveal">
+            <p class="eyebrow">09 / FREQUENTLY ASKED QUESTIONS</p>
+            <h2 class="faq__heading">Common questions &amp;<br class="faq-heading-br" /> <em>clear answers.</em></h2>
+            <p class="faq__subheading">Engineering standards, working relationships, and practical details about partnering with EG TECH.</p>
+          </div>
+
+          <div class="faq-scene">
+            <!-- Decorative Left Angled Background Panel -->
+            <div class="faq-bg-panel faq-bg-panel--left" aria-hidden="true">
+              <div class="faq-preview-card">
+                <div class="faq-preview-bar">
+                  <span class="faq-preview-dots">● ● ●</span>
+                  <span class="faq-preview-title">TIRUTTANI QUICK</span>
+                </div>
+                <div class="faq-preview-img-wrap">
+                  <img src="/tiruttani-quick-preview.png" alt="" width="600" height="380" loading="lazy" decoding="async" />
+                </div>
+                <div class="faq-preview-overlay"></div>
+              </div>
+            </div>
+
+            <!-- Decorative Right Angled Background Panel -->
+            <div class="faq-bg-panel faq-bg-panel--right" aria-hidden="true">
+              <div class="faq-preview-card">
+                <div class="faq-preview-bar">
+                  <span class="faq-preview-dots">● ● ●</span>
+                  <span class="faq-preview-title">EG TECH / SYSTEMS</span>
+                </div>
+                <div class="faq-preview-img-wrap">
+                  <img src="/web.jpg" alt="" width="600" height="380" loading="lazy" decoding="async" />
+                </div>
+                <div class="faq-preview-overlay"></div>
+              </div>
+            </div>
+
+            <!-- Main Central FAQ Card -->
+            <div class="faq-card" id="faq-carousel" aria-roledescription="carousel" aria-label="Frequently Asked Questions Carousel">
+              <!-- Screen reader live region for manual navigation announcements only -->
+              <div class="faq-sr-status sr-only" aria-live="polite" aria-atomic="true"></div>
+
+              <!-- Top Row: Label and Slide Counter -->
+              <div class="faq-card__top">
+                <span class="faq-card__label">COMMON QUESTIONS</span>
+                <span class="faq-card__counter" id="faq-counter" aria-hidden="true">01 / 05</span>
+              </div>
+
+              <!-- Carousel Slides Stage -->
+              <div class="faq-stage" id="faq-stage">
+                <!-- Slide 1 -->
+                <article class="faq-slide is-active" id="faq-slide-0" role="group" aria-roledescription="slide" aria-label="1 of 5" aria-hidden="false">
+                  <h3 class="faq-question">What services does EG TECH provide?</h3>
+                  <div class="faq-answer"><p>We connect strategy, design and engineering across custom web applications, ecommerce platforms, brand identity, workflow automation, and search infrastructure.</p></div>
+                </article>
+
+                <!-- Slide 2 -->
+                <article class="faq-slide" id="faq-slide-1" role="group" aria-roledescription="slide" aria-label="2 of 5" aria-hidden="true" inert>
+                  <h3 class="faq-question">How does the delivery process work?</h3>
+                  <div class="faq-answer"><p>We follow a five-step delivery framework: Discovery &amp; scope, Architecture &amp; design, Engineering &amp; review, Testing &amp; hardening, and Deployment &amp; handover. You communicate directly with the engineers building your software.</p></div>
+                </article>
+
+                <!-- Slide 3 -->
+                <article class="faq-slide" id="faq-slide-2" role="group" aria-roledescription="slide" aria-label="3 of 5" aria-hidden="true" inert>
+                  <h3 class="faq-question">Where is EG TECH located?</h3>
+                  <div class="faq-answer"><p>EG TECH is based in Tamil Nadu, India, pairing local market insight with modern web engineering standards.</p></div>
+                </article>
+
+                <!-- Slide 4 -->
+                <article class="faq-slide" id="faq-slide-3" role="group" aria-roledescription="slide" aria-label="4 of 5" aria-hidden="true" inert>
+                  <h3 class="faq-question">Are project scopes and timelines agreed in writing?</h3>
+                  <div class="faq-answer"><p>Yes. Deliverables, responsibilities, review milestones, and handover criteria are documented in writing before kickoff.</p></div>
+                </article>
+
+                <!-- Slide 5 -->
+                <article class="faq-slide" id="faq-slide-4" role="group" aria-roledescription="slide" aria-label="5 of 5" aria-hidden="true" inert>
+                  <h3 class="faq-question">How can we start a project or enquiry?</h3>
+                  <div class="faq-answer"><p>Prepare a structured project brief using the briefing tool below. You can review, copy, download, or email your requirements directly to EG TECH.</p></div>
+                </article>
+              </div>
+
+              <!-- Controls inside Card below divider -->
+              <div class="faq-card__bottom">
+                <div class="faq-controls" aria-label="Carousel navigation">
+                  <button type="button" class="faq-nav-btn faq-nav-btn--prev" aria-label="Previous question" title="Previous question">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                  </button>
+
+                  <div class="faq-dots" role="tablist" aria-label="Question slides">
+                    <button type="button" role="tab" class="faq-dot is-active" id="faq-tab-0" aria-controls="faq-slide-0" aria-selected="true" aria-label="Show question 1: What services does EG TECH provide?">
+                      <span class="faq-dot__bar" aria-hidden="true"><span class="faq-dot__fill"></span></span>
+                    </button>
+                    <button type="button" role="tab" class="faq-dot" id="faq-tab-1" aria-controls="faq-slide-1" aria-selected="false" aria-label="Show question 2: How does the delivery process work?">
+                      <span class="faq-dot__bar" aria-hidden="true"><span class="faq-dot__fill"></span></span>
+                    </button>
+                    <button type="button" role="tab" class="faq-dot" id="faq-tab-2" aria-controls="faq-slide-2" aria-selected="false" aria-label="Show question 3: Where is EG TECH located?">
+                      <span class="faq-dot__bar" aria-hidden="true"><span class="faq-dot__fill"></span></span>
+                    </button>
+                    <button type="button" role="tab" class="faq-dot" id="faq-tab-3" aria-controls="faq-slide-3" aria-selected="false" aria-label="Show question 4: Are project scopes and timelines agreed in writing?">
+                      <span class="faq-dot__bar" aria-hidden="true"><span class="faq-dot__fill"></span></span>
+                    </button>
+                    <button type="button" role="tab" class="faq-dot" id="faq-tab-4" aria-controls="faq-slide-4" aria-selected="false" aria-label="Show question 5: How can we start a project or enquiry?">
+                      <span class="faq-dot__bar" aria-hidden="true"><span class="faq-dot__fill"></span></span>
+                    </button>
+                  </div>
+
+                  <button type="button" class="faq-nav-btn faq-nav-btn--next" aria-label="Next question" title="Next question">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </button>
+
+                  <button type="button" class="faq-play-toggle" aria-label="Pause autoplay" title="Pause rotation" aria-pressed="false">
+                    <span class="faq-play-toggle__icon" aria-hidden="true">⏸</span>
+                    <span class="faq-play-toggle__text">Pause</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- View All Questions Toggle below carousel -->
+          <div class="faq-view-all">
+            <button type="button" class="faq-view-all-btn" id="faq-view-all-toggle" aria-expanded="false" aria-controls="faq-all-list">
+              <span class="faq-view-all-text">View all questions</span>
+              <span class="faq-view-all-icon" aria-hidden="true">↓</span>
+            </button>
+          </div>
+
+          <!-- All Questions List (Accessible list fallback and expanded view) -->
+          <div id="faq-all-list" class="faq-all-list" hidden>
+            <div class="faq-all-item">
+              <h3 class="faq-all-question">What services does EG TECH provide?</h3>
+              <p class="faq-all-answer">We connect strategy, design and engineering across custom web applications, ecommerce platforms, brand identity, workflow automation, and search infrastructure.</p>
+            </div>
+            <div class="faq-all-item">
+              <h3 class="faq-all-question">How does the delivery process work?</h3>
+              <p class="faq-all-answer">We follow a five-step delivery framework: Discovery &amp; scope, Architecture &amp; design, Engineering &amp; review, Testing &amp; hardening, and Deployment &amp; handover. You communicate directly with the engineers building your software.</p>
+            </div>
+            <div class="faq-all-item">
+              <h3 class="faq-all-question">Where is EG TECH located?</h3>
+              <p class="faq-all-answer">EG TECH is based in Tamil Nadu, India, pairing local market insight with modern web engineering standards.</p>
+            </div>
+            <div class="faq-all-item">
+              <h3 class="faq-all-question">Are project scopes and timelines agreed in writing?</h3>
+              <p class="faq-all-answer">Yes. Deliverables, responsibilities, review milestones, and handover criteria are documented in writing before kickoff.</p>
+            </div>
+            <div class="faq-all-item">
+              <h3 class="faq-all-question">How can we start a project or enquiry?</h3>
+              <p class="faq-all-answer">Prepare a structured project brief using the briefing tool below. You can review, copy, download, or email your requirements directly to EG TECH.</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section id="brief" class="brief section-pad"><div class="brief-intro reveal"><p class="eyebrow">10 / PROJECT BRIEFING</p><h2>Have a project in mind?<br /><span>Let’s discuss<br />the details.</span></h2><p>Tell us what you want to build or improve.<br />We review every brief and respond within 1–2 business days.</p><div class="brief-note"><span aria-hidden="true">↗</span><p>Share your goals.<br />We will help clarify scope, architecture and next steps.</p></div></div>
-        <form id="brief-form" class="brief-form" method="POST" action="javascript:void(0)" novalidate><p class="eyebrow">PROJECT BRIEFING</p><fieldset><legend>What services do you need?</legend><div class="service-chips"><label><input type="checkbox" name="service" value="Website" /><span>Website</span></label><label><input type="checkbox" name="service" value="Mobile app" /><span>Mobile app</span></label><label><input type="checkbox" name="service" value="Brand &amp; design" /><span>Brand &amp; design</span></label><label><input type="checkbox" name="service" value="Automation" /><span>Automation</span></label><label><input type="checkbox" name="service" value="Custom software" /><span>Custom software</span></label><label><input type="checkbox" name="service" value="Digital growth" /><span>Digital growth</span></label><label><input type="checkbox" name="service" value="Let’s explore" /><span>Let’s explore</span></label></div></fieldset><div class="form-row"><label for="field-name">Your name<input id="field-name" name="name" autocomplete="name" placeholder="Alex Morgan" required maxlength="100" /></label><label for="field-email">Email address<input id="field-email" name="email" type="email" autocomplete="email" placeholder="alex@company.com" required maxlength="200" /></label></div><label for="field-company">Company <span class="optional">(optional)</span><input id="field-company" name="company" autocomplete="organization" placeholder="Your company or venture name" maxlength="160" /></label><label for="field-idea">Tell us about your project or requirements<textarea id="field-idea" name="idea" placeholder="What are you building, what challenge are you solving, or what timeline are you aiming for?" required minlength="10" maxlength="5000" rows="3"></textarea></label><div class="form-row"><label for="field-budget">Project scale<select id="field-budget" name="budget"><option>Let’s discuss</option><option>A focused first step</option><option>A complete digital presence</option><option>A custom product or platform</option><option>Ongoing partnership</option></select></label><label for="field-timeline">Ideal timeline<select id="field-timeline" name="timeline"><option>Flexible / exploring</option><option>Within 1 month</option><option>1-3 months</option><option>3-6 months</option></select></label></div><button class="button form-submit" type="submit">Prepare project brief <span aria-hidden="true">↗</span></button><p class="form-privacy" id="form-help">Your details stay in this browser. Prepare a brief to review, copy, or download.</p><div class="form-result" hidden aria-live="polite"><h3>Your brief is ready.</h3><p id="result-description">Your brief has been prepared in your browser. Download or copy it to share with EG TECH. Nothing has been sent over the network.</p><details class="brief-review"><summary>Review your brief</summary><pre id="brief-preview"></pre></details><div class="result-actions"><button class="button button-small" type="button" id="copy-brief">Copy brief 📋</button><button class="button button-small" type="button" id="download-brief">Download brief ↓</button><a class="button button-small" id="email-brief" hidden>Open email draft ↗</a></div></div></form>
+      <section id="brief" class="brief section-pad">
+        <div class="brief-container">
+          <div class="brief-header reveal">
+            <p class="eyebrow">10 / PROJECT BRIEFING &amp; CONTACT</p>
+            <h2>Have a project in mind?<br /><span>Let’s discuss the details.</span></h2>
+            <p class="brief-lead">Tell us what you want to build or improve. Share your goals and we will help clarify scope, architecture and next steps.</p>
+          </div>
+          <div class="brief-grid">
+            <!-- LEFT: Contact info -->
+            <aside class="brief-contact-panel reveal" aria-label="Contact information">
+              <div class="brief-contact-card">
+                <h3 class="brief-contact-title">Contact us</h3>
+                <p class="brief-contact-desc">Let’s talk about your project.</p>
+                <div class="brief-contact-list">
+                  <div class="brief-contact-item">
+                    <span class="brief-contact-icon" aria-hidden="true">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                      </svg>
+                    </span>
+                    <div class="brief-contact-item-info">
+                      <span class="brief-contact-label">Phone</span>
+                      <a href="tel:+917604921213" class="brief-contact-link">+91 7604921213</a>
+                    </div>
+                  </div>
+                  <div class="brief-contact-item">
+                    <span class="brief-contact-icon" aria-hidden="true">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="16" x="2" y="4" rx="2"/>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                      </svg>
+                    </span>
+                    <div class="brief-contact-item-info">
+                      <span class="brief-contact-label">Email</span>
+                      <a href="mailto:narenthiranath703@gmail.com" class="brief-contact-link brief-contact-link--email">narenthiranath703@gmail.com</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <!-- RIGHT: Form filling -->
+            <div class="brief-form-column reveal">
+              <form id="brief-form" class="brief-form" method="POST" action="javascript:void(0)" novalidate>
+                <p class="eyebrow">PROJECT ENQUIRY</p>
+                <fieldset>
+                  <legend>What services do you need?</legend>
+                  <div class="service-chips">
+                    <label><input type="checkbox" name="service" value="Website" /><span>Website</span></label>
+                    <label><input type="checkbox" name="service" value="Mobile app" /><span>Mobile app</span></label>
+                    <label><input type="checkbox" name="service" value="Brand &amp; design" /><span>Brand &amp; design</span></label>
+                    <label><input type="checkbox" name="service" value="Automation" /><span>Automation</span></label>
+                    <label><input type="checkbox" name="service" value="Custom software" /><span>Custom software</span></label>
+                    <label><input type="checkbox" name="service" value="Digital growth" /><span>Digital growth</span></label>
+                    <label><input type="checkbox" name="service" value="Let’s explore" /><span>Let’s explore</span></label>
+                  </div>
+                </fieldset>
+                <div class="form-row">
+                  <label for="field-name">Your name
+                    <input id="field-name" name="name" autocomplete="name" placeholder="Your name" required maxlength="100" />
+                  </label>
+                  <label for="field-email">Email address
+                    <input id="field-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required maxlength="200" />
+                  </label>
+                </div>
+                <div class="form-row">
+                  <label for="field-company">Company <span class="optional">(optional)</span>
+                    <input id="field-company" name="company" autocomplete="organization" placeholder="Company name" maxlength="160" />
+                  </label>
+                  <label for="field-package">Website package
+                    <select id="field-package" name="package">
+                      <option value="Not sure yet">Not sure yet</option>
+                      <option value="Basic Website">Basic Website</option>
+                      <option value="Custom Website">Custom Website</option>
+                      <option value="E-commerce">E-commerce</option>
+                    </select>
+                  </label>
+                </div>
+                <label for="field-idea">Project details
+                  <textarea id="field-idea" name="idea" placeholder="Briefly describe your project." required minlength="10" maxlength="5000" rows="4"></textarea>
+                </label>
+                <div class="form-row">
+                  <label for="field-budget">Project scale
+                    <select id="field-budget" name="budget">
+                      <option>Let’s discuss</option>
+                      <option>A focused first step</option>
+                      <option>A complete digital presence</option>
+                      <option>A custom product or platform</option>
+                      <option>Ongoing partnership</option>
+                    </select>
+                  </label>
+                  <label for="field-timeline">Ideal timeline
+                    <select id="field-timeline" name="timeline">
+                      <option>Flexible / exploring</option>
+                      <option>Within 1 month</option>
+                      <option>1-3 months</option>
+                      <option>3-6 months</option>
+                    </select>
+                  </label>
+                </div>
+                <button class="button form-submit" type="submit">Prepare project brief <span aria-hidden="true">↗</span></button>
+                <p class="form-privacy" id="form-help">Your details stay in this browser. Prepare a brief to review, copy, or download.</p>
+                <div class="form-result" hidden aria-live="polite">
+                  <h3>Your brief is ready.</h3>
+                  <p id="result-description">Your brief has been prepared in your browser. Download or copy it to share with EG TECH. Nothing has been sent over the network.</p>
+                  <details class="brief-review"><summary>Review your brief</summary><pre id="brief-preview"></pre></details>
+                  <div class="result-actions">
+                    <button class="button button-small" type="button" id="copy-brief">Copy brief 📋</button>
+                    <button class="button button-small" type="button" id="download-brief">Download brief ↓</button>
+                    <a class="button button-small" id="email-brief" hidden>Open email draft ↗</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
-    <footer class="footer section-pad"><div class="footer-top"><a class="brand" href="#home"><img src="/eg-tech-logo.jpeg" alt="EG TECH official logo" width="48" height="48" /><span>EG TECH<small>EMPOWERING GROWTH TECHNOLOGY</small></span></a><a href="#home" class="text-link">Back to top ↑</a></div><nav class="footer-section-nav" aria-label="Explore the studio"><a href="#services">Services</a><a href="#work">Work</a><a href="#visibility">Visibility</a><a href="#process">Process</a><a href="#about">Studio</a><a href="#feedback">Standards</a><a href="#philosophy">Manifesto</a></nav><div class="footer-statement">IDEAS TODAY <span>|</span> IMPACT TOMORROW</div><div class="footer-bottom"><p>© <span id="year">2026</span> EG TECH</p><p>Strategy. Creativity. Technology. Impact.</p><button class="privacy-button" type="button">Privacy</button></div></footer>
+    <footer class="footer">
+      <!-- Four Organised Footer Columns -->
+      <div class="footer-main section-pad">
+        <div class="footer-grid">
+          <!-- Column 1: EG TECH -->
+          <div class="footer-col footer-col--brand">
+            <a class="brand footer-brand" href="#home" aria-label="EG TECH home">
+              <img src="/eg-tech-logo.jpeg" alt="EG TECH official logo" width="44" height="44" />
+              <span>EG TECH<small>EMPOWERING GROWTH TECHNOLOGY</small></span>
+            </a>
+            <p class="footer-brand__desc">Websites, digital experiences, and automation for growing businesses.</p>
+          </div>
+
+          <!-- Column 2: Explore -->
+          <div class="footer-col">
+            <h3 class="footer-col__title">Explore</h3>
+            <ul class="footer-col__list">
+              <li><a href="#work" class="footer-link">Work</a></li>
+              <li><a href="#services" class="footer-link">Services</a></li>
+              <li><a href="#process" class="footer-link">Process</a></li>
+              <li><a href="#about" class="footer-link">About</a></li>
+              <li><a href="#faq" class="footer-link">FAQ</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Services -->
+          <div class="footer-col">
+            <h3 class="footer-col__title">Services</h3>
+            <ul class="footer-col__list">
+              <li><a href="#service-web" class="footer-link service-accordion-link" data-service-idx="0">Web development</a></li>
+              <li><a href="#service-web" class="footer-link service-accordion-link" data-service-idx="0">E-commerce</a></li>
+              <li><a href="#service-brand" class="footer-link service-accordion-link" data-service-idx="1">Brand &amp; product design</a></li>
+              <li><a href="#service-software" class="footer-link service-accordion-link" data-service-idx="2">Software &amp; automation</a></li>
+              <li><a href="#service-growth" class="footer-link service-accordion-link" data-service-idx="3">SEO &amp; digital growth</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Get in touch -->
+          <div class="footer-col">
+            <h3 class="footer-col__title">Get in touch</h3>
+            <ul class="footer-col__list footer-col__contact">
+              <li>
+                <span class="footer-contact-label">Phone</span>
+                <a href="tel:+917604921213" class="footer-link footer-link--phone">+91 7604921213</a>
+              </li>
+              <li>
+                <span class="footer-contact-label">Email</span>
+                <a href="mailto:narenthiranath703@gmail.com" class="footer-link footer-link--email">narenthiranath703@gmail.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom section-pad">
+        <div class="footer-bottom__inner">
+          <div class="footer-bottom__left">
+            <p class="footer-copyright">© <span class="footer-year" id="year">2026</span> EG TECH. All rights reserved.</p>
+          </div>
+          <div class="footer-bottom__right">
+            <button type="button" class="footer-bottom-link privacy-button" id="footer-privacy-btn">Privacy Policy</button>
+            <span class="footer-sep" aria-hidden="true">•</span>
+            <a href="/terms.html" class="footer-bottom-link">Terms &amp; Conditions</a>
+            <span class="footer-sep" aria-hidden="true">•</span>
+            <a href="#home" class="footer-bottom-link back-to-top-link">Back to top ↑</a>
+          </div>
+        </div>
+      </div>
+    </footer>
     <dialog id="project-dialog" aria-labelledby="dialog-title"><button class="dialog-close" aria-label="Close details">×</button><p class="eyebrow" id="dialog-label"></p><h2 id="dialog-title"></h2><p id="dialog-description"></p><ul id="dialog-list"></ul><a class="button" href="#brief" id="dialog-cta">Discuss a similar project <span aria-hidden="true">↗</span></a></dialog>
     <script type="module" src="/src/main.js"></script>
   </body>

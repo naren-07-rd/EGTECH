@@ -66,8 +66,8 @@ test('header is sticky with backdrop filter and anchor scroll offsets are config
   const redesignCss = readFileSync(new URL('../src/redesign.css', import.meta.url), 'utf8');
   assert.match(redesignCss, /\.header\{position:sticky;top:0/);
   assert.match(redesignCss, /backdrop-filter:blur/);
-  assert.match(redesignCss, /html\{scroll-padding-top:96px\}/);
-  assert.match(redesignCss, /section\{scroll-margin-top:96px\}/);
+  assert.match(redesignCss, /html\{scroll-padding-top:84px\}/);
+  assert.match(redesignCss, /section\{scroll-margin-top:84px\}/);
 });
 
 test('compact FAQ section exists before brief section with confirmed details', () => {

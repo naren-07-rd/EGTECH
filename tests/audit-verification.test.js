@@ -61,10 +61,24 @@ test('both portfolio projects, their links and preview assets are preserved', ()
   assert.match(mainJs, /title:\s*'BidVerify AI'/);
 });
 
-test('desktop process layout is decoupled from data-motion=on', () => {
-  // Verify that .cinematic-process .delivery-steps grid does not require :root[data-motion=on]
-  assert.match(refMotionCss, /\.cinematic-process\s+\.delivery-steps\{display:grid;grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/);
-  assert.doesNotMatch(refMotionCss, /:root\[data-motion=on\]\s+\.cinematic-process\s+\.delivery-steps\{display:grid/);
+test('desktop process layout has 3-column card grid and is decoupled from data-motion=on', () => {
+  // Verify that .eg-process-grid has 3 columns in redesign.css
+  assert.match(redesignCss, /\.eg-process-grid\{display:grid;grid-template-columns:repeat\(3,1fr\)/);
+  assert.doesNotMatch(redesignCss, /:root\[data-motion=on\]\s+\.eg-process-grid/);
+
+  // Verify all 5 process steps are present
+  assert.match(html, /Discovery &amp; scope/);
+  assert.match(html, /Architecture &amp; design/);
+  assert.match(html, /Engineering &amp; review/);
+  assert.match(html, /Testing &amp; hardening/);
+  assert.match(html, /Deployment &amp; handover/);
+
+  // Verify all deliverable tags are present
+  assert.match(html, /BRIEF \+ SCOPE/);
+  assert.match(html, /SYSTEM PLAN \+ PROTOTYPE/);
+  assert.match(html, /WORKING PRODUCT \+ REVIEWS/);
+  assert.match(html, /TEST PASS \+ RELEASE PLAN/);
+  assert.match(html, /DEPLOYMENT \+ HANDOVER/);
 });
 
 test('headings are not split with innerHTML and br in motion modules', () => {
@@ -84,4 +98,33 @@ test('startup loader contains no fake progress percentage counter', () => {
   const loaderJs = readFileSync(new URL('../src/loader.js', import.meta.url), 'utf8');
   assert.doesNotMatch(loaderJs, /intro-count/);
   assert.doesNotMatch(loaderJs, /\/ 100/);
+});
+
+test('contact section layout, exact contact details, and rounded form fields are verified', () => {
+  // Exact contact details
+  assert.match(html, /Contact us/);
+  assert.match(html, /Let’s talk about your project\./);
+  assert.match(html, /\+91 7604921213/);
+  assert.match(html, /href="tel:\+917604921213"/);
+  assert.match(html, /narenthiranath703@gmail\.com/);
+  assert.match(html, /href="mailto:narenthiranath703@gmail\.com"/);
+
+  // Shortened placeholders & updated field label
+  assert.match(html, /placeholder="Your name"/);
+  assert.match(html, /placeholder="you@company\.com"/);
+  assert.match(html, /placeholder="Company name"/);
+  assert.match(html, /Project details/);
+  assert.match(html, /placeholder="Briefly describe your project\."/);
+
+  // Default contactEmail in main.js
+  assert.match(mainJs, /narenthiranath703@gmail\.com/);
+
+  // Layout & rounded field constraints in redesign.css
+  assert.match(redesignCss, /\.brief-container\{[^}]*max-width:\s*1260px/);
+  assert.match(redesignCss, /\.brief-form\{[^}]*border-radius:\s*24px/);
+  assert.match(redesignCss, /\.brief-contact-card\{[^}]*border-radius:\s*24px/);
+  assert.match(redesignCss, /\.brief-form input:not\(\[type=checkbox\]\),\.brief-form select\{[^}]*height:\s*52px/);
+  assert.match(redesignCss, /\.brief-form input:not\(\[type=checkbox\]\),\.brief-form select\{[^}]*border-radius:\s*14px/);
+  assert.match(redesignCss, /\.brief-form textarea\{[^}]*min-height:\s*140px/);
+  assert.match(redesignCss, /\.brief-form textarea\{[^}]*border-radius:\s*14px/);
 });

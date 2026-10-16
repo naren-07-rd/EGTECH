@@ -10,6 +10,11 @@ import { startMotion } from './motion.js';
 import { startExpressiveMotion } from './expressive-motion.js';
 import { createBrief, makeEmailLink, isContactEmail, validateBriefInput } from './brief.js';
 import { createLogoLoader, startLogoIntro } from './loader.js';
+import { initSeoFeatureCards } from './seo-feature-cards.js';
+import { initPricingCards } from './pricing-cards.js';
+import { initProcessSteps } from './process-steps.js';
+import { initFaqCarousel } from './faq-carousel.js';
+import { initServiceAccordionNav } from './service-accordion-nav.js';
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const disposeIntro = startLogoIntro(reducedMotion);
@@ -36,9 +41,23 @@ document.addEventListener('keydown', event => {
     menuButton.focus();
   }
 });
-matchMedia('(min-width: 1001px)').addEventListener('change', event => {
+matchMedia('(min-width: 961px)').addEventListener('change', event => {
   if (event.matches) closeMenu();
 });
+
+// Scroll state for subtle header elevation
+const headerEl = document.querySelector('.header');
+function updateHeaderElevation() {
+  if (headerEl) {
+    if (window.scrollY > 8) {
+      headerEl.classList.add('is-scrolled');
+    } else {
+      headerEl.classList.remove('is-scrolled');
+    }
+  }
+}
+window.addEventListener('scroll', updateHeaderElevation, { passive: true });
+updateHeaderElevation();
 
 // Animated border navigation
 // Visual reference inspired by Uiverse.io by SelfMadeSystem
@@ -60,11 +79,11 @@ function startAnimatedNavbar() {
     }
     const navBounds = nav.getBoundingClientRect();
     const linkBounds = target.getBoundingClientRect();
-    const x = linkBounds.left - navBounds.left;
-    const y = linkBounds.top - navBounds.top;
-    const w = linkBounds.width;
-    const h = linkBounds.height;
-    const r = h / 2;
+    const x = Math.round(linkBounds.left - navBounds.left);
+    const y = Math.round(linkBounds.top - navBounds.top);
+    const w = Math.round(linkBounds.width);
+    const h = Math.round(linkBounds.height);
+    const r = Math.round(h / 2);
 
     nav.style.setProperty('--indicator-x', `${x}px`);
     nav.style.setProperty('--indicator-y', `${y}px`);
@@ -81,7 +100,9 @@ function startAnimatedNavbar() {
     rect.setAttribute('ry', String(r));
     rect.style.width = `${w}px`;
     rect.style.height = `${h}px`;
-    rect.style.transform = `translate(${x}px, ${y}px)`;
+    rect.style.rx = `${r}px`;
+    rect.style.ry = `${r}px`;
+    rect.style.transform = `translate3d(${x}px, ${y}px, 0)`;
     rect.style.opacity = '1';
   }
 
@@ -90,14 +111,13 @@ function startAnimatedNavbar() {
   }
 
   links.forEach(link => {
-    link.addEventListener('pointerenter', () => {
+    const onEnter = () => {
       hoveredOrFocusedLink = link;
       update();
-    });
-    link.addEventListener('focus', () => {
-      hoveredOrFocusedLink = link;
-      update();
-    });
+    };
+    link.addEventListener('pointerenter', onEnter);
+    link.addEventListener('mouseenter', onEnter);
+    link.addEventListener('focus', onEnter);
     link.addEventListener('blur', () => {
       if (hoveredOrFocusedLink === link) {
         hoveredOrFocusedLink = null;
@@ -106,10 +126,12 @@ function startAnimatedNavbar() {
     });
   });
 
-  nav.addEventListener('pointerleave', () => {
+  const onLeave = () => {
     hoveredOrFocusedLink = null;
     update();
-  });
+  };
+  nav.addEventListener('pointerleave', onLeave);
+  nav.addEventListener('mouseleave', onLeave);
 
   const onResize = () => update();
   window.addEventListener('resize', onResize, { passive: true });
@@ -128,7 +150,7 @@ function startAnimatedNavbar() {
   ].filter(Boolean);
 
   const sectionObserver = new IntersectionObserver(() => {
-    if (window.scrollY < 200) {
+    if (window.scrollY < 180) {
       links.forEach(l => l.removeAttribute('aria-current'));
       activeLink = null;
       update();
@@ -137,7 +159,7 @@ function startAnimatedNavbar() {
 
     const inView = observedSections
       .map(sec => ({ sec, rect: sec.getBoundingClientRect() }))
-      .filter(({ rect }) => rect.top <= 250 && rect.bottom >= 100)
+      .filter(({ rect }) => rect.top <= 200 && rect.bottom >= 90)
       .sort((a, b) => b.rect.top - a.rect.top);
 
     if (inView.length > 0) {
@@ -151,20 +173,20 @@ function startAnimatedNavbar() {
           l.removeAttribute('aria-current');
         }
       });
-    } else if (window.scrollY < 300) {
+    } else if (window.scrollY < 260) {
       links.forEach(l => l.removeAttribute('aria-current'));
       activeLink = null;
     }
     update();
   }, {
-    rootMargin: '-88px 0px -40% 0px',
+    rootMargin: '-72px 0px -40% 0px',
     threshold: [0, 0.1, 0.25, 0.5, 0.75]
   });
 
   observedSections.forEach(s => sectionObserver.observe(s));
 
   const onScroll = () => {
-    if (window.scrollY < 180 && activeLink) {
+    if (window.scrollY < 140 && activeLink) {
       links.forEach(l => l.removeAttribute('aria-current'));
       activeLink = null;
       update();
@@ -293,7 +315,7 @@ document.querySelector('.privacy-button').addEventListener('click', function() {
 
 // Enquiry & brief workflow
 const form = document.querySelector('#brief-form');
-const contactEmail = (import.meta.env.VITE_CONTACT_EMAIL || '').trim();
+const contactEmail = (import.meta.env.VITE_CONTACT_EMAIL || '').trim() || 'narenthiranath703@gmail.com';
 const emailReady = isContactEmail(contactEmail);
 
 if (emailReady) {
@@ -391,6 +413,22 @@ form.addEventListener('input', event => {
   formError.hidden = true;
 });
 
+form.addEventListener('change', event => {
+  if (event.target && event.target.hasAttribute('aria-invalid')) {
+    event.target.removeAttribute('aria-invalid');
+  }
+  if (!document.querySelector('.form-result').hidden) {
+    document.querySelector('.form-result').hidden = true;
+    currentBrief = '';
+  }
+  formError.hidden = true;
+});
+
+// Website package enquiry card selection & animated pricing cards
+// Preserves: packageSelect.value = pkg; packageSelect.dispatchEvent(new Event('change', { bubbles: true }));
+// for .eg-package-card__btn and #field-package integration
+const disposePricingCards = initPricingCards();
+
 // Copy brief action
 const copyButton = document.querySelector('#copy-brief');
 if (copyButton) {
@@ -429,6 +467,18 @@ document.querySelector('#download-brief').addEventListener('click', () => {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 });
 
+// Highlighted Feature Cards (SEO & Performance)
+const disposeSeoFeatureCards = initSeoFeatureCards();
+
+// Process Steps Rows (Engineering Methodology)
+const disposeProcessSteps = initProcessSteps();
+
+// FAQ Question & Answer Carousel
+const disposeFaqCarousel = initFaqCarousel();
+
+// Service Accordion Footer Navigation
+const disposeServiceAccordionNav = initServiceAccordionNav();
+
 // Motions
 const disposeMotion = startMotion(reducedMotion);
 const disposeExpressiveMotion = startExpressiveMotion(reducedMotion);
@@ -438,6 +488,21 @@ document.querySelector('#year').textContent = new Date().getFullYear();
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
+    if (typeof disposeServiceAccordionNav === 'function') {
+      disposeServiceAccordionNav();
+    }
+    if (typeof disposeFaqCarousel === 'function') {
+      disposeFaqCarousel();
+    }
+    if (typeof disposeProcessSteps === 'function') {
+      disposeProcessSteps();
+    }
+    if (typeof disposePricingCards === 'function') {
+      disposePricingCards();
+    }
+    if (typeof disposeSeoFeatureCards === 'function') {
+      disposeSeoFeatureCards();
+    }
     disposeAnimatedNavbar();
     disposeIntro();
     disposeReferenceMotion();
