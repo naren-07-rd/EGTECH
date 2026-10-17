@@ -596,7 +596,411 @@
         <p class="eg-package-note reveal">Final features, pricing and delivery timelines are agreed after reviewing your requirements.</p>
       </section>
 
-      <section id="philosophy" class="manifesto section-pad"><p class="eyebrow reveal">08 / STUDIO MANIFESTO</p><h2 class="reveal">Intentional design.<br /><em>Zero noise.</em></h2><div class="manifesto-principles"><p><span>01</span>Function and usability guide every interface.</p><p><span>02</span>Performance and low latency are foundational requirements.</p><p><span>03</span>Clean, maintainable code outlasts fleeting aesthetic trends.</p></div><div class="manifesto-bottom"><p>Every interaction should help someone accomplish a goal.<br />Every system should make your business more resilient.</p><a class="button" href="#brief">Discuss your project <span aria-hidden="true">↗</span></a></div></section>
+      <section id="philosophy" class="manifesto section-pad">
+        <p class="eyebrow reveal">08 / STUDIO MANIFESTO</p>
+        <h2 class="reveal">Intentional design.<br /><em>Zero noise.</em></h2>
+
+        <div class="manifesto-grid">
+          <!-- Left: Interactive Floating Browser-and-Phone Mockup -->
+          <div class="manifesto-mockup-col">
+            <div class="eg-mockup-stage">
+              <div class="eg-mockup-caption">
+                <span class="eg-mockup-caption__dot" aria-hidden="true"></span>
+                <span>Interactive preview · Explore our capabilities</span>
+              </div>
+
+              <div class="eg-mockup-devices">
+                <!-- Desktop Browser Frame -->
+                <div class="eg-mockup-desktop">
+                  <div class="eg-mockup-chrome">
+                    <div class="eg-mockup-chrome__left">
+                      <div class="eg-mockup-dots" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                      </div>
+                      <span class="eg-mockup-brand">EG TECH</span>
+                    </div>
+
+                    <!-- 4 Clickable Preview Option Tabs -->
+                    <div class="eg-mockup-tabs" role="tablist" aria-label="Studio capabilities preview">
+                      <button type="button" class="eg-mockup-tab is-active" role="tab" id="mockup-tab-webdev" data-tab="webdev" aria-selected="true" aria-controls="mockup-panel-webdev">Web Development</button>
+                      <button type="button" class="eg-mockup-tab" role="tab" id="mockup-tab-uiux" data-tab="uiux" aria-selected="false" aria-controls="mockup-panel-uiux">UI/UX Design</button>
+                      <button type="button" class="eg-mockup-tab" role="tab" id="mockup-tab-ecommerce" data-tab="ecommerce" aria-selected="false" aria-controls="mockup-panel-ecommerce">E-commerce</button>
+                      <button type="button" class="eg-mockup-tab" role="tab" id="mockup-tab-automation" data-tab="automation" aria-selected="false" aria-controls="mockup-panel-automation">Automation</button>
+                    </div>
+
+                    <div class="eg-mockup-chrome__right">
+                      <a class="eg-mockup-chrome-btn" href="#brief">Discuss project ↗</a>
+                    </div>
+                  </div>
+
+                  <!-- Desktop Screen -->
+                  <div class="eg-mockup-screen">
+                    <!-- Panel 1: Web Development -->
+                    <div class="eg-mockup-panel eg-preview-webdev is-active" id="mockup-panel-webdev" role="tabpanel" aria-labelledby="mockup-tab-webdev" data-panel="webdev">
+                      <div class="eg-preview-webdev__hero">
+                        <h3 class="eg-preview-webdev__h1">
+                          Big ideas.<br />Beautifully built.<br />
+                          <span>Real impact.</span>
+                        </h3>
+                        <p class="eg-preview-webdev__p">A creative web development studio for ambitious brands.</p>
+                        <div class="eg-preview-webdev__action">
+                          <button type="button" class="eg-mockup-btn mockup-view-services-btn">View services →</button>
+                        </div>
+                        <div class="eg-preview-webdev__chips" aria-label="Core stack">
+                          <span class="eg-chip">Next.js / Vite</span>
+                          <span class="eg-chip">TypeScript</span>
+                          <span class="eg-chip">UI Engineering</span>
+                          <span class="eg-chip">Low Latency</span>
+                        </div>
+                      </div>
+
+                      <div class="eg-preview-webdev__constellation" aria-label="Capability constellation">
+                        <svg class="eg-constellation-lines" aria-hidden="true" viewBox="0 0 280 240">
+                          <line x1="140" y1="45" x2="140" y2="95" />
+                          <line x1="140" y1="145" x2="140" y2="195" />
+                          <line x1="55" y1="120" x2="95" y2="120" />
+                          <line x1="185" y1="120" x2="225" y2="120" />
+                        </svg>
+
+                        <div class="eg-node eg-node--top">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                          <span>Strategy</span>
+                        </div>
+                        <div class="eg-node eg-node--left">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                          <span>Development</span>
+                        </div>
+
+                        <div class="eg-constellation-center">
+                          <strong>EG TECH</strong>
+                          <small>Studio Hub</small>
+                        </div>
+
+                        <div class="eg-node eg-node--right">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>
+                          <span>Design</span>
+                        </div>
+                        <div class="eg-node eg-node--bottom">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                          <span>Growth</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Panel 2: UI/UX Design -->
+                    <div class="eg-mockup-panel eg-preview-uiux" id="mockup-panel-uiux" role="tabpanel" aria-labelledby="mockup-tab-uiux" data-panel="uiux">
+                      <div class="eg-preview-header">
+                        <div>
+                          <h4 class="eg-preview-title">Design System &amp; Component Hierarchy</h4>
+                          <p class="eg-preview-subtitle">Modular design tokens engineered for clarity.</p>
+                        </div>
+                        <div class="eg-view-toggle" role="group" aria-label="Layout mode">
+                          <button type="button" class="eg-toggle-btn is-active" data-view="grid" aria-pressed="true">⊞ Grid</button>
+                          <button type="button" class="eg-toggle-btn" data-view="list" aria-pressed="false">☰ List</button>
+                        </div>
+                      </div>
+
+                      <div class="eg-uiux-cards view-grid">
+                        <div class="eg-uiux-card">
+                          <div class="eg-uiux-card__icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                          </div>
+                          <div class="eg-uiux-card__body">
+                            <h4>Design Tokens</h4>
+                            <p>Adaptive dark/light variables, dynamic typography, and fluid spacing scales.</p>
+                          </div>
+                        </div>
+
+                        <div class="eg-uiux-card">
+                          <div class="eg-uiux-card__icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                          </div>
+                          <div class="eg-uiux-card__body">
+                            <h4>Interactive Controls</h4>
+                            <p>Accessible modals, accordions, and animated form inputs with visible focus rings.</p>
+                          </div>
+                        </div>
+
+                        <div class="eg-uiux-card">
+                          <div class="eg-uiux-card__icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+                          </div>
+                          <div class="eg-uiux-card__body">
+                            <h4>Visual Metrics</h4>
+                            <p>Progressive disclosure and concise summaries that highlight key user journeys.</p>
+                          </div>
+                        </div>
+
+                        <div class="eg-uiux-card">
+                          <div class="eg-uiux-card__icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                          </div>
+                          <div class="eg-uiux-card__body">
+                            <h4>Motion Choreography</h4>
+                            <p>Hardware-accelerated CSS transforms respecting prefers-reduced-motion safety.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Panel 3: E-commerce -->
+                    <div class="eg-mockup-panel eg-preview-ecom" id="mockup-panel-ecommerce" role="tabpanel" aria-labelledby="mockup-tab-ecommerce" data-panel="ecommerce">
+                      <div class="eg-ecom-header">
+                        <div>
+                          <span class="eg-ecom-badge">Interactive Demo Store</span>
+                          <p class="eg-preview-subtitle">Sample catalogue only · No payment processing</p>
+                        </div>
+                        <div class="eg-ecom-cart-pill" aria-live="polite">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                          <span>Cart (<span class="mockup-cart-count">0</span>)</span>
+                        </div>
+                      </div>
+
+                      <div class="eg-ecom-products">
+                        <div class="eg-product-card">
+                          <div class="eg-product-thumb" aria-hidden="true">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></svg>
+                          </div>
+                          <div class="eg-product-info">
+                            <h5>Studio Keyboard</h5>
+                            <span>Minimal 75% CNC</span>
+                          </div>
+                          <div class="eg-product-bottom">
+                            <span class="eg-product-price">$140</span>
+                            <button type="button" class="eg-add-cart-btn" data-item="kb" data-product-name="Studio Keyboard">Add +</button>
+                          </div>
+                        </div>
+
+                        <div class="eg-product-card">
+                          <div class="eg-product-thumb" aria-hidden="true">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
+                          </div>
+                          <div class="eg-product-info">
+                            <h5>Wireless Audio</h5>
+                            <span>Active ANC Monitor</span>
+                          </div>
+                          <div class="eg-product-bottom">
+                            <span class="eg-product-price">$220</span>
+                            <button type="button" class="eg-add-cart-btn" data-item="audio" data-product-name="Wireless Audio">Add +</button>
+                          </div>
+                        </div>
+
+                        <div class="eg-product-card">
+                          <div class="eg-product-thumb" aria-hidden="true">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="12" x="3" y="6" rx="2"/><path d="M3 12h18"/></svg>
+                          </div>
+                          <div class="eg-product-info">
+                            <h5>Precision Desk Pad</h5>
+                            <span>Micro-textured Felt</span>
+                          </div>
+                          <div class="eg-product-bottom">
+                            <span class="eg-product-price">$45</span>
+                            <button type="button" class="eg-add-cart-btn" data-item="pad" data-product-name="Precision Desk Pad">Add +</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Panel 4: Automation -->
+                    <div class="eg-mockup-panel eg-preview-automation" id="mockup-panel-automation" role="tabpanel" aria-labelledby="mockup-tab-automation" data-panel="automation">
+                      <div class="eg-auto-controls">
+                        <div>
+                          <h4 class="eg-preview-title">Workflow Automation Pipeline</h4>
+                          <span class="eg-auto-status">Idle · Ready to run</span>
+                        </div>
+                        <button type="button" class="eg-mockup-btn eg-auto-run-btn">Run demo ▶</button>
+                      </div>
+
+                      <div class="eg-auto-pipeline">
+                        <div class="eg-auto-step" data-step="1">
+                          <div class="eg-auto-step__icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h9"/><polyline points="22 7 12 13 2 7"/><polyline points="16 19 19 22 23 18"/></svg>
+                          </div>
+                          <h6>1. Enquiry</h6>
+                          <p>Brief validated</p>
+                        </div>
+
+                        <span class="eg-auto-arrow" aria-hidden="true">→</span>
+
+                        <div class="eg-auto-step" data-step="2">
+                          <div class="eg-auto-step__icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                          </div>
+                          <h6>2. Notification</h6>
+                          <p>Instant team alert</p>
+                        </div>
+
+                        <span class="eg-auto-arrow" aria-hidden="true">→</span>
+
+                        <div class="eg-auto-step" data-step="3">
+                          <div class="eg-auto-step__icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+                          </div>
+                          <h6>3. Follow-up</h6>
+                          <p>Scope &amp; call set</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Smartphone Frame (Overlapping lower right) -->
+                <div class="eg-mockup-mobile" aria-hidden="true">
+                  <div class="eg-mockup-mobile-status">
+                    <span>9:41</span>
+                    <div class="eg-mockup-dynamic-island"></div>
+                    <span>100% 🔋</span>
+                  </div>
+                  <div class="eg-mockup-mobile-brand">
+                    <span>EG TECH</span>
+                    <span>☰</span>
+                  </div>
+                  <div class="eg-mockup-mobile-screen">
+                    <!-- Mobile Panel 1: Web Dev -->
+                    <div class="eg-mockup-mobile-panel eg-preview-webdev-mobile is-active" data-panel="webdev">
+                      <div class="eg-preview-webdev__hero" style="gap: 8px;">
+                        <h4 style="font-size: 15px; line-height: 1.2; margin: 0; color: #fff;">
+                          Big ideas.<br />Built right.<br />
+                          <span style="color: #4f8bff;">Real impact.</span>
+                        </h4>
+                        <p style="font-size: 10px; color: #8fafe6; margin: 0;">Web studio for ambitious brands.</p>
+                        <button type="button" class="eg-mockup-btn mockup-view-services-btn" style="padding: 4px 10px; font-size: 10px; margin-top: 4px;">Services →</button>
+                        <div class="eg-preview-webdev__chips" style="margin-top: 6px;">
+                          <span class="eg-chip" style="font-size: 8.5px;">Vite</span>
+                          <span class="eg-chip" style="font-size: 8.5px;">TypeScript</span>
+                          <span class="eg-chip" style="font-size: 8.5px;">UI Design</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Mobile Panel 2: UI/UX -->
+                    <div class="eg-mockup-mobile-panel eg-preview-uiux-mobile" data-panel="uiux">
+                      <div style="font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 6px;">UI/UX System</div>
+                      <div class="eg-uiux-cards view-grid" style="gap: 6px;">
+                        <div class="eg-uiux-card" style="padding: 8px;">
+                          <div class="eg-uiux-card__body">
+                            <h4 style="font-size: 10.5px;">Tokens</h4>
+                            <p style="font-size: 9px;">Theme variables</p>
+                          </div>
+                        </div>
+                        <div class="eg-uiux-card" style="padding: 8px;">
+                          <div class="eg-uiux-card__body">
+                            <h4 style="font-size: 10.5px;">Controls</h4>
+                            <p style="font-size: 9px;">Accessible UI</p>
+                          </div>
+                        </div>
+                        <div class="eg-uiux-card" style="padding: 8px;">
+                          <div class="eg-uiux-card__body">
+                            <h4 style="font-size: 10.5px;">Metrics</h4>
+                            <p style="font-size: 9px;">Fast insights</p>
+                          </div>
+                        </div>
+                        <div class="eg-uiux-card" style="padding: 8px;">
+                          <div class="eg-uiux-card__body">
+                            <h4 style="font-size: 10.5px;">Motion</h4>
+                            <p style="font-size: 9px;">Safe 60fps</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Mobile Panel 3: E-commerce -->
+                    <div class="eg-mockup-mobile-panel eg-preview-ecom-mobile" data-panel="ecommerce">
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <span style="font-size: 10px; color: #8fafe6; font-family: var(--mono);">Demo Cart:</span>
+                        <span class="eg-ecom-cart-pill" style="font-size: 9px; padding: 2px 8px;">
+                          Cart (<span class="mockup-cart-count">0</span>)
+                        </span>
+                      </div>
+                      <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <div class="eg-product-card" style="padding: 6px; flex-direction: row; align-items: center; justify-content: space-between;">
+                          <div>
+                            <h5 style="font-size: 11px;">Studio Keyboard</h5>
+                            <span class="eg-product-price" style="font-size: 11px;">$140</span>
+                          </div>
+                          <button type="button" class="eg-add-cart-btn" data-item="kb" data-product-name="Studio Keyboard" style="font-size: 9.5px; padding: 3px 6px;">Add +</button>
+                        </div>
+                        <div class="eg-product-card" style="padding: 6px; flex-direction: row; align-items: center; justify-content: space-between;">
+                          <div>
+                            <h5 style="font-size: 11px;">Wireless Audio</h5>
+                            <span class="eg-product-price" style="font-size: 11px;">$220</span>
+                          </div>
+                          <button type="button" class="eg-add-cart-btn" data-item="audio" data-product-name="Wireless Audio" style="font-size: 9.5px; padding: 3px 6px;">Add +</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Mobile Panel 4: Automation -->
+                    <div class="eg-mockup-mobile-panel eg-preview-auto-mobile" data-panel="automation">
+                      <div style="font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 6px;">Automation Pipeline</div>
+                      <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <div class="eg-auto-step" data-step="1" style="padding: 6px;">
+                          <h6 style="font-size: 10px;">1. Enquiry</h6>
+                          <p style="font-size: 8.5px;">Validated</p>
+                        </div>
+                        <div class="eg-auto-step" data-step="2" style="padding: 6px;">
+                          <h6 style="font-size: 10px;">2. Notification</h6>
+                          <p style="font-size: 8.5px;">Slack alert</p>
+                        </div>
+                        <div class="eg-auto-step" data-step="3" style="padding: 6px;">
+                          <h6 style="font-size: 10px;">3. Follow-up</h6>
+                          <p style="font-size: 8.5px;">Scheduled</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="eg-mockup-home-bar"></div>
+                </div>
+              </div>
+
+              <div id="mockup-live-status" class="sr-only" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <!-- Right: Three Concise Principles & CTA Button -->
+          <div class="manifesto-content-col">
+            <div class="manifesto-principles" role="list">
+              <div class="manifesto-principle" role="listitem">
+                <div class="manifesto-principle__header">
+                  <span class="manifesto-principle__num">01</span>
+                  <span class="manifesto-principle__dash" aria-hidden="true">—</span>
+                  <h3 class="manifesto-principle__title">Designed for people.</h3>
+                </div>
+                <p class="manifesto-principle__desc">Clear interfaces. Effortless navigation.</p>
+              </div>
+
+              <div class="manifesto-principle" role="listitem">
+                <div class="manifesto-principle__header">
+                  <span class="manifesto-principle__num">02</span>
+                  <span class="manifesto-principle__dash" aria-hidden="true">—</span>
+                  <h3 class="manifesto-principle__title">Built for speed.</h3>
+                </div>
+                <p class="manifesto-principle__desc">Fast loading. Smooth interactions.</p>
+              </div>
+
+              <div class="manifesto-principle" role="listitem">
+                <div class="manifesto-principle__header">
+                  <span class="manifesto-principle__num">03</span>
+                  <span class="manifesto-principle__dash" aria-hidden="true">—</span>
+                  <h3 class="manifesto-principle__title">Engineered to last.</h3>
+                </div>
+                <p class="manifesto-principle__desc">Clean code. Easier maintenance.</p>
+              </div>
+            </div>
+
+            <div class="manifesto-bottom">
+              <a class="button" href="#brief">Discuss your project <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preservation container for backwards test compatibility -->
+        <div class="sr-only" aria-hidden="true" hidden>
+          <span>01</span>Function and usability guide every interface.
+          <span>02</span>Performance and low latency are foundational requirements.
+          <span>03</span>Clean, maintainable code outlasts fleeting aesthetic trends.
+        </div>
+      </section>
 
       <section id="faq" class="faq section-pad" aria-label="Frequently Asked Questions">
         <div class="faq__container">

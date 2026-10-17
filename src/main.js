@@ -6,6 +6,7 @@ import './reference-motion.css';
 import './minimal-loader.css';
 import './typography.css';
 import './premium-motion.css';
+import './studio-mockup.css';
 import { startReferenceMotion } from './reference-motion.js';
 import { startMotion } from './motion.js';
 import { startExpressiveMotion } from './expressive-motion.js';
@@ -23,6 +24,7 @@ import { initPortfolioCinematic } from './portfolio-cinematic.js';
 import { initProcessAboutManifestoCinematic } from './process-about-manifesto-cinematic.js';
 import { initPricingFaqContactCinematic } from './pricing-faq-contact-cinematic.js';
 import { initFooterCinematic } from './footer-cinematic.js';
+import { initStudioMockup } from './studio-mockup.js';
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const disposeIntro = startLogoIntro(reducedMotion);
@@ -587,11 +589,15 @@ const disposePortfolioCinematic = initPortfolioCinematic();
 const disposeProcessAboutManifestoCinematic = initProcessAboutManifestoCinematic();
 const disposePricingFaqContactCinematic = initPricingFaqContactCinematic();
 const disposeFooterCinematic = initFooterCinematic();
+const disposeStudioMockup = initStudioMockup();
 
 document.querySelector('#year').textContent = new Date().getFullYear();
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
+    if (typeof disposeStudioMockup === 'function') {
+      disposeStudioMockup();
+    }
     if (typeof disposeFooterCinematic === 'function') {
       disposeFooterCinematic();
     }
