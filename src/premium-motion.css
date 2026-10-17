@@ -21,7 +21,7 @@
   display: block;
   overflow: hidden;
   padding-bottom: 0.15em;
-  margin-bottom: -0.15em;
+  margin-bottom: 0;
   line-height: inherit;
   vertical-align: top;
 }

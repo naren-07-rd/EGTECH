@@ -51,7 +51,6 @@ export function initFaqCarousel() {
   let currentIndex = 0;
   // Under prefers-reduced-motion or if motion is off, start with autoplay off
   let isManuallyPaused = !isMotionAllowed();
-  let isHovered = false;
   let isFocused = false;
   let isVisible = false;
   let isDocumentVisible = !document.hidden;
@@ -73,7 +72,6 @@ export function initFaqCarousel() {
 
   function shouldAutoplayRun() {
     return !isManuallyPaused &&
-           !isHovered &&
            !isFocused &&
            isVisible &&
            isDocumentVisible &&
@@ -153,8 +151,6 @@ export function initFaqCarousel() {
     if (targetIndex === currentIndex && !isTransitioning) return;
 
     if (source === 'manual') {
-      isManuallyPaused = true;
-      syncPlayButtonUI();
       announceSlide(targetIndex);
     }
 
@@ -293,25 +289,15 @@ export function initFaqCarousel() {
     });
   });
 
-  // Mouse Hover Pausing (leaving resumes only if not manually paused)
-  listen(carousel, 'mouseenter', () => {
-    isHovered = true;
-  });
-
-  listen(carousel, 'mouseleave', () => {
-    isHovered = false;
-  });
-
-  // Keyboard Focus entering carousel stops autoplay until Play is pressed
+  // Keyboard focus entering carousel pauses autoplay to avoid replacing content during interaction
   listen(carousel, 'focusin', () => {
     isFocused = true;
-    isManuallyPaused = true;
-    syncPlayButtonUI();
   });
 
   listen(carousel, 'focusout', event => {
     if (!carousel.contains(event.relatedTarget)) {
       isFocused = false;
+      lastTimestamp = null;
     }
   });
 

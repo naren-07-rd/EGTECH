@@ -95,7 +95,7 @@ export function initServicesCinematic() {
         if (!isMotionAllowed()) return;
 
         serviceRows.forEach((row, index) => {
-          row.animate(
+          const anim = row.animate(
             [
               { opacity: 0, transform: 'translateY(24px)' },
               { opacity: 1, transform: 'translateY(0)' }
@@ -107,6 +107,11 @@ export function initServicesCinematic() {
               fill: 'both'
             }
           );
+          anim.finished.then(() => {
+            row.style.opacity = '1';
+            row.style.transform = '';
+            anim.cancel();
+          }).catch(() => {});
         });
       }, { threshold: 0.1 });
 

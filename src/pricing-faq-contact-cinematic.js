@@ -129,7 +129,7 @@ export function initPricingFaqContactCinematic() {
 
           cards.forEach((card, index) => {
             const delay = index * 110;
-            trackAnim(
+            const anim = trackAnim(
               card.animate(
                 [
                   { opacity: 0, transform: 'translateY(28px) scale(0.98)' },
@@ -143,6 +143,11 @@ export function initPricingFaqContactCinematic() {
                 }
               )
             );
+            anim.finished.then(() => {
+              card.style.opacity = '1';
+              card.style.transform = '';
+              anim.cancel();
+            }).catch(() => {});
           });
         }, { threshold: 0.1 });
 

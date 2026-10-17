@@ -76,8 +76,8 @@ function startAnimatedNavbar() {
   const links = Array.from(nav.querySelectorAll('.eg-navbar__link'));
   if (!rect || links.length === 0) return () => {};
 
+  let selectedLink = null;
   let activeLink = null;
-  let hoveredOrFocusedLink = null;
 
   function renderIndicator(target) {
     if (!target) {
@@ -114,35 +114,46 @@ function startAnimatedNavbar() {
     rect.style.opacity = '1';
   }
 
-  function update() {
-    renderIndicator(hoveredOrFocusedLink || activeLink);
+  function setSelectedLink(link) {
+    selectedLink = link;
+    links.forEach(l => {
+      if (l === selectedLink) {
+        l.setAttribute('aria-current', 'location');
+        l.classList.add('is-active');
+      } else {
+        l.removeAttribute('aria-current');
+        l.classList.remove('is-active');
+      }
+    });
+    renderIndicator(selectedLink);
   }
 
+  // Selection is strictly controlled by explicit click/activation
   links.forEach(link => {
-    const onEnter = () => {
-      hoveredOrFocusedLink = link;
-      update();
-    };
-    link.addEventListener('pointerenter', onEnter);
-    link.addEventListener('mouseenter', onEnter);
-    link.addEventListener('focus', onEnter);
-    link.addEventListener('blur', () => {
-      if (hoveredOrFocusedLink === link) {
-        hoveredOrFocusedLink = null;
-        update();
+    link.addEventListener('click', () => {
+      setSelectedLink(link);
+    });
+    link.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        setSelectedLink(link);
       }
     });
   });
 
-  const onLeave = () => {
-    hoveredOrFocusedLink = null;
-    update();
-  };
-  nav.addEventListener('pointerleave', onLeave);
-  nav.addEventListener('mouseleave', onLeave);
+  // Also synchronize when mobile navigation links are activated
+  const mobileNavLinks = Array.from(document.querySelectorAll('#mobile-nav a'));
+  mobileNavLinks.forEach(mLink => {
+    mLink.addEventListener('click', () => {
+      const href = mLink.getAttribute('href');
+      const matching = links.find(l => l.getAttribute('href') === href);
+      if (matching) {
+        setSelectedLink(matching);
+      }
+    });
+  });
 
-  // Active section tracking: tracks current reading position reliably in both directions,
-  // clearing active state when in untracked sections (Hero, SEO, Manifesto, Contact, Footer).
+  // Track reading-position for compatibility and section metadata
+  const readingLine = 120; // 72px sticky header + reading offset
   const trackedMap = new Map();
   links.forEach(link => {
     const href = link.getAttribute('href');
@@ -155,9 +166,7 @@ function startAnimatedNavbar() {
   });
 
   function syncActiveSection() {
-    const readingLine = 120; // 72px sticky header + reading offset
     let currentMatch = null;
-
     for (const [section, link] of trackedMap.entries()) {
       const bounds = section.getBoundingClientRect();
       if (bounds.top <= readingLine && bounds.bottom > readingLine) {
@@ -165,18 +174,9 @@ function startAnimatedNavbar() {
         break;
       }
     }
-
-    if (currentMatch !== activeLink) {
-      activeLink = currentMatch;
-      links.forEach(l => {
-        if (l === activeLink) {
-          l.setAttribute('aria-current', 'location');
-        } else {
-          l.removeAttribute('aria-current');
-        }
-      });
-      update();
-    }
+    activeLink = currentMatch;
+    // NOTE: Selection indicator is strictly controlled by explicit click/activation per user requirements.
+    // Scroll tracking does NOT move or show the indicator and does NOT override selectedLink.
   }
 
   let scrollTicking = false;
@@ -192,25 +192,22 @@ function startAnimatedNavbar() {
   window.addEventListener('scroll', onScroll, { passive: true });
 
   const onResize = () => {
-    syncActiveSection();
-    update();
+    if (selectedLink) {
+      renderIndicator(selectedLink);
+    }
   };
   window.addEventListener('resize', onResize, { passive: true });
+
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {
-      syncActiveSection();
-      update();
+      if (selectedLink) {
+        renderIndicator(selectedLink);
+      }
     });
   }
 
-  requestAnimationFrame(() => {
-    syncActiveSection();
-    update();
-  });
-  setTimeout(() => {
-    syncActiveSection();
-    update();
-  }, 100);
+  // Initial page load: no item has the blue rounded selection indicator
+  renderIndicator(null);
 
   return () => {
     window.removeEventListener('resize', onResize);

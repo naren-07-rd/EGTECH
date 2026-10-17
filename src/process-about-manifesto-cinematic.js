@@ -130,7 +130,7 @@ export function initProcessAboutManifestoCinematic() {
             const title = step.querySelector('.process-step__title');
             const chevron = step.querySelector('.process-step__chevron');
 
-            trackAnim(
+            const stepAnim = trackAnim(
               step.animate(
                 [
                   { opacity: 0, transform: 'translateY(22px)' },
@@ -139,6 +139,11 @@ export function initProcessAboutManifestoCinematic() {
                 { delay, duration: 750, easing: MOTION_EASING, fill: 'both' }
               )
             );
+            stepAnim.finished.then(() => {
+              step.style.opacity = '1';
+              step.style.transform = '';
+              stepAnim.cancel();
+            }).catch(() => {});
 
             if (circle) {
               trackAnim(

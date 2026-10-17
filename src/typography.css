@@ -59,7 +59,7 @@ main h2,
   font-family: var(--font-primary);
   font-size: clamp(40px, 4vw, 56px);
   font-weight: 500;
-  line-height: 1.15;
+  line-height: 1.25;
   letter-spacing: -0.035em;
 }
 
