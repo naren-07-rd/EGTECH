@@ -237,7 +237,7 @@ export function initPricingCards() {
   cards.forEach(card => {
     // Non-interactive card clicking selects plan without scrolling
     card.addEventListener('click', event => {
-      if (event.target.closest('button') || event.target.closest('a') || event.target.closest('input') || event.target.closest('select')) {
+      if (event.target.closest('button') || event.target.closest('a') || event.target.closest('input') || event.target.closest('select') || event.target.closest('details') || event.target.closest('summary')) {
         return;
       }
       const btn = card.querySelector('.eg-package-card__btn');

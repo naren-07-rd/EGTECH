@@ -77,7 +77,13 @@ function startAnimatedNavbar() {
   if (!rect || links.length === 0) return () => {};
 
   let selectedLink = null;
+  let hoveredLink = null;
+  let focusedLink = null;
   let activeLink = null;
+
+  function getEffectiveTarget() {
+    return hoveredLink || focusedLink || selectedLink;
+  }
 
   function renderIndicator(target) {
     if (!target) {
@@ -114,8 +120,7 @@ function startAnimatedNavbar() {
     rect.style.opacity = '1';
   }
 
-  function setSelectedLink(link) {
-    selectedLink = link;
+  function updateLinkAttributes() {
     links.forEach(l => {
       if (l === selectedLink) {
         l.setAttribute('aria-current', 'location');
@@ -125,19 +130,48 @@ function startAnimatedNavbar() {
         l.classList.remove('is-active');
       }
     });
-    renderIndicator(selectedLink);
   }
 
-  // Selection is strictly controlled by explicit click/activation
+  function setSelectedLink(link) {
+    selectedLink = link;
+    updateLinkAttributes();
+    renderIndicator(getEffectiveTarget());
+  }
+
+  // Pointer & keyboard interactions on links
   links.forEach(link => {
+    link.addEventListener('pointerenter', () => {
+      hoveredLink = link;
+      renderIndicator(getEffectiveTarget());
+    });
+
+    link.addEventListener('focus', () => {
+      focusedLink = link;
+      renderIndicator(getEffectiveTarget());
+    });
+
+    link.addEventListener('blur', () => {
+      if (focusedLink === link) {
+        focusedLink = null;
+        renderIndicator(getEffectiveTarget());
+      }
+    });
+
     link.addEventListener('click', () => {
       setSelectedLink(link);
     });
+
     link.addEventListener('keydown', event => {
       if (event.key === 'Enter') {
         setSelectedLink(link);
       }
     });
+  });
+
+  // When pointer leaves the navbar, return indicator to selected link (or hide if none)
+  nav.addEventListener('pointerleave', () => {
+    hoveredLink = null;
+    renderIndicator(getEffectiveTarget());
   });
 
   // Also synchronize when mobile navigation links are activated
@@ -192,16 +226,18 @@ function startAnimatedNavbar() {
   window.addEventListener('scroll', onScroll, { passive: true });
 
   const onResize = () => {
-    if (selectedLink) {
-      renderIndicator(selectedLink);
+    const target = getEffectiveTarget();
+    if (target) {
+      renderIndicator(target);
     }
   };
   window.addEventListener('resize', onResize, { passive: true });
 
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {
-      if (selectedLink) {
-        renderIndicator(selectedLink);
+      const target = getEffectiveTarget();
+      if (target) {
+        renderIndicator(target);
       }
     });
   }
