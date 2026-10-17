@@ -15,6 +15,7 @@ import {
   isMotionAllowed,
   revealHeadingMask,
   createRevealObserver,
+  onMotionStateChange,
   MOTION_EASING,
   MOTION_DURATIONS
 } from './premium-motion.js';
@@ -147,7 +148,7 @@ export function initServicesCinematic() {
     const content = details.querySelector('.service-content');
     if (!summary || !content) return;
 
-    let isAnimating = false;
+    let transitionToken = 0;
 
     // Handle Summary Click (Mouse, Touch, and Keyboard Space/Enter)
     const onSummaryClick = event => {
@@ -158,17 +159,19 @@ export function initServicesCinematic() {
 
       event.preventDefault();
 
-      // If already animating, cancel running animation
+      const thisToken = ++transitionToken;
+
+      // Cancel any ongoing transition for this accordion
       if (activeAnimations.has(content)) {
-        try {
-          activeAnimations.get(content).cancel();
-        } catch {}
+        const prevAnim = activeAnimations.get(content);
         activeAnimations.delete(content);
+        try {
+          prevAnim.cancel();
+        } catch {}
       }
 
       if (details.open) {
         // Closing accordion
-        isAnimating = true;
         const startHeight = content.offsetHeight;
         content.style.overflow = 'hidden';
 
@@ -185,21 +188,31 @@ export function initServicesCinematic() {
 
         activeAnimations.set(content, anim);
 
-        const onFinish = () => {
-          details.open = false;
-          summary.setAttribute('aria-expanded', 'false');
-          content.style.removeProperty('height');
-          content.style.removeProperty('overflow');
-          content.style.removeProperty('opacity');
-          content.style.removeProperty('transform');
-          activeAnimations.delete(content);
-          isAnimating = false;
-        };
-
-        anim.finished.then(onFinish).catch(onFinish);
+        anim.finished
+          .then(() => {
+            // Only finalize if this animation is still the active generation
+            if (transitionToken !== thisToken) return;
+            details.open = false;
+            summary.setAttribute('aria-expanded', 'false');
+            content.style.removeProperty('height');
+            content.style.removeProperty('overflow');
+            content.style.removeProperty('opacity');
+            content.style.removeProperty('transform');
+            activeAnimations.delete(content);
+          })
+          .catch(() => {
+            // Cancelled animation: do NOT overwrite state if a newer transition has begun
+            if (transitionToken === thisToken) {
+              content.style.removeProperty('height');
+              content.style.removeProperty('overflow');
+              content.style.removeProperty('opacity');
+              content.style.removeProperty('transform');
+              summary.setAttribute('aria-expanded', String(details.open));
+              activeAnimations.delete(content);
+            }
+          });
       } else {
         // Opening accordion
-        isAnimating = true;
         details.open = true;
         summary.setAttribute('aria-expanded', 'true');
 
@@ -223,16 +236,27 @@ export function initServicesCinematic() {
         // Coordinate image reveal
         triggerImageReveal(content);
 
-        const onFinish = () => {
-          content.style.removeProperty('height');
-          content.style.removeProperty('overflow');
-          content.style.removeProperty('opacity');
-          content.style.removeProperty('transform');
-          activeAnimations.delete(content);
-          isAnimating = false;
-        };
-
-        anim.finished.then(onFinish).catch(onFinish);
+        anim.finished
+          .then(() => {
+            // Only finalize if this animation is still the active generation
+            if (transitionToken !== thisToken) return;
+            content.style.removeProperty('height');
+            content.style.removeProperty('overflow');
+            content.style.removeProperty('opacity');
+            content.style.removeProperty('transform');
+            activeAnimations.delete(content);
+          })
+          .catch(() => {
+            // Cancelled animation: do NOT overwrite state if a newer transition has begun
+            if (transitionToken === thisToken) {
+              content.style.removeProperty('height');
+              content.style.removeProperty('overflow');
+              content.style.removeProperty('opacity');
+              content.style.removeProperty('transform');
+              summary.setAttribute('aria-expanded', String(details.open));
+              activeAnimations.delete(content);
+            }
+          });
       }
     };
 
@@ -242,7 +266,7 @@ export function initServicesCinematic() {
     // Listen to native toggle to catch programmatic opening (e.g. from service-accordion-nav)
     const onToggle = () => {
       summary.setAttribute('aria-expanded', String(details.open));
-      if (details.open && !isAnimating) {
+      if (details.open && !activeAnimations.has(content)) {
         triggerImageReveal(content);
       }
     };
@@ -251,6 +275,31 @@ export function initServicesCinematic() {
     cleanups.push(() => details.removeEventListener('toggle', onToggle));
   });
 
+  // React to runtime motion toggle / reduced-motion changes
+  cleanups.push(
+    onMotionStateChange(allowed => {
+      if (!allowed) {
+        activeAnimations.forEach(anim => {
+          try { anim.cancel(); } catch {}
+        });
+        activeAnimations.clear();
+        serviceRows.forEach(details => {
+          const content = details.querySelector('.service-content');
+          const summary = details.querySelector('summary');
+          if (content) {
+            content.style.removeProperty('height');
+            content.style.removeProperty('overflow');
+            content.style.removeProperty('opacity');
+            content.style.removeProperty('transform');
+          }
+          if (summary) {
+            summary.setAttribute('aria-expanded', String(details.open));
+          }
+        });
+      }
+    })
+  );
+
   return function disposeServicesCinematic() {
     activeAnimations.forEach(anim => {
       try {
@@ -258,6 +307,15 @@ export function initServicesCinematic() {
       } catch {}
     });
     activeAnimations.clear();
+    serviceRows.forEach(details => {
+      const content = details.querySelector('.service-content');
+      if (content) {
+        content.style.removeProperty('height');
+        content.style.removeProperty('overflow');
+        content.style.removeProperty('opacity');
+        content.style.removeProperty('transform');
+      }
+    });
     cleanups.forEach(cleanup => cleanup());
     section.removeAttribute('data-cinematic-services');
   };

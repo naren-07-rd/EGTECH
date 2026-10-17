@@ -51,19 +51,19 @@ export function startMotion(preference) {
       const element = entry.target;
       if (element.matches('.service')) {
         // Coordinated by services-cinematic.js module
-        return;
+        continue;
       } else if (element.matches('.case-study')) {
         // Coordinated by portfolio-cinematic.js module
-        return;
+        continue;
       } else if (element.closest('#process') || element.closest('#about') || element.closest('#philosophy')) {
         // Coordinated by process-about-manifesto-cinematic.js module
-        return;
+        continue;
       } else if (element.closest('#feedback') || element.closest('#faq') || element.closest('#brief')) {
         // Coordinated by pricing-faq-contact-cinematic.js module
-        return;
+        continue;
       } else if (element.closest('.footer')) {
         // Coordinated by footer-cinematic.js module
-        return;
+        continue;
       } else if (element.matches('.search-blueprint')) {
         animate(element, [{ opacity: 0, transform: 'perspective(900px) rotateX(8deg) translateY(20px)' }, { opacity: 1, transform: 'perspective(900px) rotateX(0) translateY(0)' }]);
         element.querySelectorAll('li').forEach((row, index) => animate(row, rise, { delay: 100 + index * 130 }));

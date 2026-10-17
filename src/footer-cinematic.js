@@ -42,14 +42,16 @@ export function initFooterCinematic() {
 
   function resetToStatic() {
     columns.forEach(col => {
-      col.style.opacity = '1';
-      col.style.transform = 'none';
+      if (col?.style) {
+        col.style.opacity = '1';
+        col.style.transform = 'none';
+      }
     });
-    if (brandLogo) {
+    if (brandLogo?.style) {
       brandLogo.style.opacity = '1';
       brandLogo.style.transform = 'none';
     }
-    if (bottomBar) {
+    if (bottomBar?.style) {
       bottomBar.style.opacity = '1';
       bottomBar.style.transform = 'none';
     }
@@ -114,7 +116,8 @@ export function initFooterCinematic() {
       }
     }, { threshold: 0.1 });
 
-    cleanups.push(footerObserver(footer));
+    footerObserver.observe(footer);
+    cleanups.push(() => footerObserver.disconnect());
   }
 
   // React to runtime motion toggle / reduced-motion changes

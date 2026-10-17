@@ -91,9 +91,13 @@ export function onMotionStateChange(callback) {
     cleanups.push(() => observer.disconnect());
   }
 
-  if (typeof document !== 'undefined') {
+  if (typeof document !== 'undefined' && typeof document.addEventListener === 'function') {
     document.addEventListener('visibilitychange', handleChange);
-    cleanups.push(() => document.removeEventListener('visibilitychange', handleChange));
+    cleanups.push(() => {
+      if (typeof document.removeEventListener === 'function') {
+        document.removeEventListener('visibilitychange', handleChange);
+      }
+    });
   }
 
   return () => {
@@ -445,10 +449,107 @@ export function createMagneticHover(element, options = {}) {
   };
 }
 
+// Shared scroll controller for efficient single-listener window dispatch
+const sharedControllers = new WeakMap();
+
+function getSharedScrollController(win) {
+  if (sharedControllers.has(win)) {
+    return sharedControllers.get(win);
+  }
+
+  const subscribers = new Set();
+  let rafId = 0;
+  let lastScrollY = win.scrollY || 0;
+  let listenersAttached = false;
+
+  const tick = () => {
+    rafId = 0;
+    const currentScrollY = win.scrollY || 0;
+    const innerHeight = win.innerHeight || 800;
+    const innerWidth = win.innerWidth || 1200;
+    const isScrollingDown = currentScrollY >= lastScrollY;
+    lastScrollY = currentScrollY;
+
+    const scrollState = {
+      scrollY: currentScrollY,
+      innerHeight,
+      innerWidth,
+      isScrollingDown
+    };
+
+    subscribers.forEach(handler => {
+      try {
+        handler(scrollState);
+      } catch (err) {
+        console.error('[UnifiedScrollManager] subscriber error:', err);
+      }
+    });
+  };
+
+  const scheduleTick = () => {
+    if (!rafId && typeof win.requestAnimationFrame === 'function') {
+      rafId = win.requestAnimationFrame(tick);
+    }
+  };
+
+  const attachListeners = () => {
+    if (!listenersAttached && typeof win.addEventListener === 'function') {
+      win.addEventListener('scroll', scheduleTick, { passive: true });
+      win.addEventListener('resize', scheduleTick, { passive: true });
+      listenersAttached = true;
+    }
+  };
+
+  const detachListeners = () => {
+    if (listenersAttached && typeof win.removeEventListener === 'function') {
+      win.removeEventListener('scroll', scheduleTick);
+      win.removeEventListener('resize', scheduleTick);
+      listenersAttached = false;
+    }
+    if (rafId && typeof win.cancelAnimationFrame === 'function') {
+      win.cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+  };
+
+  const controller = {
+    win,
+    subscribers,
+    add(callback) {
+      subscribers.add(callback);
+      if (subscribers.size === 1) {
+        attachListeners();
+      }
+      try {
+        callback({
+          scrollY: win.scrollY || 0,
+          innerHeight: win.innerHeight || 800,
+          innerWidth: win.innerWidth || 1200,
+          isScrollingDown: true
+        });
+      } catch {}
+    },
+    remove(callback) {
+      subscribers.delete(callback);
+      if (subscribers.size === 0) {
+        detachListeners();
+      }
+    },
+    destroy() {
+      subscribers.clear();
+      detachListeners();
+      sharedControllers.delete(win);
+    }
+  };
+
+  sharedControllers.set(win, controller);
+  return controller;
+}
+
 /**
  * Centralized Unified Scroll Manager.
- * Batches window scroll & resize events into a single requestAnimationFrame tick.
- * Prevents layout thrashing and redundant getBoundingClientRect measurements.
+ * Batches window scroll & resize events into a single shared requestAnimationFrame tick.
+ * Prevents duplicate listeners, layout thrashing, and redundant measurements.
  */
 export function createUnifiedScrollManager(customWindow = null) {
   const win = typeof window !== 'undefined' ? window : customWindow;
@@ -473,66 +574,22 @@ export function createUnifiedScrollManager(customWindow = null) {
     };
   }
 
-  const subscribers = new Set();
-  let rafId = 0;
-  let lastScrollY = window.scrollY || 0;
-
-  const tick = () => {
-    rafId = 0;
-    const currentScrollY = window.scrollY || 0;
-    const innerHeight = window.innerHeight || 800;
-    const innerWidth = window.innerWidth || 1200;
-    const isScrollingDown = currentScrollY >= lastScrollY;
-    lastScrollY = currentScrollY;
-
-    const scrollState = {
-      scrollY: currentScrollY,
-      innerHeight,
-      innerWidth,
-      isScrollingDown
-    };
-
-    subscribers.forEach(handler => {
-      try {
-        handler(scrollState);
-      } catch (err) {
-        console.error('[UnifiedScrollManager] subscriber error:', err);
-      }
-    });
-  };
-
-  const scheduleTick = () => {
-    if (!rafId) {
-      rafId = requestAnimationFrame(tick);
-    }
-  };
-
-  window.addEventListener('scroll', scheduleTick, { passive: true });
-  window.addEventListener('resize', scheduleTick, { passive: true });
+  const controller = getSharedScrollController(win);
+  const localSubscribers = new Set();
 
   return {
     register(callback) {
       if (typeof callback !== 'function') return () => {};
-      subscribers.add(callback);
-      // Immediately invoke with initial state
-      callback({
-        scrollY: window.scrollY || 0,
-        innerHeight: window.innerHeight || 800,
-        innerWidth: window.innerWidth || 1200,
-        isScrollingDown: true
-      });
+      localSubscribers.add(callback);
+      controller.add(callback);
       return () => {
-        subscribers.delete(callback);
+        localSubscribers.delete(callback);
+        controller.remove(callback);
       };
     },
     destroy() {
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = 0;
-      }
-      window.removeEventListener('scroll', scheduleTick);
-      window.removeEventListener('resize', scheduleTick);
-      subscribers.clear();
+      localSubscribers.forEach(cb => controller.remove(cb));
+      localSubscribers.clear();
     }
   };
 }
