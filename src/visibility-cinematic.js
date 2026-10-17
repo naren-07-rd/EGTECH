@@ -12,6 +12,7 @@ import {
   isMotionAllowed,
   revealHeadingMask,
   createRevealObserver,
+  onMotionStateChange,
   MOTION_EASING,
   MOTION_DURATIONS
 } from './premium-motion.js';
@@ -22,6 +23,7 @@ export function initVisibilityCinematic() {
   section.dataset.cinematicVisibility = 'true';
 
   const cleanups = [];
+  const activeAnimations = new Set();
 
   // ---------------------------------------------------------------------------
   // 1. Heading & Typography Coordinated Reveal
@@ -102,7 +104,7 @@ export function initVisibilityCinematic() {
         if (!isMotionAllowed()) return;
 
         cards.forEach((card, index) => {
-          card.animate(
+          const anim = card.animate(
             [
               { opacity: 0, transform: 'translateY(24px) scale(0.98)' },
               { opacity: 1, transform: 'translateY(0) scale(1)' }
@@ -114,6 +116,15 @@ export function initVisibilityCinematic() {
               fill: 'both'
             }
           );
+          activeAnimations.add(anim);
+          const finalize = () => {
+            activeAnimations.delete(anim);
+            card.style.opacity = '1';
+            card.style.transform = 'none';
+          };
+          anim.finished.then(finalize).catch(() => {
+            activeAnimations.delete(anim);
+          });
         });
       }, { threshold: 0.12 });
 
@@ -122,7 +133,37 @@ export function initVisibilityCinematic() {
     }
   }
 
+  // Handle runtime motion toggle / reduced-motion changes
+  cleanups.push(
+    onMotionStateChange(allowed => {
+      if (!allowed) {
+        activeAnimations.forEach(anim => {
+          try { anim.cancel(); } catch {}
+        });
+        activeAnimations.clear();
+        cards.forEach(card => {
+          card.style.opacity = '1';
+          card.style.transform = 'none';
+        });
+        if (copyContainer) {
+          copyContainer.querySelectorAll('.seo-label, h2, .seo-desc, .seo-cta').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+          });
+        }
+      }
+    })
+  );
+
   return function disposeVisibilityCinematic() {
+    activeAnimations.forEach(anim => {
+      try { anim.cancel(); } catch {}
+    });
+    activeAnimations.clear();
+    cards.forEach(card => {
+      card.style.removeProperty('opacity');
+      card.style.removeProperty('transform');
+    });
     cleanups.forEach(cleanup => cleanup());
     section.removeAttribute('data-cinematic-visibility');
   };

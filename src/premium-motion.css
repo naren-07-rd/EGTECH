@@ -20,8 +20,8 @@
 .motion-mask-wrap {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.12em;
-  margin-bottom: -0.12em;
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
   line-height: inherit;
   vertical-align: top;
 }

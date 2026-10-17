@@ -170,10 +170,7 @@ export function revealHeadingMask(headingEl, options = {}) {
       });
 
       headingEl.replaceChildren();
-      lines.forEach((nodes, lineIdx) => {
-        if (lineIdx > 0) {
-          headingEl.appendChild(document.createElement('br'));
-        }
+      lines.forEach(nodes => {
         const maskWrap = document.createElement('span');
         maskWrap.className = 'motion-mask-wrap';
         const inner = document.createElement('span');

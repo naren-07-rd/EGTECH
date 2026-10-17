@@ -67,7 +67,7 @@ test('Project Enquiry (#brief) preserves form, contacts, and implements refined 
   // Preserves form and contact panel
   assert.match(html, /<section id="brief" class="brief section-pad">/);
   assert.match(html, /10 \/ PROJECT BRIEFING &amp; CONTACT/);
-  assert.match(html, /Have a project in mind\?<br \/><span>Let’s discuss the details\.<\/span>/);
+  assert.match(html, /Have a project in mind\?<br \/><span class="contact-accent">Let’s discuss the details\.<\/span>/);
   assert.match(html, /id="brief-form"/);
   assert.match(html, /id="field-name"/);
   assert.match(html, /id="field-email"/);

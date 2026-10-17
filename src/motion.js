@@ -64,6 +64,9 @@ export function startMotion(preference) {
       } else if (element.closest('.footer')) {
         // Coordinated by footer-cinematic.js module
         continue;
+      } else if (element.matches('.seo-card') || element.matches('.seo-feature-card') || element.closest('#visibility')) {
+        // Coordinated by visibility-cinematic.js module
+        continue;
       } else if (element.matches('.search-blueprint')) {
         animate(element, [{ opacity: 0, transform: 'perspective(900px) rotateX(8deg) translateY(20px)' }, { opacity: 1, transform: 'perspective(900px) rotateX(0) translateY(0)' }]);
         element.querySelectorAll('li').forEach((row, index) => animate(row, rise, { delay: 100 + index * 130 }));
@@ -73,7 +76,7 @@ export function startMotion(preference) {
       } else if (element.matches('.standards-grid article')) {
         const index = [...element.parentElement.children].indexOf(element);
         animate(element, rise, { delay: index * 85 });
-      } else if (element.matches('.eg-package-card') || element.matches('.eg-process-card') || element.matches('.delivery-steps li') || element.matches('.seo-card') || element.matches('.seo-feature-card')) {
+      } else if (element.matches('.eg-package-card') || element.matches('.eg-process-card') || element.matches('.delivery-steps li')) {
         const index = [...element.parentElement.children].indexOf(element);
         animate(element, rise, { delay: index * 90 });
       } else animate(element, rise);
@@ -85,6 +88,7 @@ export function startMotion(preference) {
     if (element.closest('#process') || element.closest('#about') || element.closest('#philosophy')) return;
     if (element.closest('#feedback') || element.closest('#faq') || element.closest('#brief')) return;
     if (element.closest('.footer')) return;
+    if (element.closest('#visibility') || element.matches('.seo-feature-card')) return;
     observer.observe(element);
   });
 

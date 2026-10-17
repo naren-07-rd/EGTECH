@@ -69,9 +69,9 @@ main h2 em,
 .section-heading h2 em,
 .system-heading em,
 .case-wordmark em,
-.brief h2 span {
+.brief h2 .contact-accent {
   font-family: inherit;
-  font-style: italic;
+  font-style: normal;
   font-weight: inherit;
   color: var(--accent-text);
   background: none;
@@ -80,6 +80,11 @@ main h2 em,
   transform: none;
   padding: 0;
   border-radius: 0;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent-text);
 }
 
 .hero h1 em:before,

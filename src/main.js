@@ -141,74 +141,80 @@ function startAnimatedNavbar() {
   nav.addEventListener('pointerleave', onLeave);
   nav.addEventListener('mouseleave', onLeave);
 
-  const onResize = () => update();
-  window.addEventListener('resize', onResize, { passive: true });
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(() => update());
-  }
+  // Active section tracking: tracks current reading position reliably in both directions,
+  // clearing active state when in untracked sections (Hero, SEO, Manifesto, Contact, Footer).
+  const trackedMap = new Map();
+  links.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      const target = document.querySelector(href);
+      if (target) {
+        trackedMap.set(target, link);
+      }
+    }
+  });
 
-  // Active section tracking via IntersectionObserver
-  // Links in navbar: Work (#work), Services (#services), Process (#process), About (#about), FAQ (#faq)
-  const observedSections = [
-    document.getElementById('work'),
-    document.getElementById('services'),
-    document.getElementById('process'),
-    document.getElementById('about'),
-    document.getElementById('faq')
-  ].filter(Boolean);
+  function syncActiveSection() {
+    const readingLine = 120; // 72px sticky header + reading offset
+    let currentMatch = null;
 
-  const sectionObserver = new IntersectionObserver(() => {
-    if (window.scrollY < 180) {
-      links.forEach(l => l.removeAttribute('aria-current'));
-      activeLink = null;
-      update();
-      return;
+    for (const [section, link] of trackedMap.entries()) {
+      const bounds = section.getBoundingClientRect();
+      if (bounds.top <= readingLine && bounds.bottom > readingLine) {
+        currentMatch = link;
+        break;
+      }
     }
 
-    const inView = observedSections
-      .map(sec => ({ sec, rect: sec.getBoundingClientRect() }))
-      .filter(({ rect }) => rect.top <= 200 && rect.bottom >= 90)
-      .sort((a, b) => b.rect.top - a.rect.top);
-
-    if (inView.length > 0) {
-      const current = inView[0].sec;
-      const href = `#${current.id}`;
+    if (currentMatch !== activeLink) {
+      activeLink = currentMatch;
       links.forEach(l => {
-        if (l.getAttribute('href') === href) {
+        if (l === activeLink) {
           l.setAttribute('aria-current', 'location');
-          activeLink = l;
         } else {
           l.removeAttribute('aria-current');
         }
       });
-    } else if (window.scrollY < 260) {
-      links.forEach(l => l.removeAttribute('aria-current'));
-      activeLink = null;
-    }
-    update();
-  }, {
-    rootMargin: '-72px 0px -40% 0px',
-    threshold: [0, 0.1, 0.25, 0.5, 0.75]
-  });
-
-  observedSections.forEach(s => sectionObserver.observe(s));
-
-  const onScroll = () => {
-    if (window.scrollY < 140 && activeLink) {
-      links.forEach(l => l.removeAttribute('aria-current'));
-      activeLink = null;
       update();
+    }
+  }
+
+  let scrollTicking = false;
+  const onScroll = () => {
+    if (!scrollTicking) {
+      scrollTicking = true;
+      requestAnimationFrame(() => {
+        scrollTicking = false;
+        syncActiveSection();
+      });
     }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  requestAnimationFrame(update);
-  setTimeout(update, 100);
+  const onResize = () => {
+    syncActiveSection();
+    update();
+  };
+  window.addEventListener('resize', onResize, { passive: true });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      syncActiveSection();
+      update();
+    });
+  }
+
+  requestAnimationFrame(() => {
+    syncActiveSection();
+    update();
+  });
+  setTimeout(() => {
+    syncActiveSection();
+    update();
+  }, 100);
 
   return () => {
     window.removeEventListener('resize', onResize);
     window.removeEventListener('scroll', onScroll);
-    sectionObserver.disconnect();
   };
 }
 
