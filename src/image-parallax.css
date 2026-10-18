@@ -1,0 +1,83 @@
+/**
+ * EG TECH — Smooth Image Parallax CSS
+ *
+ * Implements subtle, scroll-linked parallax for eligible content images:
+ * - Treatment 1: Cropping-tolerant photographs & illustrations inside stationary frames (#services)
+ * - Treatment 2: Website screenshots & device mockups with whole-image vertical drift (#philosophy, #work)
+ *
+ * Absolute rule: Protects #home hero, .header, dialogs, and logos.
+ */
+
+/* --------------------------------------------------------------------------
+   1. Treatment 1: Stationary Outer Frame with Image Inset Travel
+   -------------------------------------------------------------------------- */
+#services .service-media {
+  /* Stationary frame preserves 16px radius and clips overflowing image overscan */
+  overflow: hidden;
+  position: relative;
+}
+
+#services .service-media img[data-parallax="crop"] {
+  /* Subtle overscan (approx 11%) gives ample safety margin for ~5% travel */
+  scale: 1.11;
+  /* Dedicated scroll-linked vertical translation */
+  translate: 0 var(--parallax-y, 0px);
+  transform-origin: center center;
+}
+
+/* Service 2 illustration has object-fit: contain on subtle gradient background */
+#services .service-media--brand img[data-parallax="crop"] {
+  scale: 1.04;
+  translate: 0 var(--parallax-y, 0px);
+}
+
+/* --------------------------------------------------------------------------
+   2. Treatment 2: Whole-image Drift (Screenshots & Mockups)
+   -------------------------------------------------------------------------- */
+#philosophy .manifesto-image[data-parallax="drift"] {
+  /* Restrained whole-image drift (8–12px) without cropping device edges or text */
+  translate: 0 var(--parallax-y, 0px);
+  transform-origin: center center;
+}
+
+/* --------------------------------------------------------------------------
+   3. Touch & Mobile Devices (Keep static / preserve 100% native touch)
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
+  #services .service-media img[data-parallax="crop"],
+  #services .service-media--brand img[data-parallax="crop"] {
+    scale: 1 !important;
+    translate: 0 0 !important;
+  }
+
+  #philosophy .manifesto-image[data-parallax="drift"] {
+    translate: 0 0 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Reduced Motion & Global Motion Off Overrides
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-parallax],
+  [data-parallax="crop"],
+  [data-parallax="drift"],
+  #services .service-media img[data-parallax="crop"],
+  #services .service-media--brand img[data-parallax="crop"],
+  #philosophy .manifesto-image[data-parallax="drift"] {
+    scale: 1 !important;
+    translate: 0 0 !important;
+    transition: none !important;
+  }
+}
+
+:root[data-motion="off"] [data-parallax],
+:root[data-motion="off"] [data-parallax="crop"],
+:root[data-motion="off"] [data-parallax="drift"],
+:root[data-motion="off"] #services .service-media img[data-parallax="crop"],
+:root[data-motion="off"] #services .service-media--brand img[data-parallax="crop"],
+:root[data-motion="off"] #philosophy .manifesto-image[data-parallax="drift"] {
+  scale: 1 !important;
+  translate: 0 0 !important;
+  transition: none !important;
+}

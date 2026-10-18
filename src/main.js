@@ -26,10 +26,13 @@ import { initPricingFaqContactCinematic } from './pricing-faq-contact-cinematic.
 import { initFooterCinematic } from './footer-cinematic.js';
 import 'lenis/dist/lenis.css';
 import './smooth-scroll.css';
+import './image-parallax.css';
 import { initSmoothScroll, scrollToTarget } from './smooth-scroll.js';
+import { initImageParallax } from './image-parallax.js';
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const disposeSmoothScroll = initSmoothScroll();
+const disposeImageParallax = initImageParallax();
 const disposeIntro = startLogoIntro(reducedMotion);
 const root = document.documentElement;
 
@@ -632,6 +635,9 @@ if (import.meta.hot) {
     }
     if (typeof disposeSeoFeatureCards === 'function') {
       disposeSeoFeatureCards();
+    }
+    if (typeof disposeImageParallax === 'function') {
+      disposeImageParallax();
     }
     if (typeof disposeSmoothScroll === 'function') {
       disposeSmoothScroll();

@@ -18,6 +18,20 @@
 import Lenis from 'lenis';
 
 let lenisInstance = null;
+const scrollSubscribers = new Set();
+
+/**
+ * Registers a subscriber callback to receive scroll events directly from the
+ * active Lenis instance's auto-RAF tick.
+ * Returns an unregister function.
+ */
+export function onLenisScroll(callback) {
+  if (typeof callback !== 'function') return () => {};
+  scrollSubscribers.add(callback);
+  return () => {
+    scrollSubscribers.delete(callback);
+  };
+}
 
 /**
  * Checks whether smooth scrolling is permitted based on:
@@ -209,6 +223,16 @@ export function initSmoothScroll() {
             node.closest('#mobile-nav') !== null
           );
         }
+      });
+
+      lenisInstance.on('scroll', (event) => {
+        scrollSubscribers.forEach(cb => {
+          try {
+            cb(event);
+          } catch (err) {
+            console.error('[SmoothScroll] subscriber error:', err);
+          }
+        });
       });
     } catch (err) {
       console.warn('[SmoothScroll] Failed to instantiate Lenis:', err);
