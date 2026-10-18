@@ -3,6 +3,11 @@ import './redesign.css';
 import './studio.css';
 import './typography.css';
 import './legal.css';
+import 'lenis/dist/lenis.css';
+import './smooth-scroll.css';
+import { initSmoothScroll } from './smooth-scroll.js';
+
+const disposeSmoothScroll = initSmoothScroll();
 
 // Set current year
 const yearEl = document.querySelector('#year');

@@ -1,0 +1,40 @@
+/* EG TECH — Lenis Smooth Scrolling Enhancement
+ * Isolates smooth scroll styling and ensures zero conflict with browser native features.
+ */
+
+/* Lenis root dimensions and containment */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+/* When Lenis is driving the scroll interpolation, disable native CSS smooth scroll */
+html.lenis,
+html.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/* When site motion is off or reduced motion is requested, force instantaneous native behavior */
+:root[data-motion="off"] html,
+:root[data-motion="off"] body,
+html[data-motion="off"] {
+  scroll-behavior: auto !important;
+}
+
+/* Stop state should clip overflow without shifting layout */
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+/* Contain overscroll on dialogs, modals, and isolated scroll containers */
+dialog,
+[data-lenis-prevent],
+[data-lenis-prevent-wheel],
+[data-lenis-prevent-touch] {
+  overscroll-behavior: contain;
+}
+
+/* Disable pointer events on iframes during smooth scrolling */
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}

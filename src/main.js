@@ -24,8 +24,12 @@ import { initPortfolioCinematic } from './portfolio-cinematic.js';
 import { initProcessAboutManifestoCinematic } from './process-about-manifesto-cinematic.js';
 import { initPricingFaqContactCinematic } from './pricing-faq-contact-cinematic.js';
 import { initFooterCinematic } from './footer-cinematic.js';
+import 'lenis/dist/lenis.css';
+import './smooth-scroll.css';
+import { initSmoothScroll, scrollToTarget } from './smooth-scroll.js';
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const disposeSmoothScroll = initSmoothScroll();
 const disposeIntro = startLogoIntro(reducedMotion);
 const root = document.documentElement;
 
@@ -450,10 +454,10 @@ form.addEventListener('submit', event => {
     submitButton.disabled = false;
     preparingBrief = false;
     if (currentBrief) {
-      document.querySelector('.form-result').scrollIntoView({
-        behavior: reducedMotion.matches ? 'instant' : 'smooth',
-        block: 'nearest'
-      });
+      const resultEl = document.querySelector('.form-result');
+      if (resultEl) {
+        scrollToTarget(resultEl, { focusTarget: false });
+      }
     }
   }
 });
@@ -628,6 +632,9 @@ if (import.meta.hot) {
     }
     if (typeof disposeSeoFeatureCards === 'function') {
       disposeSeoFeatureCards();
+    }
+    if (typeof disposeSmoothScroll === 'function') {
+      disposeSmoothScroll();
     }
     disposeAnimatedNavbar();
     disposeIntro();

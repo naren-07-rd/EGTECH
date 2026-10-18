@@ -1,3 +1,5 @@
+import { scrollToTarget } from './smooth-scroll.js';
+
 // Service Accordion Navigation Controller
 // Opens corresponding <details> accordion item and scrolls smoothly into view
 // when triggered by footer service links or direct hash navigation.
@@ -17,16 +19,7 @@ export function initServiceAccordionNav() {
       summary.setAttribute('aria-expanded', 'true');
     }
 
-    // Scroll taking into account the sticky header
-    const header = document.querySelector('.header');
-    const headerHeight = header ? header.offsetHeight : 84;
-    const rect = item.getBoundingClientRect();
-    const targetY = window.scrollY + rect.top - headerHeight - 20;
-
-    window.scrollTo({
-      top: Math.max(0, targetY),
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
-    });
+    scrollToTarget(item, { focusTarget: true });
   }
 
   function handleLinkClick(event) {

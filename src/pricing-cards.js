@@ -1,3 +1,5 @@
+import { scrollToTarget } from './smooth-scroll.js';
+
 // Animated Pricing Card Component
 // Handles card selection, Choose -> Chosen text morphing, enquiry preselection,
 // and save-plan hearts with pop and 8-particle burst
@@ -217,13 +219,7 @@ export function initPricingCards() {
     if (shouldScroll) {
       const targetElement = document.querySelector('#brief-form') || document.querySelector('#brief');
       if (targetElement) {
-        const header = document.querySelector('.header');
-        const headerHeight = header ? header.offsetHeight : 84;
-        const targetY = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 16;
-        window.scrollTo({
-          top: Math.max(0, targetY),
-          behavior: reducedMotion.matches ? 'instant' : 'smooth'
-        });
+        scrollToTarget(targetElement, { focusTarget: false });
       }
       if (packageSelect) {
         packageSelect.focus({ preventScroll: true });
