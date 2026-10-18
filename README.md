@@ -1,77 +1,111 @@
-# EG TECH
+# EG TECH — Company Website
 
-Editorial company website for Empowering Growth Technology. Built with Vite and native HTML, CSS and JavaScript. Outfit and JetBrains Mono are self-hosted. The official supplied logo is preserved; the decorative chrome sculpture and WebGL dependencies have been removed.
+The official website for **EG TECH — Empowering Growth Technology**, a technology studio based in Tamil Nadu, India.
 
-## Run
+**Ideas today. Impact tomorrow.**
 
-Use Node.js 22.12+ or a supported newer LTS version.
+## About
 
-```
-npm install
-npm run dev
-npm test
-npm run build
-npm run preview
-```
+EG TECH helps businesses and founders build websites, digital products, and automated software. This website presents our services, selected projects, delivery process, and project enquiry form.
 
-Deploy the generated dist folder to a static host.
+## Features
 
-## Narrative sections
+- Responsive layouts for desktop, tablet, and mobile
+- Light and dark themes
+- Animated hero section and scroll effects
+- Smooth scrolling powered by Lenis
+- Subtle image parallax
+- Circular mobile navigation
+- Expandable service details
+- Portfolio previews and project dialogs
+- Website package selection linked to the enquiry form
+- FAQ carousel with progress indicators and a full question list
+- Project enquiries submitted through Formspree
+- Support for reduced-motion preferences
+- Terms and Conditions page
 
-- #services — 02 / Services & Capabilities
-- #work — 03 / Selected Work & Case Studies
-- #visibility — 04 / Search Infrastructure & Performance
-- #process — 05 / Engineering Methodology
-- #about — 06 / Studio Profile
-- #feedback — 07 / Studio Standards & Verified Impact
-- #philosophy — 08 / Studio Manifesto
-- #brief — 09 / Project Briefing
+## Tech Stack
 
-The hero uses an original lightweight systems diagram. The requested reference, https://www.tranzora.digital/, informed the light editorial style, blue accents and section rhythm; no reference branding or assets are included.
+| Technology | Purpose |
+|------------|---------|
+| HTML5 | Page structure |
+| CSS3 | Styling, responsive layouts, and animations |
+| JavaScript ES Modules | Interactions and application logic |
+| Vite | Local development and production builds |
+| Lenis | Smooth scrolling |
+| Formspree | Project enquiry submissions |
+| Switzer and JetBrains Mono | Typography |
+| Node.js test runner | Automated tests |
 
-## Loading animation
+## Getting Started
 
-The official logo has a depth reveal, orbital lines and a curtain exit. It runs only at document startup and valid brief preparation. Startup lasts approximately 2.3 seconds, with a 2.7-second fail-open deadline; keyboard or pointer interaction dismisses it early. Reduced-motion startup is near-immediate. Brief preparation uses a short 850ms transition, skipped for reduced motion. No upload or network progress is simulated.
+Install a Node.js version supported by the project's Vite version, then run:
 
-## Brief configuration
+    npm ci
+    npm run dev
 
-Copy .env.example to .env.local and set VITE_CONTACT_EMAIL to the real public business email, then rebuild. This is a public value, not a secret. Without it, visitors can prepare and download a text brief. With it, visitors can open an email draft and review/send through their own email application. There is no backend submission, analytics or saved form data.
+Open the local URL printed in the terminal.
 
-## Project evidence
+## Available Commands
 
-The user identified Tiruttani Quick and BidVerify AI as portfolio projects. The supplied Tiruttani Quick URL resolves to a live grocery-delivery website, with catalog and customer-app links. Its case study links to that site. BidVerify AI has no supplied public URL. Tiruttani Quick uses a locally stored screenshot of its actual storefront, linked to the live website. BidVerify AI uses identity artwork. Detailed delivery evidence and measured commercial outcomes remain unpublished; do not add unsupported results.
+| Command | Description |
+|---------|-------------|
+| npm run dev | Start the development server |
+| npm test | Run the automated tests |
+| npm run build | Generate the production website |
+| npm run preview | Preview the production build locally |
 
-The sub-50ms TTFB figure is explicitly an engineering target for suitable cached edge responses, not a measured site result or guarantee. Validate against the actual hosting, routes, regions and traffic before publishing any achieved figure.
+## Project Structure
 
-## Validation and launch
+    index.html        Main website
+    terms.html        Terms and Conditions
+    src/              Styles, interactions, and animation modules
+    public/           Images, fonts, icons, and robots.txt
+    tests/            Automated tests
+    scripts/          Additional verification scripts
+    vite.config.js    Build configuration
 
-Eight automated tests cover briefs, safe email encoding, fragment links, section order, sculpture removal and organization metadata. The production build passes. Browser verification confirmed the repaired manifesto heading, its scroll re-entry, and the actual Tiruttani Quick storefront preview, with no console warnings or errors. Earlier Lighthouse reports predate this redesign and are not current measurements.
+## Project Enquiries
 
-Before launch: set the real business contact email, confirm project case-study details, add canonical/Open Graph URLs for the final domain, and review the hosting privacy statement.
+The enquiry form uses Formspree to submit visitor details and project requirements.
 
-## Files
+It includes:
 
-- index.html: seven narratives, navigation, metadata, project briefing.
-- src/style.css: shared foundations and original component styling.
-- src/redesign.css: light editorial theme and advanced loader.
-- src/studio.css: seven-section design and systems illustration.
-- src/main.js: navigation, reveals, project dialogs and brief states.
-- src/loader.js: startup and form loading component.
-- src/brief.js: brief formatting and safe email draft links.
-- tests: functional and content-structure checks.
+- Name, email, and optional company
+- Multiple service selections
+- Website package, project scale, and timeline
+- Project description
+- Input validation and spam honeypot
+- Loading, success, and error states
+- Protection against duplicate submissions
 
-## Section-specific motion
+The receiving email address is managed in the Formspree dashboard.
 
-src/motion.js and src/motion.css add native section reveals, hero connection flow, desktop card tilt, a scroll-linked process timeline, ambient search/studio light passes, and menu/dialog/form-result transitions. The header pause control disables decorative motion. Reduced-motion preferences and offscreen/background suspension are built in. No animation dependency was added.
+When adapting this project, replace the Formspree endpoint in both
+`index.html` and `src/brief.js` with your own form endpoint.
 
-Latest browser verification succeeded on the reopened preview: pause/resume via keyboard, project dialogs, process progress, form loader/result, mobile and desktop layouts, with no console errors or warnings. The earlier blocked-tab limitation is resolved for these checks.
+Automated form tests use mocked responses. Confirm real delivery separately
+through the Formspree dashboard and receiving inbox.
 
-## Heading and portfolio repair
+## Deployment
 
-Headings now have a single word-translation reveal, without competing parent clipping, 3D rotation or blur. Tiruttani Quick displays its actual storefront screenshot inside a linked browser frame. Eight automated checks and the production build pass.
+Use these settings with a hosting provider that supports Vite:
 
+- Install command: `npm ci`
+- Build command: `npm run build`
+- Publish directory: `dist`
 
-## Recording-inspired motion
+The build includes the homepage and Terms and Conditions page.
 
-reference-motion.js and reference-motion.css add a hero entrance after the startup curtain, a continuous discipline marquee, scroll-lit studio copy, a parallax monogram, and a sticky five-stage desktop process timeline. Narrow or short viewports keep the vertical process layout. Pause and reduced-motion settings restore static content. Verified desktop stage progression, 390px mobile layout, pause/resume, and no browser warnings or errors. Eight checks and the production build pass.
+Install dependencies on the deployment host rather than uploading a local
+`node_modules` folder. Do not commit `.env` files or credentials.
 
+## Contact
+
+**EG TECH — Empowering Growth Technology**
+
+- Location: Tamil Nadu, India
+- Email: narenthiranath703@gmail.com
+- Phone: +91 7604921213
+
+**Your next big idea. Let’s build it.**

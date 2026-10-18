@@ -1,6 +1,41 @@
+# Dependencies
 node_modules/
+
+# Production builds
 dist/
+dist-ssr/
+
+# Environment variables and secrets
 .env
 .env.*
 !.env.example
+
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Test and browser verification output
+coverage/
+playwright-report/
+test-results/
+
+# Cache
+.vite/
+.cache/
+*.tsbuildinfo
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+# Generated verification screenshots
+screenshots/
