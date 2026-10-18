@@ -40,7 +40,7 @@ test('form rejects whitespace-only name and project description', () => {
 
 test('form markup has safe method and fallback action to prevent GET query exposure', () => {
   assert.match(html, /<form[^>]+method="POST"/i);
-  assert.match(html, /<form[^>]+action="javascript:void\(0\)"/i);
+  assert.match(html, /<form[^>]+action="(?:https:\/\/formspree\.io\/f\/mjygzedl|javascript:void\(0\))"/i);
 });
 
 test('form formatting does not use artificial 850ms delay', () => {

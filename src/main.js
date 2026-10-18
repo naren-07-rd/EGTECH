@@ -11,7 +11,7 @@ import { startReferenceMotion } from './reference-motion.js';
 import { startMotion } from './motion.js';
 import { startExpressiveMotion } from './expressive-motion.js';
 import { initPremiumMotion } from './premium-motion.js';
-import { createBrief, makeEmailLink, isContactEmail, validateBriefInput } from './brief.js';
+import { createBrief, makeEmailLink, isContactEmail, validateBriefInput, prepareFormData, submitEnquiry, FORMSPREE_ENDPOINT } from './brief.js';
 import { createLogoLoader, startLogoIntro } from './loader.js';
 import { initSeoFeatureCards } from './seo-feature-cards.js';
 import { initPricingCards } from './pricing-cards.js';
@@ -345,163 +345,148 @@ document.querySelector('.privacy-button').addEventListener('click', function() {
   }, this);
 });
 
-// Enquiry & brief workflow
+// Formspree Project Enquiry integration
 const form = document.querySelector('#brief-form');
-const contactEmail = (import.meta.env.VITE_CONTACT_EMAIL || '').trim() || 'narenthiranath703@gmail.com';
-const emailReady = isContactEmail(contactEmail);
+const submitButton = form?.querySelector('.form-submit');
+const formStatus = form?.querySelector('#brief-form-status');
+const formError = form?.querySelector('#brief-form-error');
+const formResult = form?.querySelector('.form-result');
+const resultDesc = form?.querySelector('#result-description');
 
-if (emailReady) {
-  document.querySelector('#form-help').textContent = 'Prepare your brief, then review and draft an email directly to EG TECH. Nothing is sent automatically.';
-}
+let isSubmitting = false;
 
-let currentBrief = '';
-let preparingBrief = false;
-const formLoader = createLogoLoader('form', 'Formatting your brief');
-formLoader.hidden = true;
-document.querySelector('.form-submit').after(formLoader);
-
-const formError = document.createElement('p');
-formError.id = 'brief-form-error';
-formError.className = 'form-privacy';
-formError.setAttribute('role', 'alert');
-formError.setAttribute('aria-live', 'assertive');
-formError.style.color = '#e04848';
-formError.hidden = true;
-formLoader.after(formError);
-
-form.addEventListener('submit', event => {
-  event.preventDefault();
-  if (preparingBrief) return;
-
-  // Clear previous validation alerts
-  formError.hidden = true;
-  formError.textContent = '';
-  form.querySelectorAll('[aria-invalid]').forEach(el => {
+function clearValidationErrors() {
+  if (formError) {
+    formError.hidden = true;
+    formError.textContent = '';
+  }
+  if (formStatus) {
+    formStatus.hidden = true;
+  }
+  if (formResult) {
+    formResult.hidden = true;
+  }
+  form?.querySelectorAll('[aria-invalid]').forEach(el => {
     el.removeAttribute('aria-invalid');
     el.removeAttribute('aria-describedby');
   });
+}
 
-  const data = new FormData(form);
-  const validation = validateBriefInput(data);
+if (form) {
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
 
-  if (!validation.valid) {
-    formError.textContent = validation.message;
-    formError.hidden = false;
-    const invalidField = form.querySelector(`[name="${validation.field}"]`);
-    if (invalidField) {
-      invalidField.setAttribute('aria-invalid', 'true');
-      invalidField.setAttribute('aria-describedby', 'brief-form-error');
-      invalidField.focus();
-    }
-    return;
-  }
+    // In-flight guard: prevent duplicate requests
+    if (isSubmitting) return;
 
-  const controls = [...form.elements].filter(control => !control.disabled);
-  const submitButton = document.querySelector('.form-submit');
-  preparingBrief = true;
-  currentBrief = '';
-  document.querySelector('.form-result').hidden = true;
-  controls.forEach(control => { control.disabled = true; });
-  submitButton.disabled = true;
-  form.setAttribute('aria-busy', 'true');
+    clearValidationErrors();
 
-  try {
-    // Generate brief instantaneously without artificial delay
-    currentBrief = createBrief(data);
-    document.querySelector('#brief-preview').textContent = currentBrief;
+    const rawData = new FormData(form);
 
-    const emailLink = makeEmailLink(contactEmail, currentBrief);
-    const emailButton = document.querySelector('#email-brief');
-    emailButton.hidden = !emailLink;
-    if (emailLink) {
-      emailButton.href = emailLink;
-      document.querySelector('#result-description').textContent = 'Your brief is ready. Open an email draft to review and send through your mail client, or copy/download it below. Nothing has been sent automatically.';
-    } else {
-      document.querySelector('#result-description').textContent = 'Your brief is ready in your browser. Copy or download a copy to share with EG TECH. No data has been sent over the network.';
-    }
-
-    document.querySelector('.form-result').hidden = false;
-    submitButton.innerHTML = 'Update project brief <span aria-hidden="true">↗</span>';
-  } catch {
-    currentBrief = '';
-    formError.textContent = 'Could not prepare the project brief. Your entered details have been preserved. Please try again.';
-    formError.hidden = false;
-    submitButton.innerHTML = 'Prepare project brief <span aria-hidden="true">↗</span>';
-  } finally {
-    formLoader.hidden = true;
-    form.removeAttribute('aria-busy');
-    controls.forEach(control => { control.disabled = false; });
-    submitButton.disabled = false;
-    preparingBrief = false;
-    if (currentBrief) {
-      const resultEl = document.querySelector('.form-result');
-      if (resultEl) {
-        scrollToTarget(resultEl, { focusTarget: false });
+    // Validate visitor inputs (preserves required-field and email validation)
+    const validation = validateBriefInput(rawData);
+    if (!validation.valid) {
+      if (formError) {
+        formError.textContent = validation.message;
+        formError.hidden = false;
       }
+      const invalidField = form.querySelector(`[name="${validation.field}"]`);
+      if (invalidField) {
+        invalidField.setAttribute('aria-invalid', 'true');
+        invalidField.setAttribute('aria-describedby', 'brief-form-error');
+        invalidField.focus();
+      }
+      return;
     }
-  }
-});
 
-form.addEventListener('input', event => {
-  if (event.target && event.target.hasAttribute('aria-invalid')) {
-    event.target.removeAttribute('aria-invalid');
-    event.target.removeAttribute('aria-describedby');
-  }
-  if (!document.querySelector('.form-result').hidden) {
-    document.querySelector('.form-result').hidden = true;
-    currentBrief = '';
-  }
-  formError.hidden = true;
-});
+    // Spam honeypot check (Formspree _gotcha)
+    if (rawData.get('_gotcha')) {
+      return;
+    }
 
-form.addEventListener('change', event => {
-  if (event.target && event.target.hasAttribute('aria-invalid')) {
-    event.target.removeAttribute('aria-invalid');
-    event.target.removeAttribute('aria-describedby');
-  }
-  if (!document.querySelector('.form-result').hidden) {
-    document.querySelector('.form-result').hidden = true;
-    currentBrief = '';
-  }
-  formError.hidden = true;
-});
+    // Prepare payload collecting ALL selected services, subject, and brief
+    const payload = prepareFormData(form);
 
-// Optional online enquiry endpoint support
-const enquiryApiEndpoint = (import.meta.env.VITE_ENQUIRY_API_ENDPOINT || '').trim();
-const submitApiBtn = document.querySelector('#submit-api-brief');
-if (submitApiBtn && enquiryApiEndpoint) {
-  submitApiBtn.hidden = false;
-  submitApiBtn.addEventListener('click', async () => {
-    if (!currentBrief || submitApiBtn.disabled) return;
-    submitApiBtn.disabled = true;
-    const origText = submitApiBtn.innerHTML;
-    submitApiBtn.textContent = 'Sending...';
+    // In-flight state: disable submit button, show "Sending…", keep entered info visible
+    isSubmitting = true;
+    form.setAttribute('aria-busy', 'true');
+    const origBtnContent = submitButton.innerHTML;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending…';
+
     try {
-      const response = await fetch(enquiryApiEndpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: form.querySelector('#field-name')?.value.trim(),
-          email: form.querySelector('#field-email')?.value.trim(),
-          company: form.querySelector('#field-company')?.value.trim(),
-          package: form.querySelector('#field-package')?.value,
-          budget: form.querySelector('#field-budget')?.value,
-          timeline: form.querySelector('#field-timeline')?.value,
-          idea: form.querySelector('#field-idea')?.value.trim(),
-          brief: currentBrief
-        })
+      await submitEnquiry(payload);
+
+      // Only after successful Formspree response: display confirmation message
+      const successMsg = 'Thank you! Your enquiry has been submitted. We’ll get back to you soon.';
+      const liveResultDesc = form?.querySelector('#result-description');
+      if (liveResultDesc) {
+        liveResultDesc.textContent = successMsg;
+      } else if (formStatus) {
+        formStatus.textContent = successMsg;
+      }
+      if (formStatus) formStatus.hidden = false;
+      if (formResult && formResult !== formStatus) formResult.hidden = false;
+
+      // Reset form and synchronize custom service chips and package controls with default state
+      form.reset();
+      form.querySelectorAll('.service-chips input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
       });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      document.querySelector('#result-description').textContent = 'Your enquiry was successfully sent to EG TECH! We will review your project brief and follow up promptly.';
-      submitApiBtn.textContent = 'Sent! ✓';
-    } catch {
-      formError.textContent = 'Could not send online. Please use the "Open email draft" or "Copy brief" options below to send your brief.';
-      formError.hidden = false;
-      submitApiBtn.innerHTML = origText;
-      submitApiBtn.disabled = false;
+      const packageSelect = form.querySelector('#field-package');
+      if (packageSelect) {
+        packageSelect.value = 'Not sure yet';
+        packageSelect.classList.remove('is-highlighted');
+        packageSelect.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      const budgetSelect = form.querySelector('#field-budget');
+      if (budgetSelect) budgetSelect.selectedIndex = 0;
+      const timelineSelect = form.querySelector('#field-timeline');
+      if (timelineSelect) timelineSelect.selectedIndex = 0;
+
+      // Scroll to confirmation message
+      const targetMessage = formStatus || formResult;
+      if (targetMessage) {
+        scrollToTarget(targetMessage, { focusTarget: false });
+      }
+    } catch (err) {
+      // On error: preserve all entered values and selections, re-enable submit button
+      const isNetwork = err instanceof TypeError || (err && err.name === 'TypeError');
+      const errorMessage = isNetwork
+        ? 'Network connection issue. Please check your internet connection and try again.'
+        : (err.message || 'Could not send your enquiry. Please try again or email us directly at narenthiranath703@gmail.com.');
+
+      if (formError) {
+        formError.textContent = errorMessage;
+        formError.hidden = false;
+      }
+    } finally {
+      form.removeAttribute('aria-busy');
+      submitButton.disabled = false;
+      submitButton.innerHTML = origBtnContent;
+      isSubmitting = false;
+    }
+  });
+
+  form.addEventListener('input', event => {
+    if (event.target && event.target.hasAttribute('aria-invalid')) {
+      event.target.removeAttribute('aria-invalid');
+      event.target.removeAttribute('aria-describedby');
+    }
+    if (formError) {
+      formError.hidden = true;
+      formError.textContent = '';
+    }
+  });
+
+  form.addEventListener('change', event => {
+    if (event.target && event.target.hasAttribute('aria-invalid')) {
+      event.target.removeAttribute('aria-invalid');
+      event.target.removeAttribute('aria-describedby');
+    }
+    if (formError) {
+      formError.hidden = true;
+      formError.textContent = '';
     }
   });
 }

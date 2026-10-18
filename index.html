@@ -948,7 +948,9 @@
 
             <!-- RIGHT: Form filling -->
             <div class="brief-form-column reveal">
-              <form id="brief-form" class="brief-form" method="POST" action="javascript:void(0)" novalidate>
+              <form id="brief-form" class="brief-form" method="POST" action="https://formspree.io/f/mjygzedl" novalidate>
+                <input type="hidden" name="_subject" value="New EG TECH Project Enquiry" />
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
                 <p class="eyebrow">PROJECT ENQUIRY</p>
                 <fieldset>
                   <legend>What services do you need?</legend>
@@ -1005,19 +1007,12 @@
                     </select>
                   </label>
                 </div>
-                <button class="button form-submit" type="submit">Prepare project brief <span aria-hidden="true">↗</span></button>
-                <p class="form-privacy" id="form-help">Your details stay in this browser. Prepare a brief to review, copy, or download.</p>
-                <div class="form-result" hidden aria-live="polite">
-                  <h3>Your brief is ready.</h3>
-                  <p id="result-description">Your brief has been prepared in your browser. Download or copy it to share with EG TECH. Nothing has been sent over the network.</p>
-                  <details class="brief-review"><summary>Review your brief</summary><pre id="brief-preview"></pre></details>
-                  <div class="result-actions">
-                    <button class="button button-small" type="button" id="copy-brief">Copy brief 📋</button>
-                    <button class="button button-small" type="button" id="download-brief">Download brief ↓</button>
-                    <a class="button button-small" id="email-brief" hidden>Open email draft ↗</a>
-                    <button class="button button-small" type="button" id="submit-api-brief" hidden>Submit online ↗</button>
-                  </div>
+                <button class="button form-submit" type="submit">Submit project enquiry <span aria-hidden="true">↗</span></button>
+                <p class="form-privacy" id="form-help">Submit your project details directly to EG TECH. We will review your requirements and follow up promptly.</p>
+                <div id="brief-form-status" class="form-status form-result" role="status" aria-live="polite" hidden>
+                  <p id="result-description" class="form-success-text">Thank you! Your enquiry has been submitted. We’ll get back to you soon.</p>
                 </div>
+                <div id="brief-form-error" class="form-error" role="alert" aria-live="assertive" hidden></div>
               </form>
             </div>
           </div>

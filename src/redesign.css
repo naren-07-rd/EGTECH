@@ -1649,6 +1649,10 @@ html{scroll-padding-top:84px}section{scroll-margin-top:84px}section{scroll-margi
 .brief-form .form-submit:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
 .brief-form .form-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .brief-form .form-privacy{font-size:13px;line-height:1.5;color:var(--muted);margin:0}
+.brief-form .form-status,.brief-form .form-success{background:color-mix(in srgb,#10b981 12%,transparent);border:1px solid color-mix(in srgb,#10b981 35%,transparent);color:#10b981;padding:16px 20px;border-radius:14px;font-size:15px;line-height:1.5;font-weight:500;margin-top:10px}
+:root[data-theme=light] .brief-form .form-status,:root[data-theme=light] .brief-form .form-success{background:#ecfdf5;border-color:#059669;color:#065f46}
+.brief-form .form-error{background:color-mix(in srgb,#e04848 12%,transparent);border:1px solid color-mix(in srgb,#e04848 35%,transparent);color:#ff6b6b;padding:14px 18px;border-radius:14px;font-size:14.5px;line-height:1.5;font-weight:500;margin-top:10px}
+:root[data-theme=light] .brief-form .form-error{background:#fef2f2;border-color:#ef4444;color:#b91c1c}
 .brief-form .form-result{border-left:2px solid var(--accent);padding:8px 0 8px 20px;margin-top:10px}
 .brief-contact-panel{width:100%;box-sizing:border-box}
 .brief-contact-card{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:32px;box-sizing:border-box;width:100%;box-shadow:0 16px 36px -12px rgba(0,0,0,.35);position:static;display:flex;flex-direction:column;text-align:left}
