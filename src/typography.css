@@ -42,7 +42,17 @@ main h1 {
   line-height: 1.05;
 }
 .hero h1 > .hero-line {
+  display: block;
   color: var(--text);
+}
+:root[data-theme=dark] .hero h1,
+:root[data-theme=dark] .hero h1 > .hero-line,
+:root:not([data-theme=light]) .hero h1,
+:root:not([data-theme=light]) .hero h1 > .hero-line {
+  color: #fff;
+}
+.hero h1 br {
+  display: none !important;
 }
 
 /* 2. Section headings: 40–56px desktop, 32–40px mobile */
@@ -64,7 +74,6 @@ main h2,
 }
 
 /* Headings emphasis: clean italic or accent without unintended Georgia */
-main h1 em,
 main h2 em,
 .section-heading h2 em,
 .system-heading em,
@@ -83,8 +92,14 @@ main h2 em,
 }
 
 .hero h1 em {
+  font-family: inherit;
   font-style: italic;
-  color: var(--accent-text);
+  font-weight: inherit;
+  color: var(--text);
+}
+:root[data-theme=dark] .hero h1 em,
+:root:not([data-theme=light]) .hero h1 em {
+  color: #fff;
 }
 
 .hero h1 em:before,

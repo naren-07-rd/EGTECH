@@ -524,15 +524,18 @@ if (copyButton) {
 }
 
 // Download brief action
-document.querySelector('#download-brief').addEventListener('click', () => {
-  if (!currentBrief) return;
-  const url = URL.createObjectURL(new Blob([currentBrief], { type: 'text/plain;charset=utf-8' }));
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'EG-TECH-project-brief.txt';
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-});
+const downloadButton = document.querySelector('#download-brief');
+if (downloadButton) {
+  downloadButton.addEventListener('click', () => {
+    if (!currentBrief) return;
+    const url = URL.createObjectURL(new Blob([currentBrief], { type: 'text/plain;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'EG-TECH-project-brief.txt';
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+}
 
 // Highlighted Feature Cards (SEO & Performance)
 const disposeSeoFeatureCards = initSeoFeatureCards();
