@@ -467,7 +467,7 @@ export function initProcessAboutManifestoCinematic() {
     const eyebrow = philosophySection.querySelector('.eyebrow');
     const h2 = philosophySection.querySelector('h2');
     const principlesWrap = philosophySection.querySelector('.manifesto-principles');
-    const principles = Array.from(philosophySection.querySelectorAll('.manifesto-principles p'));
+    const principles = Array.from(philosophySection.querySelectorAll('.manifesto-principle'));
     const bottomWrap = philosophySection.querySelector('.manifesto-bottom');
     const bottomText = bottomWrap?.querySelector('p');
     const bottomBtn = bottomWrap?.querySelector('.button');

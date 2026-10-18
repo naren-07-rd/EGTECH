@@ -100,8 +100,13 @@ export function initFaqCarousel() {
   function updateTabsUI() {
     dots.forEach((dot, idx) => {
       const isActive = idx === currentIndex;
+      const isCompleted = idx < currentIndex;
+      const isUpcoming = idx > currentIndex;
+
       dot.setAttribute('aria-selected', String(isActive));
       dot.classList.toggle('is-active', isActive);
+      dot.classList.toggle('is-completed', isCompleted);
+      dot.classList.toggle('is-upcoming', isUpcoming);
       dot.tabIndex = isActive ? 0 : -1;
     });
   }
@@ -113,6 +118,8 @@ export function initFaqCarousel() {
       if (idx === currentIndex) {
         const pct = Math.min(100, Math.max(0, fraction * 100));
         fill.style.width = `${pct}%`;
+      } else if (idx < currentIndex) {
+        fill.style.width = '100%';
       } else {
         fill.style.width = '0%';
       }
@@ -266,6 +273,7 @@ export function initFaqCarousel() {
   // Indicator Dots
   dots.forEach((dot, idx) => {
     listen(dot, 'click', () => {
+      isFocused = false;
       goToSlide(idx, 'manual');
     });
 
@@ -284,14 +292,17 @@ export function initFaqCarousel() {
       if (targetIdx !== -1) {
         event.preventDefault();
         dots[targetIdx].focus();
+        isFocused = false;
         goToSlide(targetIdx, 'manual');
       }
     });
   });
 
-  // Keyboard focus entering carousel pauses autoplay to avoid replacing content during interaction
-  listen(carousel, 'focusin', () => {
-    isFocused = true;
+  // Keyboard focus entering slide content pauses autoplay to avoid replacing content during interaction
+  listen(carousel, 'focusin', event => {
+    if (event.target && event.target.closest('.faq-slide')) {
+      isFocused = true;
+    }
   });
 
   listen(carousel, 'focusout', event => {
