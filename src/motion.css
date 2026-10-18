@@ -1,5 +1,4 @@
 /* Motion is decorative: content stays readable without JS or animation. */
-.motion-control{width:38px;height:44px;font-size:17px;color:var(--muted);flex-shrink:0;border-radius:50%}.motion-control:hover{color:var(--accent-text)}.motion-control:disabled{opacity:.5}
 .footer-section-nav a{position:relative}.footer-section-nav a:after{content:'';position:absolute;bottom:5px;left:0;width:100%;height:1px;background:var(--accent-text);transform:scaleX(0);transform-origin:right;transition:transform .3s}.footer-section-nav a:hover:after{transform:scaleX(1);transform-origin:left}
 .desktop-nav a,.eg-navbar__link{text-decoration:none!important;border-bottom:none!important}
 .desktop-nav a:after,.desktop-nav a:before,.eg-navbar__link:after,.eg-navbar__link:before{display:none!important;content:none!important}
@@ -24,7 +23,7 @@
 @keyframes blueprint-scan{0%,25%{transform:translateY(-100%)}80%,100%{transform:translateY(100%)}}
 @keyframes studio-light{0%,20%{transform:translateX(-100%)}80%,100%{transform:translateX(100%)}}
 :root[data-motion=off] *, :root[data-motion=off] *:before,:root[data-motion=off] *:after{animation:none!important;transition:none!important}
-@media(max-width:370px){.motion-control{width:26px;font-size:14px}.header-actions{gap:2px}}
+@media(max-width:370px){.header-actions{gap:4px}}
 @media(prefers-reduced-motion:reduce){.case-cover{transform:none!important}}
 
 /* Expressive scroll and pointer interactions. */

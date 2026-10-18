@@ -4,13 +4,8 @@ export function startMotion(preference) {
   const cleanups = [];
   const animations = new Set();
   const visible = new Set();
-  let paused = false;
   let frame = 0;
-  const enabled = () => !paused && !preference.matches && !document.hidden;
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'motion-control';
-  document.querySelector('.header-actions').prepend(button);
+  const enabled = () => !preference.matches && !document.hidden;
 
   function listen(target, type, callback, options) {
     target.addEventListener(type, callback, options);
@@ -26,11 +21,6 @@ export function startMotion(preference) {
   }
   function sync() {
     root.dataset.motion = enabled() ? 'on' : 'off';
-    button.disabled = preference.matches;
-    button.textContent = paused || preference.matches ? '▷' : 'Ⅱ';
-    button.setAttribute('aria-label', preference.matches ? 'Motion reduced by device preference' : paused ? 'Resume animations' : 'Pause animations');
-    button.setAttribute('aria-pressed', String(paused || preference.matches));
-    button.title = button.getAttribute('aria-label');
     if (!enabled()) {
       animations.forEach(animation => animation.cancel());
       document.querySelectorAll('.case-cover').forEach(card => card.style.removeProperty('transform'));
@@ -38,7 +28,6 @@ export function startMotion(preference) {
       frame = 0;
     }
   }
-  listen(button, 'click', () => { paused = !paused; sync(); });
   listen(preference, 'change', sync);
   listen(document, 'visibilitychange', sync);
 
@@ -108,19 +97,15 @@ export function startMotion(preference) {
       if (summary) summary.setAttribute('aria-expanded', String(details.open));
     });
   });
-  const menu = document.querySelector('#mobile-nav');
   const dialog = document.querySelector('#project-dialog');
   const result = document.querySelector('.form-result');
   const mutations = new MutationObserver(records => {
     for (const { target, attributeName } of records) {
-      if (target === menu && attributeName === 'hidden' && !menu.hidden) {
-        [...menu.children].forEach((link, i) => animate(link, rise, { delay: i * 35, duration: 380 }));
-      } else if (target === dialog && attributeName === 'open' && dialog.open) {
+      if (target === dialog && attributeName === 'open' && dialog.open) {
         animate(dialog, [{ opacity: 0, transform: 'translateY(18px) scale(.97)' }, { opacity: 1, transform: 'translateY(0) scale(1)' }], { duration: 380 });
       } else if (target === result && !result.hidden) animate(result, rise, { duration: 500 });
     }
   });
-  mutations.observe(menu, { attributes: true, attributeFilter: ['hidden'] });
   mutations.observe(dialog, { attributes: true, attributeFilter: ['open'] });
   mutations.observe(result, { attributes: true, attributeFilter: ['hidden'] });
   sync();
@@ -128,7 +113,7 @@ export function startMotion(preference) {
     observer.disconnect(); ambient.disconnect(); mutations.disconnect();
     cleanups.forEach(cleanup => cleanup());
     animations.forEach(animation => animation.cancel());
-    cancelAnimationFrame(frame); button.remove();
+    cancelAnimationFrame(frame);
     root.dataset.motion = 'off';
   };
 }

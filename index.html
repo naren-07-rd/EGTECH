@@ -35,9 +35,72 @@
             <rect class="eg-navbar__rect" rx="100" ry="100" />
           </svg>
         </nav>
-        <div class="header-actions"><button class="theme-toggle" aria-label="Switch to dark theme" title="Switch theme"><span aria-hidden="true">◐</span></button><a class="button button-small header-cta" href="#brief">Discuss your project <span aria-hidden="true">↗</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav">Menu <span aria-hidden="true">+</span></button></div>
+        <div class="header-actions"><button class="theme-toggle" aria-label="Switch to dark theme" title="Switch theme"><span aria-hidden="true">◐</span></button><a class="button button-small header-cta" href="#brief">Discuss your project <span aria-hidden="true">↗</span></a><button class="menu-toggle eg-radial-trigger" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation menu"><span class="eg-hamburger-lines" aria-hidden="true"><span class="eg-line eg-line--1"></span><span class="eg-line eg-line--2"></span><span class="eg-line eg-line--3"></span></span></button></div>
       </div>
-      <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden><a href="#work">Work</a><a href="#services">Services</a><a href="#process">Process</a><a href="#about">About</a><a href="#faq">FAQ</a><a class="mobile-cta" href="#brief">Discuss your project ↗</a></nav>
+      <nav id="mobile-nav" class="eg-mobile-radial-overlay" aria-label="Mobile navigation" hidden>
+        <div class="eg-radial-backdrop" aria-hidden="true"></div>
+        <div class="eg-radial-scroller" data-lenis-prevent>
+          <div class="eg-radial-stage">
+            <div class="eg-mobile-radial-menu">
+              <a class="eg-radial-item eg-radial-item--work" href="#work" aria-label="Work">
+                <svg class="eg-radial-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                </svg>
+                <span class="eg-radial-label">Work</span>
+              </a>
+              <a class="eg-radial-item eg-radial-item--services" href="#services" aria-label="Services">
+                <svg class="eg-radial-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                  <polyline points="2 17 12 22 22 17"/>
+                  <polyline points="2 12 12 17 22 12"/>
+                </svg>
+                <span class="eg-radial-label">Services</span>
+              </a>
+              <a class="eg-radial-item eg-radial-item--process" href="#process" aria-label="Process">
+                <svg class="eg-radial-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="3" width="6" height="6" rx="1"/>
+                  <rect x="15" y="15" width="6" height="6" rx="1"/>
+                  <path d="M6 9v3a3 3 0 0 0 3 3h6"/>
+                  <polyline points="15 9 18 12 15 15"/>
+                </svg>
+                <span class="eg-radial-label">Process</span>
+              </a>
+              <a class="eg-radial-item eg-radial-item--about" href="#about" aria-label="About">
+                <svg class="eg-radial-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span class="eg-radial-label">About</span>
+              </a>
+              <a class="eg-radial-item eg-radial-item--faq" href="#faq" aria-label="FAQ">
+                <svg class="eg-radial-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                <span class="eg-radial-label">FAQ</span>
+              </a>
+              <a class="eg-radial-item eg-radial-item--contact" href="#brief" aria-label="Contact">
+                <svg class="eg-radial-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <span class="eg-radial-label">Contact</span>
+              </a>
+
+              <!-- Central circular control (becomes close button) -->
+              <button type="button" class="eg-radial-center-btn" aria-label="Close navigation menu">
+                <span class="eg-hamburger-lines is-active" aria-hidden="true">
+                  <span class="eg-line eg-line--1"></span>
+                  <span class="eg-line eg-line--2"></span>
+                  <span class="eg-line eg-line--3"></span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
     </header>
 
     <main id="main">
