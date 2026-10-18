@@ -1264,10 +1264,12 @@ html{scroll-padding-top:84px}section{scroll-margin-top:84px}section{scroll-margi
   top: 0;
   left: 0;
   height: 100%;
-  width: 0%;
+  width: 100%;
   background: #3b82f6; /* bright blue */
   border-radius: inherit;
-  will-change: width;
+  transform-origin: left center;
+  transform: scaleX(0);
+  will-change: transform;
 }
 
 /* Completed segments: muted blue */
@@ -1276,7 +1278,7 @@ html{scroll-padding-top:84px}section{scroll-margin-top:84px}section{scroll-margi
 }
 
 .faq-dot.is-completed .faq-dot__fill {
-  width: 100% !important;
+  transform: scaleX(1) !important;
   background: #254473;
 }
 
@@ -1292,6 +1294,7 @@ html{scroll-padding-top:84px}section{scroll-margin-top:84px}section{scroll-margi
 
 .faq-dot.is-active .faq-dot__fill {
   background: #3b82f6;
+  transform-origin: left center;
 }
 
 :root[data-theme=light] .faq-dot.is-active .faq-dot__fill {
@@ -1306,7 +1309,7 @@ html{scroll-padding-top:84px}section{scroll-margin-top:84px}section{scroll-margi
 
 .faq-dot.is-upcoming .faq-dot__fill,
 .faq-dot:not(.is-completed):not(.is-active) .faq-dot__fill {
-  width: 0% !important;
+  transform: scaleX(0) !important;
 }
 
 :root[data-theme=light] .faq-dot.is-upcoming .faq-dot__bar,

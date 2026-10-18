@@ -49,8 +49,7 @@ export function initFaqCarousel() {
   }
 
   let currentIndex = 0;
-  // Under prefers-reduced-motion or if motion is off, start with autoplay off
-  let isManuallyPaused = !isMotionAllowed();
+  let isManuallyPaused = false;
   let isFocused = false;
   let isVisible = false;
   let isDocumentVisible = !document.hidden;
@@ -76,7 +75,6 @@ export function initFaqCarousel() {
            isVisible &&
            isDocumentVisible &&
            !isAllExpanded &&
-           !isTransitioning &&
            isMotionAllowed();
   }
 
@@ -112,16 +110,16 @@ export function initFaqCarousel() {
   }
 
   function updateProgressUI(fraction) {
+    const clampedFraction = Math.min(1, Math.max(0, fraction));
     dots.forEach((dot, idx) => {
       const fill = dot.querySelector('.faq-dot__fill');
       if (!fill) return;
       if (idx === currentIndex) {
-        const pct = Math.min(100, Math.max(0, fraction * 100));
-        fill.style.width = `${pct}%`;
+        fill.style.transform = `scaleX(${clampedFraction})`;
       } else if (idx < currentIndex) {
-        fill.style.width = '100%';
+        fill.style.transform = 'scaleX(1)';
       } else {
-        fill.style.width = '0%';
+        fill.style.transform = 'scaleX(0)';
       }
     });
   }
@@ -155,11 +153,7 @@ export function initFaqCarousel() {
     if (targetIndex < 0) targetIndex = slides.length - 1;
     if (targetIndex >= slides.length) targetIndex = 0;
 
-    if (targetIndex === currentIndex && !isTransitioning) return;
-
-    if (source === 'manual') {
-      announceSlide(targetIndex);
-    }
+    const isSameSlide = targetIndex === currentIndex;
 
     if (transitionTimeoutId) {
       clearTimeout(transitionTimeoutId);
@@ -167,15 +161,26 @@ export function initFaqCarousel() {
     }
 
     const prevIndex = currentIndex;
-    const outgoingSlide = slides[prevIndex];
-    const incomingSlide = slides[targetIndex];
-
     currentIndex = targetIndex;
+
+    if (source === 'manual') {
+      announceSlide(targetIndex);
+    }
+
+    // 1. Reset authoritative elapsed time and start active segment countdown fresh from 0%
     elapsedTime = 0;
     lastTimestamp = null;
-    updateProgressUI(0);
     updateTabsUI();
+    updateProgressUI(0);
     updateCounterUI();
+
+    // Clicking currently active segment restarts its 5s countdown fresh without re-animating slides
+    if (isSameSlide) {
+      return;
+    }
+
+    const outgoingSlide = slides[prevIndex];
+    const incomingSlide = slides[targetIndex];
 
     const motionOk = isMotionAllowed();
 
@@ -220,7 +225,11 @@ export function initFaqCarousel() {
     incomingSlide.removeAttribute('inert');
 
     transitionTimeoutId = setTimeout(() => {
-      outgoingSlide.classList.remove('is-leaving');
+      slides.forEach((slide, idx) => {
+        if (idx !== currentIndex) {
+          slide.classList.remove('is-leaving', 'is-active');
+        }
+      });
       isTransitioning = false;
       transitionTimeoutId = null;
       updateStageHeight();
@@ -228,25 +237,36 @@ export function initFaqCarousel() {
   }
 
   function tick(timestamp) {
-    if (shouldAutoplayRun()) {
-      if (lastTimestamp !== null) {
-        const delta = timestamp - lastTimestamp;
-        elapsedTime += delta;
-        if (elapsedTime >= HOLD_DURATION) {
-          elapsedTime = 0;
-          lastTimestamp = null;
-          updateProgressUI(1);
-          const nextIndex = (currentIndex + 1) % slides.length;
-          goToSlide(nextIndex, 'auto');
-          return;
-        }
-      }
-      lastTimestamp = timestamp;
-      updateProgressUI(elapsedTime / HOLD_DURATION);
-    } else {
-      lastTimestamp = null;
-    }
     animFrameId = requestAnimationFrame(tick);
+
+    if (!shouldAutoplayRun()) {
+      lastTimestamp = null;
+      return;
+    }
+
+    if (lastTimestamp === null) {
+      lastTimestamp = timestamp;
+      return;
+    }
+
+    const delta = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
+
+    // Guard against huge deltas (e.g. system sleep/wake or tab freeze)
+    if (delta > 1000) {
+      return;
+    }
+
+    elapsedTime += delta;
+
+    if (elapsedTime >= HOLD_DURATION) {
+      elapsedTime = 0;
+      updateProgressUI(1);
+      const nextIndex = (currentIndex + 1) % slides.length;
+      goToSlide(nextIndex, 'auto');
+    } else {
+      updateProgressUI(elapsedTime / HOLD_DURATION);
+    }
   }
 
   // Prev / Next Navigation
@@ -302,6 +322,7 @@ export function initFaqCarousel() {
   listen(carousel, 'focusin', event => {
     if (event.target && event.target.closest('.faq-slide')) {
       isFocused = true;
+      lastTimestamp = null;
     }
   });
 
@@ -331,31 +352,38 @@ export function initFaqCarousel() {
   }
 
   // IntersectionObserver for meaningful visibility
-  const visibilityObserver = new IntersectionObserver(
-    entries => {
-      for (const entry of entries) {
-        isVisible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
-      }
-    },
-    { threshold: [0, 0.25, 0.5] }
-  );
-  visibilityObserver.observe(section);
+  let visibilityObserver = null;
+  if (typeof IntersectionObserver !== 'undefined') {
+    visibilityObserver = new IntersectionObserver(
+      entries => {
+        for (const entry of entries) {
+          const nextVisible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+          if (!nextVisible && isVisible) {
+            lastTimestamp = null;
+          }
+          isVisible = nextVisible;
+        }
+      },
+      { threshold: [0, 0.25, 0.5] }
+    );
+    visibilityObserver.observe(section);
+  } else {
+    isVisible = true;
+  }
 
   // Tab visibility changes
   function onVisibilityChange() {
     isDocumentVisible = !document.hidden;
+    if (!isDocumentVisible) {
+      lastTimestamp = null;
+    }
   }
   listen(document, 'visibilitychange', onVisibilityChange);
 
   // Motion preference changes & Site motion toggle changes
   function syncMotionState() {
+    lastTimestamp = null;
     syncPlayButtonUI();
-    if (!isMotionAllowed()) {
-      isManuallyPaused = true;
-      elapsedTime = 0;
-      updateProgressUI(0);
-      syncPlayButtonUI();
-    }
   }
 
   listen(reducedMotionQuery, 'change', syncMotionState);
@@ -413,7 +441,7 @@ export function initFaqCarousel() {
   return function cleanup() {
     if (animFrameId) cancelAnimationFrame(animFrameId);
     if (transitionTimeoutId) clearTimeout(transitionTimeoutId);
-    visibilityObserver.disconnect();
+    if (visibilityObserver) visibilityObserver.disconnect();
     motionObserver.disconnect();
     if (resizeObserver) resizeObserver.disconnect();
     eventCleanups.forEach(fn => fn());

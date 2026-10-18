@@ -146,3 +146,26 @@ test('initFaqCarousel is properly imported, called, and disposed in main.js', ()
   assert.match(mainJs, /const\s+disposeFaqCarousel\s*=\s*initFaqCarousel\(\)/);
   assert.match(mainJs, /disposeFaqCarousel\(\)/);
 });
+
+test('FAQ progress timer uses transform-based scaleX fill, single authoritative state, and correct color tokens', () => {
+  // Transform-based fill with transform-origin: left
+  assert.match(redesignCss, /\.faq-dot__fill\s*\{[^}]*transform-origin:\s*left/);
+  assert.match(redesignCss, /\.faq-dot__fill\s*\{[^}]*transform:\s*scaleX\(0\)/);
+  assert.match(redesignCss, /\.faq-dot\.is-completed\s+\.faq-dot__fill\s*\{[^}]*transform:\s*scaleX\(1\)\s*!important/);
+
+  // Segment colors: bright blue for active (#3b82f6 / #2563eb), muted blue for completed (#254473 / #93b3e8)
+  assert.match(redesignCss, /\.faq-dot\.is-completed\s+\.faq-dot__fill\s*\{[^}]*background:\s*#254473/);
+  assert.match(redesignCss, /:root\[data-theme=light\]\s+\.faq-dot\.is-completed\s+\.faq-dot__fill\s*\{[^}]*background:\s*#93b3e8/);
+  assert.match(redesignCss, /\.faq-dot\.is-active\s+\.faq-dot__fill\s*\{[^}]*background:\s*#3b82f6/);
+  assert.match(redesignCss, /:root\[data-theme=light\]\s+\.faq-dot\.is-active\s+\.faq-dot__fill\s*\{[^}]*background:\s*#2563eb/);
+
+  // Single authoritative elapsed time state and unbroken RAF tick loop
+  assert.match(faqJs, /animFrameId\s*=\s*requestAnimationFrame\(tick\);/);
+  assert.match(faqJs, /updateProgressUI\(elapsedTime\s*\/\s*HOLD_DURATION\)/);
+  assert.match(faqJs, /fill\.style\.transform\s*=\s*`scaleX\(\$\{clampedFraction\}\)`/);
+
+  // Clicking active segment restarts 5s countdown
+  assert.match(faqJs, /const\s+isSameSlide\s*=\s*targetIndex\s*===\s*currentIndex;/);
+  assert.match(faqJs, /if\s*\(isSameSlide\)\s*\{\s*return;\s*\}/);
+});
+
